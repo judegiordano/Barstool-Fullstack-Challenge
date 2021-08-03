@@ -4,6 +4,7 @@ import { Base } from "./Base";
 import { NbaTeamInfo } from "./NbaTeamInfo";
 import { NbaOfficials } from "./NbaOfficials";
 import { NbaEventInfo } from "./NbaEventInfo";
+import { NbaStatInfo } from "./NbaStatInfo";
 
 @Entity()
 export class NbaGameData extends Base {
@@ -39,9 +40,11 @@ export class NbaGameData extends Base {
 	@JoinColumn()
 	event_information: NbaEventInfo;
 
-	// @Column()
-	// away_totals: IStatTotals;
+	@OneToOne(() => NbaStatInfo, stat => stat.game)
+	@JoinColumn()
+	away_totals: NbaStatInfo;
 
-	// @Column()
-	// home_totals: IStatTotals;
+	@OneToOne(() => NbaStatInfo, stat => stat.game)
+	@JoinColumn()
+	home_totals: NbaStatInfo;
 }
