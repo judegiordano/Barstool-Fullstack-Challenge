@@ -16,7 +16,7 @@
     "lint": "eslint --fix --ext .ts,.tsx .",
     "build": "tsc",
     "dev:watch": "ts-node-dev --respawn --transpile-only ./src/index.ts",
-	"prestart": "npm run build",
+	  "prestart": "npm run build",
     "start": "node ."
   },
   "keywords": [],
