@@ -9,6 +9,11 @@ import { NbaStatInfo } from "./NbaStatInfo";
 @Entity()
 export class NbaGameData extends Base {
 
+	constructor(game?: Partial<NbaGameData>) {
+		super();
+		Object.assign(this, game);
+	}
+
 	@Column()
 	league: string;
 

@@ -11,6 +11,7 @@ export abstract class Base extends BaseEntity {
 	@CreateDateColumn()
 	createdAt: Date;
 
+	@Exclude()
 	@UpdateDateColumn()
 	updatedAt: Date;
 

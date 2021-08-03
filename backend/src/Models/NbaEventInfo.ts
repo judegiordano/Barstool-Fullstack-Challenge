@@ -7,6 +7,11 @@ import { NbaSiteInfo } from "./NbaSiteInfo";
 @Entity()
 export class NbaEventInfo extends Base {
 
+	constructor(event?: Partial<NbaEventInfo>) {
+		super();
+		Object.assign(this, event);
+	}
+
 	@OneToOne(() => NbaGameData, game => game.event_information, { onDelete: "CASCADE" })
 	game: NbaGameData;
 
