@@ -24,7 +24,8 @@ export class Redis {
 		}
 	}
 
-	public static async GetAsync(key: string): Promise<string | null> {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public static async GetAsync(key: string): Promise<any | null> {
 		try {
 			return Redis._GetAsync(key);
 		} catch (error) {

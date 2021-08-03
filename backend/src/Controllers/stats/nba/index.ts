@@ -4,6 +4,7 @@ import { Requests } from "@Services/Requests";
 import { Redis } from "@Services/Redis";
 import { INBAGameData } from "@Types/Abstract";
 import { CacheKeys } from "@Types/Constants";
+import { Utility } from "@Services/Utility";
 
 export default async (fastify: FastifyInstance): Promise<void> => {
 	fastify.get("/", {
@@ -16,20 +17,35 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 		res.statusCode = 200;
 
 		const redisData = await Redis.GetAsync(CacheKeys.NBA_STATS);
-		if (redisData) {
+
+		if (!redisData) {
+			const { data } = await Requests.Get("6c974274-4bfc-4af8-a9c4-8b926637ba74.json");
+			const stats = data as INBAGameData;
+			await Redis.SetAsync(CacheKeys.NBA_STATS, JSON.stringify({ lastUpdated: new Date(), data: stats }));
+
 			return {
 				ok: true,
-				data: JSON.parse(redisData as string)
+				data: stats
 			};
 		}
 
-		const { data } = await Requests.Get("6c974274-4bfc-4af8-a9c4-8b926637ba74.json");
-		const stats = data as INBAGameData;
-		await Redis.SetAsync(CacheKeys.NBA_STATS, JSON.stringify(stats));
+		const { data, lastUpdated } = JSON.parse(redisData as string);
+		const diff = Utility.GetDiffInSeconds(new Date(lastUpdated), new Date());
+
+		if (diff >= 15) {
+			const { data } = await Requests.Get("6c974274-4bfc-4af8-a9c4-8b926637ba74.json");
+			const stats = data as INBAGameData;
+			await Redis.SetAsync(CacheKeys.NBA_STATS, JSON.stringify({ lastUpdated: new Date(), data: stats }));
+
+			return {
+				ok: true,
+				data: stats
+			};
+		}
 
 		return {
 			ok: true,
-			data: stats
+			data
 		};
 	});
 };
