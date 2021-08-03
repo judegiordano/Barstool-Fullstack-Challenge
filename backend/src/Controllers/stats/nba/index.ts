@@ -23,8 +23,7 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 			const { data } = await Requests.Get("6c974274-4bfc-4af8-a9c4-8b926637ba74.json");
 			const stats = data as INBAGameData;
 			await Redis.SetAsync(CacheKeys.NBA_STATS, JSON.stringify({ lastUpdated: new Date(), data: stats }));
-			const newGame = await GameDataRepository.InsertGame(stats);
-			console.log(newGame);
+			await GameDataRepository.InsertGame(stats);
 
 			return {
 				ok: true,
@@ -39,8 +38,7 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 			const { data } = await Requests.Get("6c974274-4bfc-4af8-a9c4-8b926637ba74.json");
 			const stats = data as INBAGameData;
 			await Redis.SetAsync(CacheKeys.NBA_STATS, JSON.stringify({ lastUpdated: new Date(), data: stats }));
-			const newGame = await GameDataRepository.InsertGame(stats);
-			console.log(newGame);
+			await GameDataRepository.InsertGame(stats);
 
 			return {
 				ok: true,

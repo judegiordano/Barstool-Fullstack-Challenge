@@ -67,6 +67,9 @@ const EventInfo: React.FC<IFinalScoreCard> = ({ gameData }: IFinalScoreCard): JS
 			<div>
 				{ DateTime.Format(gameData.event_information.start_date_time) }
 			</div>
+			<div>
+				status: { gameData.event_information.status }
+			</div>
 		</div>
 	);
 };

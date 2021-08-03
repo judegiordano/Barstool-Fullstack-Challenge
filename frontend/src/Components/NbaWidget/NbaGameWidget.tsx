@@ -19,17 +19,17 @@ export const NbaGameWidget: React.FC<INbaGameWidget> = ({ gameData }: INbaGameWi
 			<FinalScoreCard gameData={gameData} />
 			<div>
 				<ScoreHeader
-					isHome
-					teamName={gameData.home_team.full_name}
-					teamScore={homeScore}
-				/>
-				<TeamStatsTable stats={gameData.home_stats} />
-				<ScoreHeader
 					isHome={false}
 					teamName={gameData.away_team.full_name}
 					teamScore={awayScore}
 				/>
 				<TeamStatsTable stats={gameData.away_stats} />
+				<ScoreHeader
+					isHome
+					teamName={gameData.home_team.full_name}
+					teamScore={homeScore}
+				/>
+				<TeamStatsTable stats={gameData.home_stats} />
 			</div>
 		</>
 	);
