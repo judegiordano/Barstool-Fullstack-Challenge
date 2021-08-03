@@ -25,7 +25,7 @@ export class GameDataRepository {
 					"home_stats",
 					"away_stats",
 				],
-				cache: true
+				cache: 15000
 			});
 			if (!exists) throw "game not found";
 			return exists;
