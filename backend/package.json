@@ -1,0 +1,53 @@
+{
+  "name": "barstool-fullstack-challenge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./build/index.js",
+  "_moduleAliases": {
+    "@Types": "build/Types/",
+    "@Services": "build/Services/",
+    "@Repositories": "build/Repositories/"
+  },
+  "scripts": {
+    "db:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n",
+    "db:create": "ts-node ./node_modules/typeorm/cli.js migration:create -n",
+    "db:down": "ts-node ./node_modules/typeorm/cli.js migration:revert",
+    "db:up": "ts-node ./node_modules/typeorm/cli.js migration:run",
+    "lint": "eslint --fix --ext .ts,.tsx .",
+    "build": "tsc",
+    "dev:watch": "ts-node-dev --respawn --transpile-only ./src/index.ts --IS_COMPILED=false",
+    "start": "node . --IS_COMPILED=true"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/dotenv": "^8.2.0",
+    "@types/module-alias": "^2.0.1",
+    "@types/node": "^16.4.7",
+    "@types/redis": "^2.8.31",
+    "@typescript-eslint/eslint-plugin": "^4.28.5",
+    "@typescript-eslint/parser": "^4.28.5",
+    "eslint": "^7.31.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "class-transformer": "^0.4.0",
+    "fastify": "^3.19.2",
+    "fastify-autoload": "^3.8.0",
+    "fastify-cors": "^6.0.2",
+    "fastify-helmet": "^5.3.2",
+    "fastify-plugin": "^3.0.0",
+    "fastify-rate-limit": "^5.6.0",
+    "fastify-sensible": "^3.1.1",
+    "fastify-swagger": "^4.8.3",
+    "module-alias": "^2.2.2",
+    "pg": "^8.7.1",
+    "redis": "^3.1.2",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.35"
+  }
+}

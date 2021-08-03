@@ -1,0 +1,3 @@
+.styledRow:nth-of-type(odd) {
+	background-color: "lightgray"
+}

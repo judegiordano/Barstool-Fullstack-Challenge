@@ -1,0 +1,34 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		// {
+		// 	"name": "Debug",
+		// 	"type": "node",
+		// 	"request": "launch",
+		// 	"runtimeExecutable": "node",
+		// 	"runtimeArgs": ["--nolazy", "-r", "ts-node/register/transpile-only"],
+		// 	"args": ["./src/index.ts", "--IS_COMPILED=false"],
+		// 	"cwd": "${workspaceRoot}",
+		// 	"internalConsoleOptions": "openOnSessionStart",
+		// 	"skipFiles": ["<node_internals>/**", "node_modules/**"]
+		// }
+		{
+			"type": "pwa-node",
+			"request": "launch",
+			"name": "Debug DEV",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"outputCapture": "std",
+			"args": ["--IS_COMPILED=true"],
+			"program": "${workspaceFolder}\\build\\index.js",
+			"preLaunchTask": "tsc: compile",
+			"outFiles": [
+				"${workspaceFolder}/build/**/*.js"
+			],
+			"env": {
+				"NODE_ENV": "development"
+			}
+		}
+	]
+}

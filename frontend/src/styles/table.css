@@ -1,0 +1,13 @@
+.Mui-even {
+	background-color: lightgray;	
+}
+
+.MuiDataGrid-columnHeaderWrapper {
+	background-color: black;
+	color: white;
+}
+
+.MuiDataGrid-columnHeaderWrapper button {
+	background-color: black;
+	color: white;
+}
