@@ -9,14 +9,15 @@
     "@Repositories": "build/Repositories/"
   },
   "scripts": {
-    "db:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n",
-    "db:create": "ts-node ./node_modules/typeorm/cli.js migration:create -n",
+    "db:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -d src/Migrations -n",
+    "db:create": "ts-node ./node_modules/typeorm/cli.js migration:create -d src/Migrations -n",
     "db:down": "ts-node ./node_modules/typeorm/cli.js migration:revert",
     "db:up": "ts-node ./node_modules/typeorm/cli.js migration:run",
     "lint": "eslint --fix --ext .ts,.tsx .",
     "build": "tsc",
-    "dev:watch": "ts-node-dev --respawn --transpile-only ./src/index.ts --IS_COMPILED=false",
-    "start": "node . --IS_COMPILED=true"
+    "dev:watch": "ts-node-dev --respawn --transpile-only ./src/index.ts",
+	"prestart": "npm run build",
+    "start": "node ."
   },
   "keywords": [],
   "author": "",

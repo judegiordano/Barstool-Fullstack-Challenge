@@ -1,6 +1,27 @@
-import { Connection, createConnection, getConnection } from "typeorm";
+import path from "path";
+import { Connection, createConnection, getConnection, ConnectionOptions } from "typeorm";
+
+import { Config } from "./Config";
 
 export class Database {
+
+	private static readonly Connector = {
+		type: Config.Db.DB_TYPE,
+		host: Config.Db.DB_HOST,
+		port: Config.Db.DB_PORT,
+		username: Config.Db.DB_USERNAME,
+		password: Config.Db.DB_PASSWORD,
+		database: Config.Db.DB_NAME,
+		synchronize: Config.Db.DB_SYNC,
+		logging: Config.Db.DB_LOGGING,
+		autoReconnect: true,
+		reconnectTries: Number.MAX_VALUE,
+		reconnectInterval: 2000,
+		entities: [path.join(__dirname, "../Models/**/*.{ts,js}")],
+		migrations: [path.join(__dirname, "../Migrations/**/*.{ts,js}")],
+		ssl: Config.Options.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
+		cache: true
+	} as ConnectionOptions;
 
 	public static async Connect(): Promise<void> {
 
@@ -16,7 +37,7 @@ export class Database {
 				if (!connection.isConnected)
 					await connection.connect();
 			} else
-				await createConnection();
+				await createConnection(Database.Connector);
 			console.log(" successfully connected to database");
 		} catch (e) {
 			throw new Error(`error connecting to database: ${e}`);

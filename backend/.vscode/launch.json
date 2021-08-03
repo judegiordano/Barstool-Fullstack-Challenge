@@ -20,7 +20,7 @@
 				"<node_internals>/**"
 			],
 			"outputCapture": "std",
-			"args": ["--IS_COMPILED=true"],
+			// "args": ["--IS_COMPILED=true"],
 			"program": "${workspaceFolder}\\build\\index.js",
 			"preLaunchTask": "tsc: compile",
 			"outFiles": [

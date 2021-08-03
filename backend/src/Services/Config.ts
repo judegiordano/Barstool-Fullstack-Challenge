@@ -17,4 +17,15 @@ export class Config {
 		REDIS_PORT: parseInt(process.env.REDIS_PORT as string) ?? 6379
 	}
 
+	public static readonly Db = {
+		DB_TYPE: process.env.DB_TYPE,
+		DB_HOST: process.env.DB_HOST,
+		DB_PORT: parseInt(process.env.DB_PORT as string),
+		DB_USERNAME: process.env.DB_USERNAME,
+		DB_PASSWORD: process.env.DB_PASSWORD,
+		DB_NAME: process.env.DB_NAME,
+		DB_SYNC: process.env.DB_SYNC === "true" ? true : false,
+		DB_LOGGING: process.env.DB_LOGGING === "true" ? true : false
+	}
+
 }
