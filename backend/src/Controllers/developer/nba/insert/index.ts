@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 
-import { NbaGameDataRepository as Game } from "@Repositories/NbaGameDataRepository";
+import { MockDataRepository as Mock } from "@Repositories/MockDataRepository";
 
 export default async (fastify: FastifyInstance): Promise<void> => {
 	fastify.post("/game", {
@@ -11,7 +11,7 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 		}
 	}, async (_: FastifyRequest, res: FastifyReply) => {
 		res.statusCode = 200;
-		const newGame = await Game.SeedMockData();
+		const newGame = await Mock.MockNbaGame();
 		return {
 			ok: true,
 			data: newGame

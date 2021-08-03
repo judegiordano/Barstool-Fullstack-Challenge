@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 
-import { NbaGameDataRepository } from "@Repositories/NbaGameDataRepository";
+import { GameDataRepository as Game } from "@Repositories/Nba/GameDataRepository";
 
 interface IRequest {
 	id: number
@@ -23,7 +23,7 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 	}, async (req: FastifyRequest, res: FastifyReply) => {
 		res.statusCode = 200;
 		const { id } = req.params as IRequest;
-		const game = await NbaGameDataRepository.FindOneById(id);
+		const game = await Game.FindById(id);
 		return {
 			ok: true,
 			data: game

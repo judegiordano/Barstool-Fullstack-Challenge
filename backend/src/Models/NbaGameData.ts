@@ -5,6 +5,7 @@ import { NbaTeamInfo } from "./NbaTeamInfo";
 import { NbaOfficials } from "./NbaOfficials";
 import { NbaEventInfo } from "./NbaEventInfo";
 import { NbaStatInfo } from "./NbaStatInfo";
+import { NbaPlayerStat } from "./NbaPlayerStat";
 
 @Entity()
 export class NbaGameData extends Base {
@@ -31,11 +32,13 @@ export class NbaGameData extends Base {
 	@Column("int", { array: true })
 	home_period_scores: number[];
 
-	// @Column()
-	// away_stats: IPlayerStats[];
+	@OneToMany(() => NbaPlayerStat, stat => stat.game)
+	@JoinColumn()
+	away_stats: NbaPlayerStat[];
 
-	// @Column()
-	// home_stats: IPlayerStats[];
+	@OneToMany(() => NbaPlayerStat, stat => stat.game)
+	@JoinColumn()
+	home_stats: NbaPlayerStat[];
 
 	@OneToMany(() => NbaOfficials, official => official.game)
 	@JoinColumn()

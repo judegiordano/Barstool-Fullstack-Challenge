@@ -12,7 +12,7 @@ export interface ITeamInfo {
 	full_name: string
 }
 
-interface IPlayerStats {
+export interface IPlayerStats {
 	last_name: string,
 	first_name: string,
 	display_name: string,
