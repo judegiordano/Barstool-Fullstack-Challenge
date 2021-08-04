@@ -1,6 +1,6 @@
 import { Entity, Column, OneToOne, JoinColumn } from "typeorm";
 
-import { Base } from "./Base";
+import { Base } from "../Base";
 import { NbaGameData } from "./NbaGameData";
 import { NbaSiteInfo } from "./NbaSiteInfo";
 

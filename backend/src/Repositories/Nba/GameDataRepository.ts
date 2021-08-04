@@ -1,13 +1,13 @@
 import { INBAGameData } from "@Types/Nba/Abstract";
 import { IOffical } from "@Types/Shared";
 import { IPlayerStats } from "@Types/Nba/Abstract";
-import { NbaGameData } from "@Models/NbaGameData";
-import { NbaTeamInfo } from "@Models/NbaTeamInfo";
-import { NbaOfficials } from "@Models/NbaOfficials";
-import { NbaEventInfo } from "@Models/NbaEventInfo";
-import { NbaSiteInfo } from "@Models/NbaSiteInfo";
-import { NbaStatInfo } from "@Models/NbaStatInfo";
-import { NbaPlayerStat } from "@Models/NbaPlayerStat";
+import { NbaGameData } from "@Models/NBA/NbaGameData";
+import { NbaTeamInfo } from "@Models/NBA/NbaTeamInfo";
+import { NbaOfficials } from "@Models/NBA/NbaOfficials";
+import { NbaEventInfo } from "@Models/NBA/NbaEventInfo";
+import { NbaSiteInfo } from "@Models/NBA/NbaSiteInfo";
+import { NbaStatInfo } from "@Models/NBA/NbaStatInfo";
+import { NbaPlayerStat } from "@Models/NBA/NbaPlayerStat";
 
 export class GameDataRepository {
 

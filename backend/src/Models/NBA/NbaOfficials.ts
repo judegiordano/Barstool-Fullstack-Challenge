@@ -1,6 +1,6 @@
 import { Entity, Column, ManyToOne } from "typeorm";
 
-import { Base } from "./Base";
+import { Base } from "../Base";
 import { NbaGameData } from "./NbaGameData";
 
 @Entity()

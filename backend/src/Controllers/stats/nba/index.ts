@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 
-import { INBAGameData } from "@/Types/Nba/Abstract";
-import { CacheKeys } from "@Types/Constants";
+import { INBAGameData } from "@Types/Nba/Abstract";
+import { CacheKeys, Endpoints } from "@Types/Constants";
 import { Requests } from "@Services/Requests";
 import { Redis } from "@Services/Redis";
 import { Utility } from "@Services/Utility";
@@ -12,7 +12,7 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 		preValidation: [fastify.client],
 		schema: {
 			tags: ["Stats"],
-			summary: "get latest nba game stat"
+			summary: "get latest or cached nba game stat"
 		}
 	}, async (_: FastifyRequest, res: FastifyReply) => {
 		res.statusCode = 200;
@@ -20,7 +20,7 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 		const redisData = await Redis.GetAsync(CacheKeys.NBA_STATS);
 
 		if (!redisData) {
-			const { data } = await Requests.Get("6c974274-4bfc-4af8-a9c4-8b926637ba74.json");
+			const { data } = await Requests.Get(Endpoints.NBA);
 			const stats = data as INBAGameData;
 			await Redis.SetAsync(CacheKeys.NBA_STATS, JSON.stringify({ lastUpdated: new Date(), data: stats }));
 			await GameDataRepository.InsertGame(stats);
@@ -35,7 +35,7 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 		const diff = Utility.GetDiffInSeconds(new Date(lastUpdated), new Date());
 
 		if (diff >= 60) {
-			const { data } = await Requests.Get("6c974274-4bfc-4af8-a9c4-8b926637ba74.json");
+			const { data } = await Requests.Get(Endpoints.NBA);
 			const stats = data as INBAGameData;
 			await Redis.SetAsync(CacheKeys.NBA_STATS, JSON.stringify({ lastUpdated: new Date(), data: stats }));
 			await GameDataRepository.InsertGame(stats);
