@@ -24,7 +24,11 @@ export const NbaGameWidget: React.FC<INbaGameWidget> = ({ gameData }: INbaGameWi
 
 	return (
 		<>
-			<FinalScoreCard gameData={gameData} />
+			<FinalScoreCard
+				awayFinalScore={awayScore}
+				homeFinalScore={homeScore}
+				gameData={gameData}
+			/>
 			<div>
 				<ScoreHeader
 					teamHex={awayTeam.hex}

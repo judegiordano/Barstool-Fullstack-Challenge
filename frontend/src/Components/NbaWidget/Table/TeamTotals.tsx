@@ -16,7 +16,7 @@ export const TeamTotals: React.FC<ITeamTotals> = ({ totals, teamColor }: ITeamTo
 	return (
 		<Accordion TransitionProps={{ unmountOnExit: true }}>
 			<AccordionSummary
-				style={{backgroundColor: teamColor, color: "White"}}
+				style={{backgroundColor: teamColor, color: "White", fontFamily: "'Open Sans', sans-serif"}}
 				expandIcon={<ExpandMoreIcon />}
 			>
 				team totals
