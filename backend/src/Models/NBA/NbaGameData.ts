@@ -1,30 +1,17 @@
 import { Entity, Column, JoinColumn, OneToOne, OneToMany } from "typeorm";
 
-import { Base } from "../Base";
-import { NbaTeamInfo } from "./NbaTeamInfo";
-import { NbaOfficials } from "./NbaOfficials";
-import { NbaEventInfo } from "./NbaEventInfo";
+import { GameInfo } from "../Shared/Game";
 import { NbaStatInfo } from "./NbaStatInfo";
 import { NbaPlayerStat } from "./NbaPlayerStat";
+import { NbaOfficial } from "./NbaOfficial";
 
 @Entity()
-export class NbaGameData extends Base {
+export class NbaGameData extends GameInfo {
 
 	constructor(game?: Partial<NbaGameData>) {
 		super();
 		Object.assign(this, game);
 	}
-
-	@Column()
-	league: string;
-
-	@OneToOne(() => NbaTeamInfo, team => team.game)
-	@JoinColumn()
-	away_team: NbaTeamInfo;
-
-	@OneToOne(() => NbaTeamInfo, team => team.game)
-	@JoinColumn()
-	home_team: NbaTeamInfo;
 
 	@Column("int", { array: true })
 	away_period_scores: number[];
@@ -36,17 +23,14 @@ export class NbaGameData extends Base {
 	@JoinColumn()
 	away_stats: NbaPlayerStat[];
 
+	// @OneToMany(() => OfficialInfo, official => official.game)
+	@OneToMany(() => NbaOfficial, official => official.game)
+	@JoinColumn()
+	officials: NbaOfficial[];
+
 	@OneToMany(() => NbaPlayerStat, stat => stat.game)
 	@JoinColumn()
 	home_stats: NbaPlayerStat[];
-
-	@OneToMany(() => NbaOfficials, official => official.game)
-	@JoinColumn()
-	officials: NbaOfficials[];
-
-	@OneToOne(() => NbaEventInfo, event => event.game)
-	@JoinColumn()
-	event_information: NbaEventInfo;
 
 	@OneToOne(() => NbaStatInfo, stat => stat.game)
 	@JoinColumn()

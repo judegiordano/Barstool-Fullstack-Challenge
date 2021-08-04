@@ -4,9 +4,9 @@ import { Base } from "../Base";
 import { NbaGameData } from "./NbaGameData";
 
 @Entity()
-export class NbaOfficials extends Base {
+export class NbaOfficial extends Base {
 
-	constructor(official?: Partial<NbaOfficials>) {
+	constructor(official?: Partial<NbaOfficial>) {
 		super();
 		Object.assign(this, official);
 	}

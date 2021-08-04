@@ -1,49 +1,49 @@
-import { Entity, Column, OneToOne } from "typeorm";
+// import { Entity, Column, OneToOne } from "typeorm";
 
-import { Base } from "../Base";
-import { NbaGameData } from "./NbaGameData";
+// import { Base } from "../Base";
+// import { NbaGameData } from "./NbaGameData";
 
-@Entity()
-export class NbaTeamInfo extends Base {
+// @Entity()
+// export class NbaTeamInfo extends Base {
 
-	constructor(team?: Partial<NbaTeamInfo>) {
-		super();
-		Object.assign(this, team);
-	}
+// 	constructor(team?: Partial<NbaTeamInfo>) {
+// 		super();
+// 		Object.assign(this, team);
+// 	}
 
-	@OneToOne(() => NbaGameData, { onDelete: "CASCADE" })
-	game: NbaGameData
+// 	@OneToOne(() => NbaGameData, { onDelete: "CASCADE" })
+// 	game: NbaGameData
 
-	@Column()
-	team_id: string;
+// 	@Column()
+// 	team_id: string;
 
-	@Column()
-	abbreviation: string;
+// 	@Column()
+// 	abbreviation: string;
 
-	@Column()
-	active: boolean;
+// 	@Column()
+// 	active: boolean;
 
-	@Column()
-	first_name: string;
+// 	@Column()
+// 	first_name: string;
 
-	@Column()
-	last_name: string;
+// 	@Column()
+// 	last_name: string;
 
-	@Column()
-	conference: string;
+// 	@Column()
+// 	conference: string;
 
-	@Column()
-	division: string;
+// 	@Column()
+// 	division: string;
 
-	@Column()
-	site_name: string;
+// 	@Column()
+// 	site_name: string;
 
-	@Column()
-	city: string;
+// 	@Column()
+// 	city: string;
 
-	@Column()
-	state: string;
+// 	@Column()
+// 	state: string;
 
-	@Column()
-	full_name: string;
-}
+// 	@Column()
+// 	full_name: string;
+// }
