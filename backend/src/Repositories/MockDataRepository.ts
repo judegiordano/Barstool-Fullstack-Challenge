@@ -1,9 +1,9 @@
 import { IPlayerStats } from "@Types/Nba/Abstract";
 import { NbaGameData } from "@Models/NBA/NbaGameData";
-import { NbaTeamInfo } from "@Models/NBA/NbaTeamInfo";
-import { NbaOfficials } from "@Models/NBA/NbaOfficials";
-import { NbaEventInfo } from "@Models/NBA/NbaEventInfo";
-import { NbaSiteInfo } from "@Models/NBA/NbaSiteInfo";
+import { TeamInfo } from "@Models/Shared/TeamInfo";
+import { NbaOfficial } from "@Models/NBA/NbaOfficial";
+import { EventInfo } from "@Models/Shared/EventInfo";
+import { SiteInfo } from "@Models/Shared/SiteInfo";
 import { NbaStatInfo } from "@Models/NBA/NbaStatInfo";
 import { NbaPlayerStat } from "@Models/NBA/NbaPlayerStat";
 
@@ -11,7 +11,7 @@ export class MockDataRepository {
 
 	public static async MockNbaGame(): Promise<NbaGameData> {
 		try {
-			const newAwayTeam = new NbaTeamInfo({
+			const newAwayTeam = new TeamInfo({
 				team_id: "oklahoma-city-thunder",
 				abbreviation: "OKC",
 				active: true,
@@ -24,7 +24,7 @@ export class MockDataRepository {
 				state: "Oklahoma",
 				full_name: "Oklahoma City Thunder"
 			});
-			const newHomeTeam = new NbaTeamInfo({
+			const newHomeTeam = new TeamInfo({
 				team_id: "miami-heat",
 				abbreviation: "MIA",
 				active: true,
@@ -37,26 +37,26 @@ export class MockDataRepository {
 				state: "Florida",
 				full_name: "Miami Heat"
 			});
-			const newOfficial1 = new NbaOfficials({
+			const newOfficial1 = new NbaOfficial({
 				first_name: "Derrick",
 				last_name: "Stafford"
 			});
-			const newOfficial2 = new NbaOfficials({
+			const newOfficial2 = new NbaOfficial({
 				first_name: "Dan",
 				last_name: "Crawford"
 			});
-			const newOfficial3 = new NbaOfficials({
+			const newOfficial3 = new NbaOfficial({
 				first_name: "Monty",
 				last_name: "McCutchen"
 			});
-			const newSite = new NbaSiteInfo({
+			const newSite = new SiteInfo({
 				capacity: 19600,
 				surface: "Hardwood",
 				name: "AmericanAirlines Arena",
 				state: "Florida",
 				city: "Miami"
 			});
-			const newEvent = new NbaEventInfo({
+			const newEvent = new EventInfo({
 				temperature: 0,
 				attendance: 20003,
 				duration: "2:40",

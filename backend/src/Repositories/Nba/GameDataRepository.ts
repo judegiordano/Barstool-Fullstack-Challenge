@@ -1,11 +1,11 @@
 import { INBAGameData } from "@Types/Nba/Abstract";
 import { IOffical } from "@Types/Shared";
 import { IPlayerStats } from "@Types/Nba/Abstract";
+import { TeamInfo } from "@Models/Shared/TeamInfo";
+import { NbaOfficial } from "@Models/NBA/NbaOfficial";
+import { EventInfo } from "@Models/Shared/EventInfo";
+import { SiteInfo } from "@Models/Shared/SiteInfo";
 import { NbaGameData } from "@Models/NBA/NbaGameData";
-import { NbaTeamInfo } from "@Models/NBA/NbaTeamInfo";
-import { NbaOfficials } from "@Models/NBA/NbaOfficials";
-import { NbaEventInfo } from "@Models/NBA/NbaEventInfo";
-import { NbaSiteInfo } from "@Models/NBA/NbaSiteInfo";
 import { NbaStatInfo } from "@Models/NBA/NbaStatInfo";
 import { NbaPlayerStat } from "@Models/NBA/NbaPlayerStat";
 
@@ -16,15 +16,15 @@ export class GameDataRepository {
 			const exists = await NbaGameData.findOne({
 				where: { id },
 				relations: [
-					"home_team",
 					"away_team",
+					"home_team",
 					"officials",
 					"event_information",
 					"event_information.site",
 					"away_totals",
 					"home_totals",
 					"home_stats",
-					"away_stats",
+					"away_stats"
 				],
 				cache: 15000
 			});
@@ -48,11 +48,11 @@ export class GameDataRepository {
 
 	public static async InsertGame(gameData: INBAGameData): Promise<NbaGameData> {
 		try {
-			const newAwayTeam = new NbaTeamInfo({ ...gameData.away_team });
-			const newHomeTeam = new NbaTeamInfo({ ...gameData.home_team });
+			const newAwayTeam = new TeamInfo({ ...gameData.away_team });
+			const newHomeTeam = new TeamInfo({ ...gameData.home_team });
 			const newOfficials = await GameDataRepository.InsertMultipleOfficials(gameData.officials);
-			const newSite = new NbaSiteInfo({ ...gameData.event_information.site });
-			const newEvent = new NbaEventInfo({ ...gameData.event_information, site: newSite });
+			const newSite = new SiteInfo({ ...gameData.event_information.site });
+			const newEvent = new EventInfo({ ...gameData.event_information, site: newSite });
 			const newAwayTotals = new NbaStatInfo({ ...gameData.away_totals });
 			const newHomeTotals = new NbaStatInfo({ ...gameData.home_totals });
 			const newHomeStats = await GameDataRepository.InsertMultiplePlayerStats(gameData.home_stats);
@@ -99,11 +99,11 @@ export class GameDataRepository {
 		}
 	}
 
-	public static async InsertMultipleOfficials(officials: IOffical[]): Promise<NbaOfficials[]> {
+	public static async InsertMultipleOfficials(officials: IOffical[]): Promise<NbaOfficial[]> {
 		try {
 			const newOfficials = [];
 			for (const key in officials) {
-				const newOfficial = new NbaOfficials({ ...officials[key] as IOffical });
+				const newOfficial = new NbaOfficial({ ...officials[key] as IOffical });
 				await newOfficial.save();
 				newOfficials.push(newOfficial);
 			}
