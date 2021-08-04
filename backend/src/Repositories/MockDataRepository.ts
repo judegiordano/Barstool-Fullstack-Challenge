@@ -1,4 +1,4 @@
-import { IPlayerStats } from "@Types/Abstract";
+import { IPlayerStats } from "@/Types/Nba/Abstract";
 import { NbaGameData } from "@Models/NbaGameData";
 import { NbaTeamInfo } from "@Models/NbaTeamInfo";
 import { NbaOfficials } from "@Models/NbaOfficials";

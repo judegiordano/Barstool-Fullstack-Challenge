@@ -1,16 +1,4 @@
-export interface ITeamInfo {
-	team_id: string
-	abbreviation: string
-	active: boolean,
-	first_name: string
-	last_name: string
-	conference: string
-	division: string
-	site_name: string
-	city: string
-	state: string
-	full_name: string
-}
+import { IGame } from "../Shared";
 
 export interface IPlayerStats {
 	last_name: string,
@@ -39,29 +27,7 @@ export interface IPlayerStats {
 	free_throw_percentage: number
 }
 
-export interface IOfficials {
-	position: string,
-	first_name: string,
-	last_name: string
-}
-
-interface IEventInfo {
-	temperature: number,
-	site: {
-		capacity: number,
-		surface: string,
-		name: string,
-		state: string,
-		city: string
-	},
-	attendance: number,
-	duration: string,
-	status: string,
-	season_type: string,
-	start_date_time: Date
-}
-
-interface IStatTotals {
+export interface IStatTotals {
 	minutes: number,
 	points: number,
 	assists: number,
@@ -87,16 +53,11 @@ interface IStatTotals {
  * NBA Game Metadata
  * @interface INBAGameData
  */
-export interface INBAGameData {
-	league: string,
-	away_team: ITeamInfo,
-	home_team: ITeamInfo,
+export interface INBAGameData extends IGame {
 	away_period_scores: number[],
 	home_period_scores: number[],
 	away_stats: IPlayerStats[],
 	home_stats: IPlayerStats[],
-	officials: IOfficials[],
-	event_information: IEventInfo,
 	away_totals: IStatTotals,
 	home_totals: IStatTotals
 }

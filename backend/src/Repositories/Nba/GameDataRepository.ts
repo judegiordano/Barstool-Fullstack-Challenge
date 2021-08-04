@@ -1,5 +1,6 @@
-import { INBAGameData, IOfficials } from "@Types/Abstract";
-import { IPlayerStats } from "@Types/Abstract";
+import { INBAGameData } from "@Types/Nba/Abstract";
+import { IOffical } from "@Types/Shared";
+import { IPlayerStats } from "@Types/Nba/Abstract";
 import { NbaGameData } from "@Models/NbaGameData";
 import { NbaTeamInfo } from "@Models/NbaTeamInfo";
 import { NbaOfficials } from "@Models/NbaOfficials";
@@ -58,7 +59,7 @@ export class GameDataRepository {
 			const newAwayStats = await GameDataRepository.InsertMultiplePlayerStats(gameData.away_stats);
 			// game
 			const newGame = new NbaGameData({
-				league: "NBA",
+				league: gameData.league,
 				away_team: newAwayTeam,
 				home_team: newHomeTeam,
 				officials: newOfficials,
@@ -98,11 +99,11 @@ export class GameDataRepository {
 		}
 	}
 
-	public static async InsertMultipleOfficials(officials: IOfficials[]): Promise<NbaOfficials[]> {
+	public static async InsertMultipleOfficials(officials: IOffical[]): Promise<NbaOfficials[]> {
 		try {
 			const newOfficials = [];
 			for (const key in officials) {
-				const newOfficial = new NbaOfficials({ ...officials[key] as IOfficials });
+				const newOfficial = new NbaOfficials({ ...officials[key] as IOffical });
 				await newOfficial.save();
 				newOfficials.push(newOfficial);
 			}
