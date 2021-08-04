@@ -35,7 +35,7 @@ export class App {
 			};
 		});
 		Redis.client.on("connect", () => {
-			console.log(`connected to redis server: ${Redis.client.connected}`);
+			console.log("connected to redis server");
 		});
 		Redis.client.on("error", (err) => {
 			console.log("Redis error.", err);

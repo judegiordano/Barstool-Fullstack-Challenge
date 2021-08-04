@@ -1,11 +1,11 @@
-import { createClient } from "redis";
+import _Redis from "ioredis";
 import { promisify } from "util";
 
 import { Config } from "@Services/Config";
 
 export class Redis {
 
-	public static readonly client = createClient(
+	public static readonly client = new _Redis(
 		{
 			host: Config.Redis.REDIS_HOST,
 			password: Config.Redis.REDIS_PASSWORD,
