@@ -51,6 +51,7 @@ export class App {
 			console.log(e);
 			await App.instance.close();
 			await Database.Close();
+			Redis.client.disconnect();
 			process.exit(1);
 		}
 	}

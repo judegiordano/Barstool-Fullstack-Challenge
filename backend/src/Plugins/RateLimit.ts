@@ -2,8 +2,8 @@ import plugin from "fastify-plugin";
 import { FastifyInstance } from "fastify";
 import rateLimit from "fastify-rate-limit";
 
-import { Config } from "../Services/Config";
-import { Redis } from "../Services/Redis";
+import { Config } from "@Services/Config";
+import { Redis } from "@Services/Redis";
 
 export default plugin(async (fastify: FastifyInstance): Promise<void> => {
 	fastify.register(rateLimit, {

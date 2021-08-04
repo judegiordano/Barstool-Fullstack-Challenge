@@ -1,9 +1,9 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 
-import { Requests } from "@Services/Requests";
-import { Redis } from "@Services/Redis";
 import { INBAGameData } from "@Types/Abstract";
 import { CacheKeys } from "@Types/Constants";
+import { Requests } from "@Services/Requests";
+import { Redis } from "@Services/Redis";
 import { Utility } from "@Services/Utility";
 import { GameDataRepository } from "@Repositories/Nba/GameDataRepository";
 

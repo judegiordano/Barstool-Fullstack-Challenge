@@ -2,6 +2,7 @@ import plugin from "fastify-plugin";
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 
 import { Config } from "@Services/Config";
+
 const { Options } = Config;
 
 export default plugin(async (fastify: FastifyInstance): Promise<void> => {

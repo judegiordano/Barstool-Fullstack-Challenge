@@ -10,5 +10,4 @@ export class Requests {
 	public static async Get(url: string, config?: AxiosRequestConfig | undefined): Promise<AxiosResponse<any>> {
 		return await Requests.base.get(url, config);
 	}
-
 }

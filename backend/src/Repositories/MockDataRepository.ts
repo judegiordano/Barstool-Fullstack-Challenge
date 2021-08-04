@@ -1,13 +1,11 @@
-// import { InsertResult } from "typeorm";
-
-import { NbaGameData } from "../Models/NbaGameData";
-import { NbaTeamInfo } from "../Models/NbaTeamInfo";
-import { NbaOfficials } from "../Models/NbaOfficials";
-import { NbaEventInfo } from "../Models/NbaEventInfo";
-import { NbaSiteInfo } from "../Models/NbaSiteInfo";
-import { NbaStatInfo } from "../Models/NbaStatInfo";
-import { IPlayerStats } from "../Types/Abstract";
-import { NbaPlayerStat } from "../Models/NbaPlayerStat";
+import { IPlayerStats } from "@Types/Abstract";
+import { NbaGameData } from "@Models/NbaGameData";
+import { NbaTeamInfo } from "@Models/NbaTeamInfo";
+import { NbaOfficials } from "@Models/NbaOfficials";
+import { NbaEventInfo } from "@Models/NbaEventInfo";
+import { NbaSiteInfo } from "@Models/NbaSiteInfo";
+import { NbaStatInfo } from "@Models/NbaStatInfo";
+import { NbaPlayerStat } from "@Models/NbaPlayerStat";
 
 export class MockDataRepository {
 

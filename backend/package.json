@@ -6,7 +6,8 @@
   "_moduleAliases": {
     "@Types": "build/Types/",
     "@Services": "build/Services/",
-    "@Repositories": "build/Repositories/"
+    "@Repositories": "build/Repositories/",
+    "@Models": "build/Models/"
   },
   "scripts": {
     "db:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -d src/Migrations -n",
