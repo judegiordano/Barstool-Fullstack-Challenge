@@ -1,7 +1,7 @@
 # Barstool Fullstack Challenege
 Jude Giordano
 
-### [repository reference]("https://github.com/BarstoolSports/fullstack-challenge")
+### [repository reference](https://github.com/BarstoolSports/fullstack-challenge)
 ---
 ## Prerequisites
 - [node.js](https://nodejs.org/en/)
