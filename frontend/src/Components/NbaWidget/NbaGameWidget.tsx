@@ -4,6 +4,7 @@ import { INBAGameData } from "@Types/Global";
 import { ScoreHeader } from "./ScoreHeader";
 import { TeamStatsTable } from "./TeamStatsTable";
 import { FinalScoreCard } from "./FinalScoreCard";
+import { TeamTotals } from "./Table/TeamTotals";
 
 interface INbaGameWidget {
 	gameData: INBAGameData
@@ -24,12 +25,14 @@ export const NbaGameWidget: React.FC<INbaGameWidget> = ({ gameData }: INbaGameWi
 					teamScore={awayScore}
 				/>
 				<TeamStatsTable stats={gameData.away_stats} />
+				<TeamTotals totals={gameData.away_totals} />
 				<ScoreHeader
 					isHome
 					teamName={gameData.home_team.full_name}
 					teamScore={homeScore}
 				/>
 				<TeamStatsTable stats={gameData.home_stats} />
+				<TeamTotals totals={gameData.home_totals} />
 			</div>
 		</>
 	);

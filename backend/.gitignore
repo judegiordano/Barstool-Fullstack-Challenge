@@ -52,3 +52,4 @@ deeplore-dev-container/data/**/*
 *.crt
 
 nba.json
+mlb.json
