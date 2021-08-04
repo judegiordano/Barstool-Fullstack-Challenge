@@ -1,17 +1,17 @@
 version: "3.7"
 services:
-  barstool-dev-container:
-    container_name: barstool-dev-container
+  barstool-database-container:
+    container_name: barstool-database-container
     image: postgres
     restart: unless-stopped
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+        - ./data/db:/var/lib/postgresql/data
     env_file:
         - database.env
     ports:
       - "6666:5432"
     networks:
-      - barstool-dev-network
+      - barstool-database-network
 networks:
-  barstool-dev-network:
+  barstool-database-network:
     driver: bridge
