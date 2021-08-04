@@ -23,7 +23,6 @@ export class NbaGameData extends GameInfo {
 	@JoinColumn()
 	away_stats: NbaPlayerStat[];
 
-	// @OneToMany(() => OfficialInfo, official => official.game)
 	@OneToMany(() => NbaOfficial, official => official.game)
 	@JoinColumn()
 	officials: NbaOfficial[];

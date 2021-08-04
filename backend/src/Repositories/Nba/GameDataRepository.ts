@@ -1,10 +1,10 @@
 import { INBAGameData } from "@Types/Nba/Abstract";
 import { IOffical } from "@Types/Shared";
-import { IPlayerStats } from "@Types/Nba/Abstract";
 import { TeamInfo } from "@Models/Shared/TeamInfo";
-import { NbaOfficial } from "@Models/NBA/NbaOfficial";
 import { EventInfo } from "@Models/Shared/EventInfo";
 import { SiteInfo } from "@Models/Shared/SiteInfo";
+import { IPlayerStats } from "@Types/Nba/Abstract";
+import { NbaOfficial } from "@Models/NBA/NbaOfficial";
 import { NbaGameData } from "@Models/NBA/NbaGameData";
 import { NbaStatInfo } from "@Models/NBA/NbaStatInfo";
 import { NbaPlayerStat } from "@Models/NBA/NbaPlayerStat";

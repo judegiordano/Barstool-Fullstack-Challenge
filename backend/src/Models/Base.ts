@@ -3,7 +3,7 @@ import { PrimaryGeneratedColumn, BaseEntity, CreateDateColumn, UpdateDateColumn 
 
 export abstract class Base extends BaseEntity {
 
-	// @Exclude()
+	@Exclude()
 	@PrimaryGeneratedColumn()
 	id: number;
 

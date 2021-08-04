@@ -12,9 +12,6 @@ export class EventInfo extends Base {
 		Object.assign(this, event);
 	}
 
-	// @OneToOne(() => GameInfo, game => game.event_information, { onDelete: "CASCADE" })
-	// game: GameInfo;
-
 	@OneToOne(() => SiteInfo, site => site.event)
 	@JoinColumn()
 	site: SiteInfo

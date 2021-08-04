@@ -1,8 +1,6 @@
-// import { Entity, Column, OneToOne } from "typeorm";
 import { Entity, Column } from "typeorm";
 
 import { Base } from "../Base";
-// import { GameInfo } from "./Game";
 
 @Entity()
 export class TeamInfo extends Base {
@@ -11,9 +9,6 @@ export class TeamInfo extends Base {
 		super();
 		Object.assign(this, team);
 	}
-
-	// @OneToOne(() => GameInfo, { onDelete: "CASCADE" })
-	// game: GameInfo
 
 	@Column()
 	team_id: string;
