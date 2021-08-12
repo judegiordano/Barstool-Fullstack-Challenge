@@ -30,3 +30,35 @@ export const NBATeamColors = [
 	{ name: "Utah Jazz", hex: "#002B5C" },
 	{ name: "Washington Wizards", hex: "#002B5C" }
 ];
+
+export const MlbTeamColors = [
+	{ name: "Boston Red Sox", hex: "#bd3039" },
+	{ name: "San Francisco Giants", hex: "#fd5a1e" },
+	{ name: "Chicago Cubs", hex: "#0e3386" },
+	{ name: "St. Louis Cardinals", hex: "#c41e3a" },
+	{ name: "Detroit Tigers", hex: "#182d55" },
+	{ name: "New York Yankees", hex: "#132448" },
+	{ name: "Texas Rangers", hex: "#003278" },
+	{ name: "Arizona Diamondbacks", hex: "#a71930" },
+	{ name: "Atlanta Braves", hex: "#13274f" },
+	{ name: "Baltimore Orioles", hex: "#df4601" },
+	{ name: "Chicago White Sox", hex: "#000000" },
+	{ name: "Cincinnati Reds", hex: "#c6011f" },
+	{ name: "Cleveland Indians", hex: "#e31937" },
+	{ name: "Colorado Rockies", hex: "#33006f" },
+	{ name: "Houston Astros", hex: "#002d62" },
+	{ name: "Kansas City Royals", hex: "#174885" },
+	{ name: "Los Angeles Angels", hex: "#ba0021" },
+	{ name: "Miami Marlins", hex: "#ff6600" },
+	{ name: "Milwaukee Brewers", hex: "#0a2351" },
+	{ name: "Minnesota Twins", hex: "#002b5c" },
+	{ name: "New York Mets", hex: "#002d72" },
+	{ name: "Oakland Athletics", hex: "#003831" },
+	{ name: "Philadelphia Phillies", hex: "#e81828" },
+	{ name: "Pittsburgh Pirates", hex: "#fdb827" },
+	{ name: "San Diego Padres", hex: "#002d62" },
+	{ name: "Seattle Mariners", hex: "#0c2c56" },
+	{ name: "Tampa Bay Rays", hex: "#092c5c" },
+	{ name: "Toronto Blue Jays", hex: "#134a8e" },
+	{ name: "Washington Nationals", hex: "#ab0003" }
+];

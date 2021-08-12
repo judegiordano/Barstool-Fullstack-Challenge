@@ -1,26 +1,26 @@
 import React from "react";
 
-import { INBAGameData } from "@Types/Nba/Abstract";
+import { IMLBGameData } from "@Types/Mlb/Abstract";
 import { ScoreHeader } from "./ScoreHeader";
-import { TeamStatsTable } from "./TeamStatsTable";
+import { BatterStatsTable } from "./BatterStatsTable";
 import { FinalScoreCard } from "./FinalScoreCard";
-import { TeamTotals } from "./Table/TeamTotals";
-import { NBATeamColors } from "@Services/Constants";
+// import { TeamTotals } from "./Table/TeamTotals";
+import { MlbTeamColors } from "@Services/Constants";
 
-interface INbaGameWidget {
-	gameData: INBAGameData
+interface IMlbGameWidget {
+	gameData: IMLBGameData
 }
 
-export const NbaGameWidget: React.FC<INbaGameWidget> = ({ gameData }: INbaGameWidget): JSX.Element => {
+export const MlbGameWidget: React.FC<IMlbGameWidget> = ({ gameData }: IMlbGameWidget): JSX.Element => {
 
 	const homeScore = gameData.home_period_scores.reduce((a, b) => a + b);
 	const awayScore = gameData.away_period_scores.reduce((a, b) => a + b);
 
 	const awayName = new RegExp(gameData.away_team.full_name.trim().toUpperCase(), "i");
-	const awayTeam = NBATeamColors.find(a => a.name.match(awayName));
+	const awayTeam = MlbTeamColors.find(a => a.name.match(awayName));
 
 	const homeName = new RegExp(gameData.home_team.full_name.trim().toUpperCase(), "i");
-	const homeTeam = NBATeamColors.find(a => a.name.match(homeName));
+	const homeTeam = MlbTeamColors.find(a => a.name.match(homeName));
 
 	return (
 		<>
@@ -36,22 +36,23 @@ export const NbaGameWidget: React.FC<INbaGameWidget> = ({ gameData }: INbaGameWi
 					teamName={gameData.away_team.full_name}
 					teamScore={awayScore}
 				/>
-				<TeamStatsTable stats={gameData.away_stats} />
-				<TeamTotals
+				<BatterStatsTable stats={gameData.away_batters} />
+				{/* <TeamTotals
 					totals={gameData.away_totals}
 					teamColor={awayTeam.hex}
-				/>
+				/> */}
 				<ScoreHeader
 					teamHex={homeTeam.hex}
 					isHome
 					teamName={gameData.home_team.full_name}
 					teamScore={homeScore}
 				/>
-				<TeamStatsTable stats={gameData.home_stats} />
-				<TeamTotals
+				<BatterStatsTable stats={gameData.home_batters} />
+				{/* <TeamStatsTable stats={gameData.home_stats} /> */}
+				{/* <TeamTotals
 					totals={gameData.home_totals}
 					teamColor={homeTeam.hex}
-				/>
+				/> */}
 			</div>
 		</>
 	);

@@ -2,12 +2,12 @@ import React from "react";
 import Card from "@material-ui/core/Card";
 import { CardContent } from "@material-ui/core";
 
-import { INBAGameData } from "@/src/Types/Nba/Abstract";
+import { IMLBGameData } from "@/src/Types/Mlb/Abstract";
 import { IEvent as IEventInfo } from "@/src/Types/Shared";
 import { DateTime } from "@Services/Date";
 
 interface IFinalScoreCard {
-	gameData: INBAGameData,
+	gameData: IMLBGameData,
 	homeFinalScore: number,
 	awayFinalScore: number
 }

@@ -4,16 +4,17 @@ import Button from "@material-ui/core/Button";
 import { GetStaticProps } from "next";
 
 import { Rest } from "@Services/RestService";
-import { INBAGameData } from "@Types/Nba/Abstract";
-import { NbaGameWidget } from "@Comp/NbaWidget/NbaGameWidget";
+import { IMLBGameData } from "@Types/Mlb/Abstract";
+import { MlbGameWidget } from "@Comp/MlbWidget/MlbGameWidget";
 import { AppLayout } from "@/src/Components/Layout/AppLayout";
 import { Divider } from "@material-ui/core";
 
 interface IIndex {
-	statData: INBAGameData
+	statData: IMLBGameData
 }
 
 const Index = ({ statData }: IIndex): JSX.Element => {
+	console.log(statData);
 	return (
 		<AppLayout>
 			<Button
@@ -22,7 +23,7 @@ const Index = ({ statData }: IIndex): JSX.Element => {
 					home
 			</Button>
 			<Divider />
-			<NbaGameWidget gameData={statData} />
+			<MlbGameWidget gameData={statData} />
 		</AppLayout>
 	);
 };
@@ -31,7 +32,7 @@ export default Index;
 
 export const getStaticProps: GetStaticProps = async () => {
 
-	const { data } = await Rest.Get("stats/nba/");
+	const { data } = await Rest.Get("stats/mlb/");
 
 	return {
 		props: {

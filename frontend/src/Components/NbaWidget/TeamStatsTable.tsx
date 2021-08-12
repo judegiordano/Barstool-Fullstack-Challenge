@@ -1,6 +1,6 @@
 import React from "react";
 
-import { IPlayerStats } from "@Types/Abstract";
+import { IPlayerStats } from "@Types/Nba/Abstract";
 import { NBADataGrid } from "./DataGrid/NBADataGrid";
 
 interface ITeamStatsTable {

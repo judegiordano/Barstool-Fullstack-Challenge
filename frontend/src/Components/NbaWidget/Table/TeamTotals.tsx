@@ -5,7 +5,7 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import { IStatTotals } from "@/src/Types/Abstract";
+import { IStatTotals } from "@/src/Types/Nba/Abstract";
 
 interface ITeamTotals {
 	totals: IStatTotals,
