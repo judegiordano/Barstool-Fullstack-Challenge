@@ -1,6 +1,6 @@
-import { Entity, Column, JoinColumn, OneToOne, OneToMany } from "typeorm";
+import { Entity, JoinColumn, OneToOne, OneToMany } from "typeorm";
 
-import { GameInfo } from "../Shared/Game";
+import { GameInfo } from "../Shared/GameInfo";
 import { NbaStatInfo } from "./NbaStatInfo";
 import { NbaPlayerStat } from "./NbaPlayerStat";
 import { NbaOfficial } from "./NbaOfficial";
@@ -12,12 +12,6 @@ export class NbaGameData extends GameInfo {
 		super();
 		Object.assign(this, game);
 	}
-
-	@Column("int", { array: true })
-	away_period_scores: number[];
-
-	@Column("int", { array: true })
-	home_period_scores: number[];
 
 	@OneToMany(() => NbaPlayerStat, stat => stat.game)
 	@JoinColumn()

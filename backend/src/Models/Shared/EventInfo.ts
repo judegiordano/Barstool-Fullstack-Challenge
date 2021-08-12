@@ -12,7 +12,7 @@ export class EventInfo extends Base {
 		Object.assign(this, event);
 	}
 
-	@OneToOne(() => SiteInfo, site => site.event)
+	@OneToOne(() => SiteInfo, site => site.event, { eager: true })
 	@JoinColumn()
 	site: SiteInfo
 

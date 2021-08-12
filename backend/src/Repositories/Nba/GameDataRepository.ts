@@ -11,25 +11,25 @@ import { NbaPlayerStat } from "@Models/NBA/NbaPlayerStat";
 
 export class GameDataRepository {
 
-	public static async FindById(id: number): Promise<NbaGameData> {
+	public static async FindById(id: number): Promise<Partial<NbaGameData>> {
 		try {
-			const exists = await NbaGameData.findOne({
-				where: { id },
-				relations: [
-					"away_team",
-					"home_team",
-					"officials",
-					"event_information",
-					"event_information.site",
-					"away_totals",
-					"home_totals",
-					"home_stats",
-					"away_stats"
-				],
-				cache: 15000
-			});
+			const exists = await NbaGameData.findOne({ where: { id }, cache: 15000 });
 			if (!exists) throw "game not found";
-			return exists;
+
+			const { officials } = await NbaGameData.findOne({ where: { id }, relations: ["officials"] }) as NbaGameData;
+			const { away_totals } = await NbaGameData.findOne({ where: { id }, relations: ["away_totals"] }) as NbaGameData;
+			const { home_totals } = await NbaGameData.findOne({ where: { id }, relations: ["home_totals"] }) as NbaGameData;
+			const { home_stats } = await NbaGameData.findOne({ where: { id }, relations: ["home_stats"] }) as NbaGameData;
+			const { away_stats } = await NbaGameData.findOne({ where: { id }, relations: ["away_stats"] }) as NbaGameData;
+
+			return {
+				...exists,
+				officials,
+				away_totals,
+				home_totals,
+				home_stats,
+				away_stats
+			};
 		} catch (error) {
 			throw new Error(error);
 		}
@@ -64,8 +64,8 @@ export class GameDataRepository {
 				home_team: newHomeTeam,
 				officials: newOfficials,
 				event_information: newEvent,
-				away_period_scores: [3, 5, 6, 8],
-				home_period_scores: [12, 78, 4, 2],
+				away_period_scores: gameData.away_period_scores,
+				home_period_scores: gameData.home_period_scores,
 				away_totals: newAwayTotals,
 				home_totals: newHomeTotals,
 				home_stats: newHomeStats,

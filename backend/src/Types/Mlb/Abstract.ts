@@ -28,18 +28,18 @@ export interface IBatter {
 	left_on_base: number,
 	hit_by_pitch: number,
 	team_abbreviation: string,
-	ops: number,
-	avg: number,
-	obp: number,
-	slg: number,
-	at_bats_per_home_run: number,
-	at_bats_per_rbi: number,
-	walk_rate: number,
-	plate_appearances_per_rbi: number,
-	plate_appearances_per_home_run: number,
+	ops: number, // decimal
+	avg: number, // decimal
+	obp: number, // decimal
+	slg: number, // decimal
+	at_bats_per_home_run: number, // decimal
+	at_bats_per_rbi: number, // decimal
+	walk_rate: number, // decimal
+	plate_appearances_per_rbi: number, // decimal
+	plate_appearances_per_home_run: number, // decimal
 	extra_base_hits: number,
-	stolen_base_average: number,
-	strikeout_rate: number,
+	stolen_base_average: number, // decimal
+	strikeout_rate: number, // decimal
 	ops_string: string,
 	slg_string: string,
 	obp_string: string,
@@ -56,9 +56,9 @@ export interface IPitcher {
 	loss: boolean,
 	save: boolean,
 	hold: boolean,
-	era: number,
-	whip: number,
-	innings_pitched: number,
+	era: number, // decmial
+	whip: number, //decimal
+	innings_pitched: number, //decimal
 	hits_allowed: number,
 	runs_allowed: number,
 	earned_runs: number,
@@ -103,18 +103,18 @@ export interface IBatterTotal {
 	strike_outs: number,
 	left_on_base: number,
 	hit_by_pitch: number,
-	ops: number,
-	avg: number,
-	obp: number,
-	slg: number,
-	at_bats_per_home_run: number,
-	at_bats_per_rbi: number,
-	walk_rate: number,
-	plate_appearances_per_rbi: number,
-	plate_appearances_per_home_run: number,
+	ops: number, // decimal
+	avg: number, // decimal
+	obp: number, // decimal
+	slg: number, // decimal
+	at_bats_per_home_run: number, // decimal
+	at_bats_per_rbi: number, // decimal
+	walk_rate: number, // decimal
+	plate_appearances_per_rbi: number, // decimal
+	plate_appearances_per_home_run: number, // decimal
 	extra_base_hits: number,
-	stolen_base_average: number,
-	strikeout_rate: number,
+	stolen_base_average: number, //decimal
+	strikeout_rate: number, //decimal
 	ops_string: string,
 	slg_string: string,
 	obp_string: string,
@@ -138,6 +138,6 @@ export interface IMLBGameData extends IGame {
 	home_pitchers: IPitcher[],
 	away_fielding: IFielder[],
 	home_fielding: IFielder[],
-	away_batter_totals: IBatterTotal[],
-	home_batter_totals: IBatterTotal[]
+	away_batter_totals: IBatterTotal,
+	home_batter_totals: IBatterTotal
 }

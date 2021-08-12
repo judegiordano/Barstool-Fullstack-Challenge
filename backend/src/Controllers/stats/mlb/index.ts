@@ -5,6 +5,7 @@ import { Redis } from "@Services/Redis";
 import { CacheKeys, Endpoints } from "@Types/Constants";
 import { IMLBGameData } from "@Types/Mlb/Abstract";
 import { Utility } from "@Services/Utility";
+import { GameDataRepository } from "@Repositories/Mlb/GameDataRepository";
 
 export default async (fastify: FastifyInstance): Promise<void> => {
 	fastify.get("/", {
@@ -22,7 +23,7 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 			const { data } = await Requests.Get(Endpoints.MLB);
 			const stats = data as IMLBGameData;
 			await Redis.SetAsync(CacheKeys.MLB_STATS, JSON.stringify({ lastUpdated: new Date(), data: stats }));
-			// await GameDataRepository.InsertGame(stats);
+			await GameDataRepository.InsertGame(stats);
 
 			return {
 				ok: true,
@@ -37,7 +38,7 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 			const { data } = await Requests.Get(Endpoints.MLB);
 			const stats = data as IMLBGameData;
 			await Redis.SetAsync(CacheKeys.MLB_STATS, JSON.stringify({ lastUpdated: new Date(), data: stats }));
-			// await GameDataRepository.InsertGame(stats);
+			await GameDataRepository.InsertGame(stats);
 
 			return {
 				ok: true,

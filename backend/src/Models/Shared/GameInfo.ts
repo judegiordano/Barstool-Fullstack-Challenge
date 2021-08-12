@@ -6,23 +6,24 @@ import { EventInfo } from "./EventInfo";
 
 export abstract class GameInfo extends Base {
 
-	constructor(game?: Partial<GameInfo>) {
-		super();
-		Object.assign(this, game);
-	}
+	@Column("int", { array: true })
+	away_period_scores: number[];
+
+	@Column("int", { array: true })
+	home_period_scores: number[];
 
 	@Column()
 	league: string;
 
-	@OneToOne(() => TeamInfo)
+	@OneToOne(() => TeamInfo, { eager: true })
 	@JoinColumn()
 	away_team: TeamInfo;
 
-	@OneToOne(() => TeamInfo)
+	@OneToOne(() => TeamInfo, { eager: true })
 	@JoinColumn()
 	home_team: TeamInfo;
 
-	@OneToOne(() => EventInfo)
+	@OneToOne(() => EventInfo, { eager: true })
 	@JoinColumn()
 	event_information: EventInfo;
 }
