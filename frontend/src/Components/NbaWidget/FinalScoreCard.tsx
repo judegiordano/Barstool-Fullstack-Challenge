@@ -2,8 +2,8 @@ import React from "react";
 import Card from "@material-ui/core/Card";
 import { CardContent } from "@material-ui/core";
 
-import { INBAGameData } from "@/src/Types/Nba/Abstract";
-import { IEvent as IEventInfo } from "@/src/Types/Shared";
+import { INBAGameData } from "@Types/Nba/Abstract";
+import { IEvent as IEventInfo } from "@Types/Shared";
 import { DateTime } from "@Services/Date";
 
 interface IFinalScoreCard {

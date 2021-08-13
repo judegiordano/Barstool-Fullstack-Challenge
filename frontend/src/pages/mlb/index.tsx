@@ -6,7 +6,7 @@ import { GetStaticProps } from "next";
 import { Rest } from "@Services/RestService";
 import { IMLBGameData } from "@Types/Mlb/Abstract";
 import { MlbGameWidget } from "@Comp/MlbWidget/MlbGameWidget";
-import { AppLayout } from "@/src/Components/Layout/AppLayout";
+import { AppLayout } from "@Comp/Layout/AppLayout";
 import { Divider } from "@material-ui/core";
 
 interface IIndex {
@@ -14,7 +14,6 @@ interface IIndex {
 }
 
 const Index = ({ statData }: IIndex): JSX.Element => {
-	console.log(statData);
 	return (
 		<AppLayout>
 			<Button

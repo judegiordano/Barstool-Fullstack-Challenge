@@ -6,7 +6,7 @@ import { GetStaticProps } from "next";
 import { Rest } from "@Services/RestService";
 import { INBAGameData } from "@Types/Nba/Abstract";
 import { NbaGameWidget } from "@Comp/NbaWidget/NbaGameWidget";
-import { AppLayout } from "@/src/Components/Layout/AppLayout";
+import { AppLayout } from "@Comp/Layout/AppLayout";
 import { Divider } from "@material-ui/core";
 
 interface IIndex {
