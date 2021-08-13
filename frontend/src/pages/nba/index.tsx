@@ -27,7 +27,7 @@ const Index = ({ statData }: IIndex): JSX.Element => {
 	);
 };
 
-export default Index;
+export default React.memo(Index);
 
 export const getStaticProps: GetStaticProps = async () => {
 
