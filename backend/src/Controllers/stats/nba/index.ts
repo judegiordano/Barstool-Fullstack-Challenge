@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { INBAGameData } from "@barstool-dev/types";
 
-import { INBAGameData } from "@Types/Nba/Abstract";
 import { CacheKeys, Endpoints } from "@Types/Constants";
 import { Requests } from "@Services/Requests";
 import { Redis } from "@Services/Redis";

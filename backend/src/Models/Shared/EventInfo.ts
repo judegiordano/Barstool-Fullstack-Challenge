@@ -1,7 +1,6 @@
 import { Entity, Column, OneToOne, JoinColumn } from "typeorm";
 
 import { Base } from "../Base";
-// import { GameInfo } from "./Game";
 import { SiteInfo } from "./SiteInfo";
 
 @Entity()

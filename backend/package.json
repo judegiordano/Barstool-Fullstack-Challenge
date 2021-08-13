@@ -37,6 +37,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "@barstool-dev/types": "github:judegiordano/bartsool-dev-types",
     "axios": "^0.21.1",
     "class-transformer": "^0.4.0",
     "fastify": "^3.19.2",

@@ -9,7 +9,6 @@ import { Config } from "@Services/Config";
 
 (async () => {
 	const cpus = Config.Options.IS_PROD ? os.cpus().length : 1;
-	// const cpus = os.cpus().length;
 	if (cluster.isMaster) {
 		for (let i = 0; i < cpus; i++) {
 			cluster.fork();

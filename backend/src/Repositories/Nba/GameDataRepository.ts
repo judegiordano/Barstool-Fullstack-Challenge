@@ -1,9 +1,8 @@
-import { INBAGameData } from "@Types/Nba/Abstract";
-import { IOffical } from "@Types/Shared";
+import { IPlayerStats, IOffical, INBAGameData } from "@barstool-dev/types";
+
 import { TeamInfo } from "@Models/Shared/TeamInfo";
 import { EventInfo } from "@Models/Shared/EventInfo";
 import { SiteInfo } from "@Models/Shared/SiteInfo";
-import { IPlayerStats } from "@Types/Nba/Abstract";
 import { NbaOfficial } from "@Models/NBA/NbaOfficial";
 import { NbaGameData } from "@Models/NBA/NbaGameData";
 import { NbaStatInfo } from "@Models/NBA/NbaStatInfo";

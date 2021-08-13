@@ -1,9 +1,9 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { IMLBGameData } from "@barstool-dev/types";
 
 import { Requests } from "@Services/Requests";
 import { Redis } from "@Services/Redis";
 import { CacheKeys, Endpoints } from "@Types/Constants";
-import { IMLBGameData } from "@Types/Mlb/Abstract";
 import { Utility } from "@Services/Utility";
 import { GameDataRepository } from "@Repositories/Mlb/GameDataRepository";
 

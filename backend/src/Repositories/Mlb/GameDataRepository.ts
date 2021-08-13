@@ -1,9 +1,9 @@
-import { IEvent, IOffical } from "@Types/Shared";
+import { IEvent, IOffical, IBatter, IFielder, IMLBGameData, IPitcher } from "@barstool-dev/types";
+
 import { TeamInfo } from "@Models/Shared/TeamInfo";
 import { EventInfo } from "@Models/Shared/EventInfo";
 import { SiteInfo } from "@Models/Shared/SiteInfo";
 import { MlbGameData } from "@Models/MLB/MlbGameData";
-import { IBatter, IFielder, IMLBGameData, IPitcher } from "@Types/Mlb/Abstract";
 import { MlbOfficial } from "@Models/MLB/MlbOfficials";
 import { MlbBatterTotal } from "@Models/MLB/MlbBatterTotal";
 import { MlbFielder } from "@Models/MLB/MlbFielder";
