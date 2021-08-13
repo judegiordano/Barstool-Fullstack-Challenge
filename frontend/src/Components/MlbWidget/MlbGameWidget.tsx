@@ -1,9 +1,9 @@
 import React from "react";
 import { IMLBGameData } from "@barstool-dev/types";
 
-import { ScoreHeader } from "./HeadWidget/ScoreHeader";
+import { ScoreHeader } from "@Comp/Shared/HeadWidget/ScoreHeader";
+import { FinalScoreCard } from "@Comp/Shared/HeadWidget/FinalScoreCard";
 import { DataGridOrganizer } from "./DataGridOrganizer";
-import { FinalScoreCard } from "./HeadWidget/FinalScoreCard";
 import { MlbTeamColors } from "@Services/Constants";
 
 interface IMlbGameWidget {

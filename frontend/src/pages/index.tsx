@@ -4,15 +4,26 @@ import Button from "@material-ui/core/Button";
 
 import { AppLayout } from "@Comp/Layout/AppLayout";
 
+const BoxScoreButtons = [
+	{ path: "/nba", text: "NBA Boxscore" },
+	{ path: "/mlb", text: "MLB Boxscore" },
+];
+
 const Home: React.FC = (): JSX.Element => {
 	return (
 		<AppLayout>
-			<Button
-				onClick={() => Router.push("/nba")}
-				variant="contained"
-				color="primary">
-					NBA Boxscore
-			</Button>
+			{
+				BoxScoreButtons.map((btn, index) => (
+					<div key={index} style={{ paddingTop: "10px" }}>
+						<Button
+							onClick={() => Router.push(btn.path)}
+							variant="contained"
+							color="primary">
+							{btn.text}
+						</Button>
+					</div>
+				))
+			}
 		</AppLayout>
 	);
 };

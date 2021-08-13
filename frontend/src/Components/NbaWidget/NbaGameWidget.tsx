@@ -1,8 +1,8 @@
 import React from "react";
 import { INBAGameData } from "@barstool-dev/types";
 
-import { ScoreHeader } from "./HeadWidget/ScoreHeader";
-import { FinalScoreCard } from "./HeadWidget/FinalScoreCard";
+import { ScoreHeader } from "@Comp/Shared/HeadWidget/ScoreHeader";
+import { FinalScoreCard } from "@Comp/Shared/HeadWidget/FinalScoreCard";
 import { TableAccordion } from "@Comp/Shared/TableAccordion";
 import { NBATeamColors } from "@Services/Constants";
 import { NBADataGrid } from "./DataGrid/NBADataGrid";

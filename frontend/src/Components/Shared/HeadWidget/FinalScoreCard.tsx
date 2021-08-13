@@ -1,12 +1,12 @@
 import React from "react";
 import Card from "@material-ui/core/Card";
 import { CardContent } from "@material-ui/core";
-import { INBAGameData, IEvent as IEventInfo } from "@barstool-dev/types";
+import { IMLBGameData, INBAGameData, IEvent as IEventInfo } from "@barstool-dev/types";
 
 import { DateTime } from "@Services/Date";
 
 interface IFinalScoreCard {
-	gameData: INBAGameData,
+	gameData: IMLBGameData | INBAGameData,
 	homeFinalScore: number,
 	awayFinalScore: number
 }
