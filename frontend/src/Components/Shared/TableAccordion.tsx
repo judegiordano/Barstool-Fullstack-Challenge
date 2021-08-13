@@ -5,28 +5,30 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
+import { IBatterTotal } from "@Types/Mlb/Abstract";
 import { IStatTotals } from "@Types/Nba/Abstract";
 
-interface ITeamTotals {
-	totals: IStatTotals,
-	teamColor: string
+interface ITableAccordion {
+	stats: IBatterTotal | IStatTotals,
+	teamColor: string,
+	description: string
 }
 
-export const TeamTotals: React.FC<ITeamTotals> = ({ totals, teamColor }: ITeamTotals): JSX.Element => {
+export const TableAccordion: React.FC<ITableAccordion> = ({ stats, teamColor, description }: ITableAccordion): JSX.Element => {
 	return (
 		<Accordion TransitionProps={{ unmountOnExit: true }}>
 			<AccordionSummary
-				style={{backgroundColor: teamColor, color: "White", fontFamily: "'Open Sans', sans-serif"}}
+				style={{ backgroundColor: teamColor, color: "White", fontFamily: "'Open Sans', sans-serif" }}
 				expandIcon={<ExpandMoreIcon />}
 			>
-				team totals
+				{description}
 			</AccordionSummary>
 			<AccordionDetails>
 				<TableContainer>
 					<Table>
 						<TableHead style={{ background: "black" }}>
 							<TableRow>
-								{Object.keys(totals).map((name, index) => (
+								{Object.keys(stats).map((name, index) => (
 									<TableCell
 										key={index}
 										style={{ color: "white" }}>
@@ -37,7 +39,7 @@ export const TeamTotals: React.FC<ITeamTotals> = ({ totals, teamColor }: ITeamTo
 						</TableHead>
 						<TableBody>
 							<TableRow>
-								{Object.values(totals).map((stat, index) => (
+								{Object.values(stats).map((stat, index) => (
 									<TableCell key={index}>{stat}</TableCell>
 								))}
 							</TableRow>

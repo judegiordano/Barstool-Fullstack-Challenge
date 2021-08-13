@@ -1,10 +1,10 @@
 import React from "react";
 
 import { INBAGameData } from "@Types/Nba/Abstract";
-import { ScoreHeader } from "./ScoreHeader";
+import { ScoreHeader } from "./HeadWidget/ScoreHeader";
 import { TeamStatsTable } from "./TeamStatsTable";
-import { FinalScoreCard } from "./FinalScoreCard";
-import { TeamTotals } from "./Table/TeamTotals";
+import { FinalScoreCard } from "./HeadWidget/FinalScoreCard";
+import { TableAccordion } from "@Comp/Shared/TableAccordion";
 import { NBATeamColors } from "@Services/Constants";
 
 interface INbaGameWidget {
@@ -37,9 +37,10 @@ export const NbaGameWidget: React.FC<INbaGameWidget> = ({ gameData }: INbaGameWi
 					teamScore={awayScore}
 				/>
 				<TeamStatsTable stats={gameData.away_stats} />
-				<TeamTotals
-					totals={gameData.away_totals}
+				<TableAccordion
+					stats={gameData.away_totals}
 					teamColor={awayTeam.hex}
+					description="team totals"
 				/>
 				<ScoreHeader
 					teamHex={homeTeam.hex}
@@ -48,9 +49,10 @@ export const NbaGameWidget: React.FC<INbaGameWidget> = ({ gameData }: INbaGameWi
 					teamScore={homeScore}
 				/>
 				<TeamStatsTable stats={gameData.home_stats} />
-				<TeamTotals
-					totals={gameData.home_totals}
+				<TableAccordion
+					stats={gameData.home_totals}
 					teamColor={homeTeam.hex}
+					description="team totals"
 				/>
 			</div>
 		</>
