@@ -103,8 +103,8 @@ export class GameDataRepository {
 	public static async InsertMultipleOfficials(instances: IOffical[]): Promise<MlbOfficial[]> {
 		try {
 			const temp = [];
-			for (const key in instances) {
-				const newInstance = new MlbOfficial({ ...instances[key] as IOffical });
+			for (const key of instances) {
+				const newInstance = new MlbOfficial(key);
 				await newInstance.save();
 				temp.push(newInstance);
 			}
@@ -117,8 +117,8 @@ export class GameDataRepository {
 	public static async InsertMultipleFielders(instances: IFielder[]): Promise<MlbFielder[]> {
 		try {
 			const temp = [];
-			for (const key in instances) {
-				const newInstance = new MlbFielder({ ...instances[key] as IFielder });
+			for (const key of instances) {
+				const newInstance = new MlbFielder(key);
 				await newInstance.save();
 				temp.push(newInstance);
 			}
@@ -131,8 +131,8 @@ export class GameDataRepository {
 	public static async InsertMultipleBatters(instances: IBatter[]): Promise<MlbBatter[]> {
 		try {
 			const temp = [];
-			for (const key in instances) {
-				const newInstance = new MlbBatter({ ...instances[key] as IBatter });
+			for (const key of instances) {
+				const newInstance = new MlbBatter(key);
 				await newInstance.save();
 				temp.push(newInstance);
 			}
@@ -160,8 +160,8 @@ export class GameDataRepository {
 	public static async InsertMultiplePitchers(instances: IPitcher[]): Promise<MlbPitcher[]> {
 		try {
 			const temp = [];
-			for (const key in instances) {
-				const _new = instances[key] as IPitcher;
+			for (const key of instances) {
+				const _new = key as IPitcher;
 				const newInstance = new MlbPitcher();
 				newInstance.last_name = _new.last_name;
 				newInstance.first_name = _new.first_name;

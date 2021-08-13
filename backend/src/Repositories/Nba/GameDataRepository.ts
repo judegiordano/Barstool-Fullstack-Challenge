@@ -87,10 +87,10 @@ export class GameDataRepository {
 	public static async InsertMultiplePlayerStats(playerStats: IPlayerStats[]): Promise<NbaPlayerStat[]> {
 		try {
 			const players = [];
-			for (const key in playerStats) {
-				const newStat = new NbaPlayerStat({ ...playerStats[key] as IPlayerStats });
-				await newStat.save();
-				players.push(newStat);
+			for (const key of playerStats) {
+				const newInstance = new NbaPlayerStat(key);
+				await newInstance.save();
+				players.push(newInstance);
 			}
 			return players;
 		} catch (error) {
@@ -101,10 +101,10 @@ export class GameDataRepository {
 	public static async InsertMultipleOfficials(officials: IOffical[]): Promise<NbaOfficial[]> {
 		try {
 			const newOfficials = [];
-			for (const key in officials) {
-				const newOfficial = new NbaOfficial({ ...officials[key] as IOffical });
-				await newOfficial.save();
-				newOfficials.push(newOfficial);
+			for (const key of officials) {
+				const newInstance = new NbaOfficial(key);
+				await newInstance.save();
+				newOfficials.push(newInstance);
 			}
 			return newOfficials;
 		} catch (error) {
