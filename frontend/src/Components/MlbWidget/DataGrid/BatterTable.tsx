@@ -1,7 +1,6 @@
 import React from "react";
 import { DataGrid } from "@material-ui/data-grid";
-
-import { IBatter } from "@Types/Mlb/Abstract";
+import { IBatter } from "@barstool-dev/types";
 
 interface IBatterTable {
 	stats: IBatter[]

@@ -1,7 +1,7 @@
 import React from "react";
 import Divider from "@material-ui/core/Divider";
+import { IBatter, IFielder, IPitcher, IBatterTotal } from "@barstool-dev/types";
 
-import { IBatter, IFielder, IPitcher, IBatterTotal } from "@Types/Mlb/Abstract";
 import { BatterTable } from "./DataGrid/BatterTable";
 import { FielderTable } from "./DataGrid/FielderTable";
 import { PitcherTable } from "./DataGrid/PItcherTable";

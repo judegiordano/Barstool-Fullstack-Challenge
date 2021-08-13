@@ -1,9 +1,8 @@
 import React from "react";
 import Card from "@material-ui/core/Card";
 import { CardContent } from "@material-ui/core";
+import { IMLBGameData, IEvent as IEventInfo } from "@barstool-dev/types";
 
-import { IMLBGameData } from "@Types/Mlb/Abstract";
-import { IEvent as IEventInfo } from "@Types/Shared";
 import { DateTime } from "@Services/Date";
 
 interface IFinalScoreCard {

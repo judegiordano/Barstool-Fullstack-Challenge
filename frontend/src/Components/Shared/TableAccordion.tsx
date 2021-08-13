@@ -4,9 +4,7 @@ import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-
-import { IBatterTotal } from "@Types/Mlb/Abstract";
-import { IStatTotals } from "@Types/Nba/Abstract";
+import { IBatterTotal, IStatTotals } from "@barstool-dev/types";
 
 interface ITableAccordion {
 	stats: IBatterTotal | IStatTotals,

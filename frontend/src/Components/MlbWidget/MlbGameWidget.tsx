@@ -1,6 +1,6 @@
 import React from "react";
+import { IMLBGameData } from "@barstool-dev/types";
 
-import { IMLBGameData } from "@Types/Mlb/Abstract";
 import { ScoreHeader } from "./HeadWidget/ScoreHeader";
 import { DataGridOrganizer } from "./DataGridOrganizer";
 import { FinalScoreCard } from "./HeadWidget/FinalScoreCard";

@@ -1,6 +1,6 @@
 import React from "react";
+import { INBAGameData } from "@barstool-dev/types";
 
-import { INBAGameData } from "@Types/Nba/Abstract";
 import { ScoreHeader } from "./HeadWidget/ScoreHeader";
 import { FinalScoreCard } from "./HeadWidget/FinalScoreCard";
 import { TableAccordion } from "@Comp/Shared/TableAccordion";

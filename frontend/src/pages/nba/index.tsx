@@ -2,12 +2,12 @@ import React from "react";
 import Router from "next/router";
 import Button from "@material-ui/core/Button";
 import { GetStaticProps } from "next";
+import { INBAGameData } from "@barstool-dev/types";
+import { Divider } from "@material-ui/core";
 
 import { Rest } from "@Services/RestService";
-import { INBAGameData } from "@Types/Nba/Abstract";
 import { NbaGameWidget } from "@Comp/NbaWidget/NbaGameWidget";
 import { AppLayout } from "@Comp/Layout/AppLayout";
-import { Divider } from "@material-ui/core";
 
 interface IIndex {
 	statData: INBAGameData

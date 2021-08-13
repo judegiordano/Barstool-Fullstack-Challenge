@@ -1,9 +1,8 @@
 import React from "react";
 import Card from "@material-ui/core/Card";
 import { CardContent } from "@material-ui/core";
+import { INBAGameData, IEvent as IEventInfo } from "@barstool-dev/types";
 
-import { INBAGameData } from "@Types/Nba/Abstract";
-import { IEvent as IEventInfo } from "@Types/Shared";
 import { DateTime } from "@Services/Date";
 
 interface IFinalScoreCard {

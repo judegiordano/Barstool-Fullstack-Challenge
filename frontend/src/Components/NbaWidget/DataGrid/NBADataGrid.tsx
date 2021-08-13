@@ -1,7 +1,6 @@
 import React from "react";
 import { DataGrid } from "@material-ui/data-grid";
-
-import { IPlayerStats } from "@Types/Nba/Abstract";
+import { IPlayerStats } from "@barstool-dev/types";
 
 interface INBADataGrid {
 	stats: IPlayerStats[]
