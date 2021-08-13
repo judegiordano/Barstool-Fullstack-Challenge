@@ -19,7 +19,7 @@ Jude Giordano
         ```
         inside each previously mentioned container folder.
     - Once started, you should see two instances running in docker, like so:
-    ![docker](./docker.PNG "docker")
+    ![docker](./docs/docker.PNG "docker")
     - The two services are a Postgres SQL db and a Redis in-memory NoSQL db.
     - Postgres volume data will be automatically stored in its appropriate container folder, under `./barstool-database-container/data/db/*`. This ensures data is persisted even if the container is composed down.
 2. # Commands
@@ -81,17 +81,17 @@ Jude Giordano
     - However, the frontend app is given a less-elevated subscription header, and will only have authorization to certain endpoints.
     - Without at least an `APPCODE` header, connection to the backend will be rejected, so I recommend using [modheader](https://modheader.com/) (or similar browser header editors) to apply the header values to your browser.
     
-        ![headers](./headers.PNG "headers")
+        ![headers](./docs/headers.PNG "headers")
 
     - I have also included swagger documentation for the backend, reachable on `http://127.0.0.1:8888/api/v1/docs/`
     which should render:
     
-        ![swagger](./swagger.PNG "swagger")
+        ![swagger](./docs/swagger.PNG "swagger")
 
 
     - The main backend rest endpoint of interest is under the scope of `http://127.0.0.1:8888/api/v1/stats/`. This will make a request out the [Bartsool api](https://chumley.barstoolsports.com/dev/data/games/6c974274-4bfc-4af8-a9c4-8b926637ba74.json) for game data.
     - It then caches the response into Redis, as well as inserts a game object into the postgres db so all previous game data is back-logged
-    ![postgres data](./postgres.PNG "postgres data")
+    ![postgres data](./docs/postgres.PNG "postgres data")
     - On subsequent requests, the backend checks if Redis has any data cached, if so, it saves a trip and instantly returns with the cached payload.
     - If the redis data is older than 60 seconds (15 seconds being the max as per the requirements) from its last insertion, it will fetch a new version of the data from the Barstool api and cache that response instead, as well as storing this new version of the data in the Postgres db.
 4. # [./Frontend](./frontend/)
@@ -103,7 +103,7 @@ Jude Giordano
         BACKEND_ENDPOINT=http://127.0.0.1:8888/api/v1/
         ```
     - Once built, the Next app offers impressive performance and SEO results, here is a snip of my latest [Lighthouse](https://developers.google.com/web/tools/lighthouse/) report:
-    ![lighthouse report](./lighthouse.PNG "lighthouse report")
+    ![lighthouse report](./docs/lighthouse.PNG "lighthouse report")
     - The frontend uses Incremental Static Regeneration to export a static cache of the widget page and silently rebuild the page in the background for subsequent loads.
         ```ts
         export const getStaticProps: GetStaticProps = async () => {
@@ -131,4 +131,11 @@ Jude Giordano
         DB_SYNC=true
         ```
         However, this flag is not technically considered production-safe.
+6. # [Types Repo](https://github.com/judegiordano/bartsool-dev-types)
+    - I have also published an npm package for help with consistent
+    typing across the frontend and backend :)
+    - for installation, run 
+        ```
+        npm i git+https://github.com/judegiordano/bartsool-dev-types.git
+        ```
 ---
