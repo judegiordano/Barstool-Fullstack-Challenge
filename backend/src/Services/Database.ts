@@ -19,7 +19,8 @@ export class Database {
 		reconnectInterval: 2000,
 		entities: [path.join(__dirname, "../Models/**/*.{ts,js}")],
 		migrations: [path.join(__dirname, "../Migrations/**/*.{ts,js}")],
-		ssl: Config.Options.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
+		// ssl is really only needed for conencting to a cloud droplet
+		// ssl: Config.Options.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
 		cache: true
 	} as ConnectionOptions;
 
