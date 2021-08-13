@@ -1,15 +1,13 @@
 import React from "react";
 import { DataGrid } from "@material-ui/data-grid";
 
-import { IBatter } from "@Types/Mlb/Abstract";
+import { IBatterTotal } from "@Types/Mlb/Abstract";
 
-interface MLBDataGrid {
-	stats: IBatter[]
+interface IBatterTotalTable {
+	stats: IBatterTotal[]
 }
 
-export const MLBDataGrid: React.FC<MLBDataGrid> = ({ stats }: MLBDataGrid): JSX.Element => {
-	console.log(stats);
-	console.log(Object.keys(stats[0]));
+export const BatterTotalTable: React.FC<IBatterTotalTable> = ({ stats }: IBatterTotalTable): JSX.Element => {
 	return (
 		<div style={{ height: 500, width: "100%" }}>
 			<DataGrid
@@ -20,12 +18,6 @@ export const MLBDataGrid: React.FC<MLBDataGrid> = ({ stats }: MLBDataGrid): JSX.
 					stats.map((stat, index) => (
 						{
 							"id": index,
-							"last name": stat.last_name,
-							"first name": stat.first_name,
-							"display name": stat.display_name,
-							"position": stat.position,
-							"bat order": stat.bat_order,
-							"sub bat order": stat.sub_bat_order,
 							"sacrifices": stat.sacrifices,
 							"at bats": stat.at_bats,
 							"plate appearances": stat.plate_appearances,
@@ -38,7 +30,7 @@ export const MLBDataGrid: React.FC<MLBDataGrid> = ({ stats }: MLBDataGrid): JSX.
 							"stolen bases": stat.stolen_bases,
 							"caught stealing": stat.caught_stealing,
 							"rbi with two outs": stat.rbi_with_two_outs,
-							"totalbases": stat.total_bases,
+							"total bases": stat.total_bases,
 							"runs": stat.runs,
 							"hits": stat.hits,
 							"rbi": stat.rbi,
@@ -46,7 +38,6 @@ export const MLBDataGrid: React.FC<MLBDataGrid> = ({ stats }: MLBDataGrid): JSX.
 							"strike outs": stat.strike_outs,
 							"left on base": stat.left_on_base,
 							"hit by pitch": stat.hit_by_pitch,
-							"team abbreviation": stat.team_abbreviation,
 							"ops": stat.ops,
 							"avg": stat.avg,
 							"obp": stat.obp,
@@ -63,7 +54,7 @@ export const MLBDataGrid: React.FC<MLBDataGrid> = ({ stats }: MLBDataGrid): JSX.
 							"slg string": stat.slg_string,
 							"obp string": stat.obp_string,
 							"avg string": stat.avg_string,
-							"batting highlights": stat.batting_highlights
+							"batting highlights": stat.batting_highlights,
 						}
 					))
 				}

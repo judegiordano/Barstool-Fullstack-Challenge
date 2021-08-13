@@ -1,7 +1,5 @@
 import React from "react";
 
-import { IStyles } from "@Types/Global";
-
 export const AppFooter: React.FC = (): JSX.Element => {
 	return (
 		<footer style={styles.footer}>

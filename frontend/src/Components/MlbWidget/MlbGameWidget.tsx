@@ -1,10 +1,9 @@
 import React from "react";
 
 import { IMLBGameData } from "@Types/Mlb/Abstract";
-import { ScoreHeader } from "./ScoreHeader";
-import { BatterStatsTable } from "./BatterStatsTable";
-import { FinalScoreCard } from "./FinalScoreCard";
-// import { TeamTotals } from "./Table/TeamTotals";
+import { ScoreHeader } from "./HeadWidget/ScoreHeader";
+import { DataGridOrganizer } from "./DataGridOrganizer";
+import { FinalScoreCard } from "./HeadWidget/FinalScoreCard";
 import { MlbTeamColors } from "@Services/Constants";
 
 interface IMlbGameWidget {
@@ -36,23 +35,26 @@ export const MlbGameWidget: React.FC<IMlbGameWidget> = ({ gameData }: IMlbGameWi
 					teamName={gameData.away_team.full_name}
 					teamScore={awayScore}
 				/>
-				<BatterStatsTable stats={gameData.away_batters} />
-				{/* <TeamTotals
-					totals={gameData.away_totals}
+				<DataGridOrganizer
+					batterStats={gameData.away_batters}
+					fielderStats={gameData.away_fielding}
+					pitcherStats={gameData.away_pitchers}
+					batterTotalStats={gameData.away_batter_totals}
 					teamColor={awayTeam.hex}
-				/> */}
+				/>
 				<ScoreHeader
 					teamHex={homeTeam.hex}
 					isHome
 					teamName={gameData.home_team.full_name}
 					teamScore={homeScore}
 				/>
-				<BatterStatsTable stats={gameData.home_batters} />
-				{/* <TeamStatsTable stats={gameData.home_stats} /> */}
-				{/* <TeamTotals
-					totals={gameData.home_totals}
+				<DataGridOrganizer
+					batterStats={gameData.home_batters}
+					fielderStats={gameData.home_fielding}
+					pitcherStats={gameData.home_pitchers}
+					batterTotalStats={gameData.home_batter_totals}
 					teamColor={homeTeam.hex}
-				/> */}
+				/>
 			</div>
 		</>
 	);
