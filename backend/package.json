@@ -10,10 +10,10 @@
     "@Models": "build/Models/"
   },
   "scripts": {
-    "db:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -d src/Migrations -n",
-    "db:create": "ts-node ./node_modules/typeorm/cli.js migration:create -d src/Migrations -n",
-    "db:down": "ts-node ./node_modules/typeorm/cli.js migration:revert",
-    "db:up": "ts-node ./node_modules/typeorm/cli.js migration:run",
+    "db:init": "npx mikro-orm migration:create --initial",
+    "db:create": "npx mikro-orm migration:create",
+    "db:up": "npx mikro-orm migration:up",
+    "db:down": "npx mikro-orm migration:down",
     "lint": "eslint --fix --ext .ts,.tsx .",
     "build": "tsc",
     "dev:watch": "ts-node-dev --respawn --transpile-only ./src/index.ts",
@@ -24,6 +24,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@mikro-orm/cli": "^4.5.7",
     "@types/axios": "^0.14.0",
     "@types/dotenv": "^8.2.0",
     "@types/ioredis": "^4.26.6",
@@ -38,6 +39,8 @@
   },
   "dependencies": {
     "@barstool-dev/types": "github:judegiordano/bartsool-dev-types",
+    "@mikro-orm/core": "^4.5.7",
+    "@mikro-orm/postgresql": "^4.5.7",
     "axios": "^0.21.1",
     "class-transformer": "^0.4.0",
     "fastify": "^3.19.2",
@@ -52,7 +55,12 @@
     "module-alias": "^2.2.2",
     "pg": "^8.7.1",
     "redis": "^3.1.2",
-    "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.2.35"
+    "reflect-metadata": "^0.1.13"
+  },
+  "mikro-orm": {
+    "useTsNode": true,
+    "configPaths": [
+      "./mikro-orm.config.ts"
+    ]
   }
 }

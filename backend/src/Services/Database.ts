@@ -1,59 +1,59 @@
 import path from "path";
-import { Connection, createConnection, getConnection, ConnectionOptions } from "typeorm";
+import { cwd } from "process";
+import { Connection, IDatabaseDriver, MikroORM, ConnectionOptions, EntityManager } from "@mikro-orm/core";
 
 import { Config } from "./Config";
 
 export class Database {
 
-	private static readonly Connector = {
+	private static orm: MikroORM<IDatabaseDriver<Connection>>;
+
+	/**
+	 *
+	 * An extension of the `orm.em` property from mikroorm
+	 * ____
+	 * @static
+	 * @type {EntityManager<IDatabaseDriver<Connection>>}
+	 * @memberof Database
+	 */
+	public static Repo: EntityManager<IDatabaseDriver<Connection>>;
+
+	private static readonly Connector: ConnectionOptions = {
+		debug: !Config.Options.IS_PROD,
 		type: Config.Db.DB_TYPE,
 		host: Config.Db.DB_HOST,
 		port: Config.Db.DB_PORT,
-		username: Config.Db.DB_USERNAME,
+		user: Config.Db.DB_USERNAME,
 		password: Config.Db.DB_PASSWORD,
-		database: Config.Db.DB_NAME,
-		synchronize: Config.Db.DB_SYNC,
-		logging: Config.Db.DB_LOGGING,
-		autoReconnect: true,
-		reconnectTries: Number.MAX_VALUE,
-		reconnectInterval: 2000,
-		entities: [path.join(__dirname, "../Models/**/*.{ts,js}")],
-		migrations: [path.join(__dirname, "../Migrations/**/*.{ts,js}")],
-		// ssl is really only needed for conencting to a cloud droplet
-		// ssl: Config.Options.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
-		cache: true
+		dbName: Config.Db.DB_NAME,
+		entities: [path.join(cwd(), "build/Models/**/*.js")],
+		entitiesTs: [path.join(cwd(), "src/Models/**/*.ts")],
+		cache: {
+			enabled: true,
+			pretty: !Config.Options.IS_PROD,
+			options: { cacheDir: cwd() + "/__db_cache__" }
+		},
 	} as ConnectionOptions;
 
 	public static async Connect(): Promise<void> {
-
-		let connection: Connection | undefined;
 		try {
-			connection = getConnection();
-		} catch (e) {
-			console.error(`no existing connection found: ${e}`);
-		}
-
-		try {
-			if (connection) {
-				if (!connection.isConnected)
-					await connection.connect();
-			} else
-				await createConnection(Database.Connector);
-			console.log(" successfully connected to database");
+			Database.orm = await MikroORM.init(Database.Connector);
+			const { em } = Database.orm;
+			Database.Repo = em;
+			console.log("successfully connected to database", await Database.orm.isConnected());
 		} catch (e) {
 			throw new Error(`error connecting to database: ${e}`);
 		}
 	}
 
-	public static GetStatus(): Connection {
-		const connection = getConnection();
+	public static async GetStatus(): Promise<boolean> {
+		const connection = await Database.orm.isConnected();
 		return connection;
 	}
 
 	public static async Close(): Promise<void> {
 		try {
-			const conn = getConnection();
-			await conn.close();
+			return await Database.orm.close();
 		} catch (e) {
 			throw new Error(e);
 		}

@@ -1,70 +1,70 @@
-import { Entity, Column, OneToOne } from "typeorm";
+import { Entity, Property, OneToOne } from "@mikro-orm/core";
 
 import { Base } from "../Base";
 import { NbaGameData } from "./NbaGameData";
 
 @Entity()
-export class NbaStatInfo extends Base {
+export class NbaHomeTotals extends Base {
 
-	constructor(stat?: Partial<NbaStatInfo>) {
+	constructor(stat?: Partial<NbaHomeTotals>) {
 		super();
 		Object.assign(this, stat);
 	}
 
-	@OneToOne(() => NbaGameData, { onDelete: "CASCADE" })
-	game: NbaGameData
+	@OneToOne(() => NbaGameData, game => game.home_totals, { hidden: true })
+	game!: NbaGameData;
 
-	@Column()
+	@Property()
 	minutes: number;
 
-	@Column()
+	@Property()
 	points: number;
 
-	@Column()
+	@Property()
 	assists: number;
 
-	@Column()
+	@Property()
 	turnovers: number;
 
-	@Column()
+	@Property()
 	steals: number;
 
-	@Column()
+	@Property()
 	blocks: number;
 
-	@Column()
+	@Property()
 	field_goals_attempted: number;
 
-	@Column()
+	@Property()
 	field_goals_made: number;
 
-	@Column()
+	@Property()
 	three_point_field_goals_attempted: number;
 
-	@Column()
+	@Property()
 	three_point_field_goals_made: number;
 
-	@Column()
+	@Property()
 	free_throws_attempted: number;
 
-	@Column()
+	@Property()
 	free_throws_made: number;
 
-	@Column()
+	@Property()
 	defensive_rebounds: number;
 
-	@Column()
+	@Property()
 	offensive_rebounds: number;
 
-	@Column()
+	@Property()
 	personal_fouls: number;
 
-	@Column({ type: "decimal" })
+	@Property()
 	field_goal_percentage: number;
 
-	@Column({ type: "decimal" })
+	@Property()
 	three_point_percentage: number;
 
-	@Column({ type: "decimal" })
+	@Property()
 	free_throw_percentage: number;
 }

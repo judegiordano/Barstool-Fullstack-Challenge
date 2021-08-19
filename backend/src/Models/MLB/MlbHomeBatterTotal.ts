@@ -1,127 +1,127 @@
-import { Column, Entity, OneToOne } from "typeorm";
+import { Property, Entity, OneToOne } from "@mikro-orm/core";
 
 import { Base } from "../Base";
 import { MlbGameData } from "./MlbGameData";
 
 @Entity()
-export class MlbBatterTotal extends Base {
+export class MlbHomeBatterTotal extends Base {
 
-	constructor(total?: Partial<MlbBatterTotal>) {
+	constructor(total?: Partial<MlbHomeBatterTotal>) {
 		super();
 		Object.assign(this, total);
 	}
 
-	@OneToOne(() => MlbGameData, { onDelete: "CASCADE" })
-	game: MlbGameData
+	@OneToOne(() => MlbGameData, game => game.home_batter_totals, { hidden: true })
+	game!: MlbGameData;
 
-	@Column()
+	@Property()
 	sacrifices: number;
 
-	@Column()
+	@Property()
 	at_bats: number;
 
-	@Column()
+	@Property()
 	plate_appearances: number;
 
-	@Column()
+	@Property()
 	singles: number;
 
-	@Column()
+	@Property()
 	doubles: number;
 
-	@Column()
+	@Property()
 	triples: number;
 
-	@Column()
+	@Property()
 	home_runs: number;
 
-	@Column()
+	@Property()
 	sac_flies: number;
 
-	@Column()
+	@Property()
 	sac_hits: number;
 
-	@Column()
+	@Property()
 	stolen_bases: number;
 
-	@Column()
+	@Property()
 	caught_stealing: number;
 
-	@Column()
+	@Property()
 	rbi_with_two_outs: number;
 
-	@Column()
+	@Property()
 	total_bases: number;
 
-	@Column()
+	@Property()
 	runs: number;
 
-	@Column()
+	@Property()
 	hits: number;
 
-	@Column()
+	@Property()
 	rbi: number;
 
-	@Column()
+	@Property()
 	walks: number;
 
-	@Column()
+	@Property()
 	strike_outs: number;
 
-	@Column()
+	@Property()
 	left_on_base: number;
 
-	@Column()
+	@Property()
 	hit_by_pitch: number;
 
-	@Column({ type: "decimal" })
+	@Property()
 	ops: number;
 
-	@Column({ type: "decimal" })
+	@Property()
 	avg: number;
 
-	@Column({ type: "decimal" })
+	@Property()
 	obp: number;
 
-	@Column({ type: "decimal" })
+	@Property()
 	slg: number;
 
-	@Column({ type: "decimal" })
+	@Property()
 	at_bats_per_home_run: number;
 
-	@Column({ type: "decimal" })
+	@Property()
 	at_bats_per_rbi: number;
 
-	@Column({ type: "decimal" })
+	@Property()
 	walk_rate: number;
 
-	@Column({ type: "decimal" })
+	@Property()
 	plate_appearances_per_rbi: number;
 
-	@Column({ type: "decimal" })
+	@Property()
 	plate_appearances_per_home_run: number;
 
-	@Column()
+	@Property()
 	extra_base_hits: number;
 
-	@Column({ type: "decimal" })
+	@Property()
 	stolen_base_average: number;
 
-	@Column({ type: "decimal" })
+	@Property()
 	strikeout_rate: number;
 
-	@Column()
+	@Property()
 	ops_string: string;
 
-	@Column()
+	@Property()
 	slg_string: string;
 
-	@Column()
+	@Property()
 	obp_string: string;
 
-	@Column()
+	@Property()
 	avg_string: string;
 
-	@Column()
+	@Property()
 	batting_highlights: string;
 }

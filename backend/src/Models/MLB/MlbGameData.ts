@@ -1,59 +1,76 @@
-import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
+import { Property, Entity, OneToOne, OneToMany, Collection, wrap, Dictionary } from "@mikro-orm/core";
 
-import { GameInfo } from "../Shared/GameInfo";
+import { Base } from "../Base";
 import { MlbBatter } from "./MlbBatter";
-import { MlbBatterTotal } from "./MlbBatterTotal";
+import { MlbHomeBatterTotal } from "./MlbHomeBatterTotal";
 import { MlbFielder } from "./MlbFielder";
 import { MlbOfficial } from "./MlbOfficials";
 import { MlbPitcher } from "./MlbPitcher";
+import { MlbAwayBatterTotal } from "./MlbAwayBatterTotal";
+import { MlbAwayTeamInfo } from "./MlbAwayTeamInfo";
+import { MlbHomeTeamInfo } from "./MlbHomeTeamInfo";
+import { MlbEventInfo } from "./MlbEventInfo";
 
 @Entity()
-export class MlbGameData extends GameInfo {
+export class MlbGameData extends Base {
 
 	constructor(game?: Partial<MlbGameData>) {
 		super();
 		Object.assign(this, game);
 	}
 
-	@Column()
+	@Property()
+	league: string;
+
+	@Property()
+	away_period_scores: number[];
+
+	@Property()
+	home_period_scores: number[];
+
+	@Property()
 	away_errors: number;
 
-	@Column()
+	@Property()
 	home_errors: number;
 
-	@OneToMany(() => MlbOfficial, official => official.game)
-	@JoinColumn()
-	officials: MlbOfficial[];
+	@OneToOne(() => MlbEventInfo, event => event.game, { owner: true, eager: true, orphanRemoval: true })
+	event_information: MlbEventInfo;
 
-	@OneToMany(() => MlbBatter, batter => batter.game)
-	@JoinColumn()
-	away_batters: MlbBatter[];
+	@OneToOne(() => MlbAwayTeamInfo, team => team.game, { owner: true, eager: true, orphanRemoval: true })
+	away_team: MlbAwayTeamInfo;
 
-	@OneToMany(() => MlbBatter, batter => batter.game)
-	@JoinColumn()
-	home_batters: MlbBatter[];
+	@OneToOne(() => MlbHomeTeamInfo, team => team.game, { owner: true, eager: true, orphanRemoval: true })
+	home_team: MlbHomeTeamInfo;
 
-	@OneToMany(() => MlbPitcher, pitcher => pitcher.game)
-	@JoinColumn()
-	away_pitchers: MlbPitcher[];
+	@OneToMany(() => MlbOfficial, official => official.game, { eager: true, orphanRemoval: true })
+	officials = new Collection<MlbOfficial>(this);
 
-	@OneToMany(() => MlbPitcher, pitcher => pitcher.game)
-	@JoinColumn()
-	home_pitchers: MlbPitcher[];
+	@OneToMany(() => MlbBatter, batter => batter.game, { eager: true, orphanRemoval: true })
+	away_batters = new Collection<MlbBatter>(this);
 
-	@OneToMany(() => MlbFielder, fielder => fielder.game)
-	@JoinColumn()
-	away_fielding: MlbFielder[];
+	@OneToMany(() => MlbBatter, batter => batter.game, { eager: true, orphanRemoval: true })
+	home_batters = new Collection<MlbBatter>(this);
 
-	@OneToMany(() => MlbFielder, fielder => fielder.game)
-	@JoinColumn()
-	home_fielding: MlbFielder[];
+	@OneToMany(() => MlbPitcher, pitcher => pitcher.game, { eager: true, orphanRemoval: true })
+	away_pitchers = new Collection<MlbPitcher>(this);
 
-	@OneToOne(() => MlbBatterTotal, total => total.game)
-	@JoinColumn()
-	away_batter_totals: MlbBatterTotal;
+	@OneToMany(() => MlbPitcher, pitcher => pitcher.game, { eager: true, orphanRemoval: true })
+	home_pitchers = new Collection<MlbPitcher>(this);
 
-	@OneToOne(() => MlbBatterTotal, total => total.game)
-	@JoinColumn()
-	home_batter_totals: MlbBatterTotal;
+	@OneToMany(() => MlbFielder, fielder => fielder.game, { eager: true, orphanRemoval: true })
+	away_fielding = new Collection<MlbFielder>(this);
+
+	@OneToMany(() => MlbFielder, fielder => fielder.game, { eager: true, orphanRemoval: true })
+	home_fielding = new Collection<MlbFielder>(this);
+
+	@OneToOne(() => MlbAwayBatterTotal, batter => batter.game, { owner: true, orphanRemoval: true, eager: true })
+	away_batter_totals: MlbAwayBatterTotal;
+
+	@OneToOne(() => MlbHomeBatterTotal, batter => batter.game, { owner: true, orphanRemoval: true, eager: true })
+	home_batter_totals: MlbHomeBatterTotal;
+
+	toJSON(): Dictionary<MlbGameData> {
+		return wrap(this).toObject();
+	}
 }

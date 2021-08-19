@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne } from "typeorm";
+import { Property, ManyToOne, Entity } from "@mikro-orm/core";
 
 import { Base } from "../Base";
 import { MlbGameData } from "./MlbGameData";
@@ -11,79 +11,78 @@ export class MlbPitcher extends Base {
 		Object.assign(this, pitcher);
 	}
 
-	@ManyToOne(() => MlbGameData, { onDelete: "CASCADE" })
-	game: MlbGameData
+	@ManyToOne(() => MlbGameData, { hidden: true })
+	game!: MlbGameData;
 
-	@Column()
+	@Property()
 	last_name: string;
 
-	@Column()
+	@Property()
 	first_name: string;
 
-	@Column()
+	@Property()
 	display_name: string;
 
-	@Column()
+	@Property()
 	pitch_order: number;
 
-	@Column()
+	@Property()
 	win: boolean;
 
-	@Column()
+	@Property()
 	loss: boolean;
 
-	// the property 'save' is taken in BaseEntity, which is super annoying
-	@Column({ name: "save" })
-	_save: boolean;
+	@Property()
+	save: boolean;
 
-	@Column()
+	@Property()
 	hold: boolean;
 
-	@Column({ type: "decimal" })
+	@Property()
 	era: number;
 
-	@Column({ type: "decimal" })
+	@Property()
 	whip: number;
 
-	@Column({ type: "decimal" })
+	@Property()
 	innings_pitched: number;
 
-	@Column()
+	@Property()
 	hits_allowed: number;
 
-	@Column()
+	@Property()
 	runs_allowed: number;
 
-	@Column()
+	@Property()
 	earned_runs: number;
 
-	@Column()
+	@Property()
 	walks: number;
 
-	@Column()
+	@Property()
 	intentional_walks: number;
 
-	@Column()
+	@Property()
 	strike_outs: number;
 
-	@Column()
+	@Property()
 	home_runs_allowed: number;
 
-	@Column()
+	@Property()
 	pitch_count: number;
 
-	@Column()
+	@Property()
 	pitches_strikes: number;
 
-	@Column()
+	@Property()
 	wild_pitches: number;
 
-	@Column()
+	@Property()
 	hit_by_pitch: number;
 
-	@Column()
+	@Property()
 	errors: number;
 
-	@Column()
+	@Property()
 	team_abbreviation: string;
 }

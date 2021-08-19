@@ -1,36 +1,18 @@
-import { Property, Entity, ManyToOne } from "@mikro-orm/core";
+import { Property, Entity, OneToOne } from "@mikro-orm/core";
 
 import { Base } from "../Base";
 import { MlbGameData } from "./MlbGameData";
 
 @Entity()
-export class MlbBatter extends Base {
+export class MlbAwayBatterTotal extends Base {
 
-	constructor(batter?: Partial<MlbBatter>) {
+	constructor(total?: Partial<MlbAwayBatterTotal>) {
 		super();
-		Object.assign(this, batter);
+		Object.assign(this, total);
 	}
 
-	@ManyToOne(() => MlbGameData, { hidden: true })
+	@OneToOne(() => MlbGameData, game => game.away_batter_totals, { hidden: true })
 	game!: MlbGameData;
-
-	@Property()
-	last_name: string;
-
-	@Property()
-	first_name: string;
-
-	@Property()
-	display_name: string;
-
-	@Property()
-	position: string;
-
-	@Property()
-	bat_order: number;
-
-	@Property()
-	sub_bat_order: number;
 
 	@Property()
 	sacrifices: number;
@@ -91,9 +73,6 @@ export class MlbBatter extends Base {
 
 	@Property()
 	hit_by_pitch: number;
-
-	@Property()
-	team_abbreviation: string;
 
 	@Property()
 	ops: number;
