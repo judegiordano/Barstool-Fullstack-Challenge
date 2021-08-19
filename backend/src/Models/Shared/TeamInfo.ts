@@ -1,18 +1,14 @@
-import { Entity, OneToOne, Property } from "@mikro-orm/core";
+import { Entity, Property } from "@mikro-orm/core";
 
 import { Base } from "../Base";
-import { MlbGameData } from "./MlbGameData";
 
 @Entity()
-export class MlbAwayTeamInfo extends Base {
+export class TeamInfo extends Base {
 
-	constructor(team?: Partial<MlbAwayTeamInfo>) {
+	constructor(team?: Partial<TeamInfo>) {
 		super();
 		Object.assign(this, team);
 	}
-
-	@OneToOne(() => MlbGameData, game => game.away_team, { hidden: true })
-	game!: MlbGameData;
 
 	@Property()
 	team_id: string;

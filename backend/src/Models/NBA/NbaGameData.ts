@@ -1,17 +1,12 @@
 import { Property, Entity, OneToOne, OneToMany, Collection, wrap, Dictionary } from "@mikro-orm/core";
 
-import { Base } from "../Base";
-import { NbaAwayTotals } from "./NbaAwayTotals";
-import { NbaHomeStat } from "./NbaHomeStats";
 import { NbaOfficial } from "./NbaOfficial";
-import { NbaEventInfo } from "./NbaEventInfo";
-import { NbaAwayTeamInfo } from "./NbaAwayTeamInfo";
-import { NbaHomeTeamInfo } from "./NbaHomeTeamInfo";
-import { NbaHomeTotals } from "./NbaHomeTotals";
-import { NbaAwayStat } from "./NbaAwayStats";
+import { NbaTotal } from "./NbaTotal";
+import { NbaStat } from "./NbaStat";
+import { GameInfo } from "../Shared/GameInfo";
 
 @Entity()
-export class NbaGameData extends Base {
+export class NbaGameData extends GameInfo {
 
 	constructor(game?: Partial<NbaGameData>) {
 		super();
@@ -27,29 +22,20 @@ export class NbaGameData extends Base {
 	@Property()
 	home_period_scores: number[];
 
-	@OneToOne(() => NbaAwayTeamInfo, team => team.game, { owner: true, eager: true, orphanRemoval: true })
-	away_team: NbaAwayTeamInfo;
-
-	@OneToOne(() => NbaHomeTeamInfo, team => team.game, { owner: true, eager: true, orphanRemoval: true })
-	home_team: NbaHomeTeamInfo;
-
-	@OneToOne(() => NbaEventInfo, event => event.game, { owner: true, eager: true, orphanRemoval: true })
-	event_information: NbaEventInfo;
-
 	@OneToMany(() => NbaOfficial, official => official.game, { eager: true, orphanRemoval: true })
 	officials = new Collection<NbaOfficial>(this);
 
-	@OneToMany(() => NbaAwayStat, stat => stat.game, { eager: true, orphanRemoval: true })
-	away_stats = new Collection<NbaAwayStat>(this);
+	@OneToMany(() => NbaStat, stat => stat.game, { eager: true, orphanRemoval: true })
+	away_stats = new Collection<NbaStat>(this);
 
-	@OneToMany(() => NbaHomeStat, stat => stat.game, { eager: true, orphanRemoval: true })
-	home_stats = new Collection<NbaHomeStat>(this);
+	@OneToMany(() => NbaStat, stat => stat.game, { eager: true, orphanRemoval: true })
+	home_stats = new Collection<NbaStat>(this);
 
-	@OneToOne(() => NbaAwayTotals, stat => stat.game, { owner: true, eager: true, orphanRemoval: true })
-	away_totals: NbaAwayTotals;
+	@OneToOne({ owner: true, eager: true, orphanRemoval: true })
+	away_totals: NbaTotal;
 
-	@OneToOne(() => NbaHomeTotals, stat => stat.game, { owner: true, eager: true, orphanRemoval: true })
-	home_totals: NbaHomeTotals;
+	@OneToOne({ owner: true, eager: true, orphanRemoval: true })
+	home_totals: NbaTotal;
 
 	toJSON(): Dictionary<NbaGameData> {
 		return wrap(this).toObject();

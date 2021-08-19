@@ -1,30 +1,14 @@
-import { Property, Entity, ManyToOne } from "@mikro-orm/core";
+import { Entity, Property } from "@mikro-orm/core";
 
 import { Base } from "../Base";
-import { NbaGameData } from "./NbaGameData";
 
 @Entity()
-export class NbaHomeStat extends Base {
+export class NbaTotal extends Base {
 
-	constructor(player?: Partial<NbaHomeStat>) {
+	constructor(stat?: Partial<NbaTotal>) {
 		super();
-		Object.assign(this, player);
+		Object.assign(this, stat);
 	}
-
-	@ManyToOne(() => NbaGameData, { hidden: true })
-	game!: NbaGameData;
-
-	@Property()
-	last_name: string;
-
-	@Property()
-	first_name: string;
-
-	@Property()
-	display_name: string;
-
-	@Property()
-	position: string;
 
 	@Property()
 	minutes: number;
@@ -70,12 +54,6 @@ export class NbaHomeStat extends Base {
 
 	@Property()
 	personal_fouls: number;
-
-	@Property()
-	team_abbreviation: string;
-
-	@Property()
-	is_starter: boolean;
 
 	@Property()
 	field_goal_percentage: number;
