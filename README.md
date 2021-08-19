@@ -26,7 +26,9 @@ Jude Giordano
 2. # [./Migrations](./backend/src/Migrations/)
     - I have included a migrations folder for getting your local db instance in line with the state of the backend app.
     - Open a terminal in `./backend` and run:
-        ```
+        ```js
+        npm install
+        // then
         npm run db:up
         ```
     - This will execute the latest migration (located in [./backend/src/Migrations](./backend/src/Migrations/)) against the postgres db.
