@@ -1,4 +1,4 @@
-import { Property, Entity, OneToOne, OneToMany, Collection, wrap, Dictionary } from "@mikro-orm/core";
+import { Entity, OneToOne, OneToMany, Collection, wrap, Dictionary } from "@mikro-orm/core";
 
 import { NbaOfficial } from "./NbaOfficial";
 import { NbaTotal } from "./NbaTotal";
@@ -12,15 +12,6 @@ export class NbaGameData extends GameInfo {
 		super();
 		Object.assign(this, game);
 	}
-
-	@Property()
-	league: string;
-
-	@Property()
-	away_period_scores: number[];
-
-	@Property()
-	home_period_scores: number[];
 
 	@OneToMany(() => NbaOfficial, official => official.game, { eager: true, orphanRemoval: true })
 	officials = new Collection<NbaOfficial>(this);

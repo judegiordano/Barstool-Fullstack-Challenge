@@ -16,15 +16,6 @@ export class MlbGameData extends GameInfo {
 	}
 
 	@Property()
-	league: string;
-
-	@Property()
-	away_period_scores: number[];
-
-	@Property()
-	home_period_scores: number[];
-
-	@Property()
 	away_errors: number;
 
 	@Property()
