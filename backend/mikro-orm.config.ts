@@ -1,6 +1,6 @@
 import "dotenv/config";
 import "reflect-metadata";
-import "module-alias/register";
+
 import { ConnectionConfig } from "@mikro-orm/core";
 
 const {
