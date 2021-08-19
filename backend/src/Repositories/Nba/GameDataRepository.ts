@@ -1,45 +1,32 @@
-import { IPlayerStats, IOffical, INBAGameData } from "@barstool-dev/types";
+import { INBAGameData } from "@barstool-dev/types";
 
+import { Database } from "@Services/Database";
+import { NbaGameData } from "@Models/NBA/NbaGameData";
+import { NbaOfficial } from "@Models/NBA/NbaOfficial";
 import { TeamInfo } from "@Models/Shared/TeamInfo";
 import { EventInfo } from "@Models/Shared/EventInfo";
 import { SiteInfo } from "@Models/Shared/SiteInfo";
-import { NbaOfficial } from "@Models/NBA/NbaOfficial";
-import { NbaGameData } from "@Models/NBA/NbaGameData";
-import { NbaStatInfo } from "@Models/NBA/NbaStatInfo";
-import { NbaPlayerStat } from "@Models/NBA/NbaPlayerStat";
+import { NbaTotal } from "@Models/NBA/NbaTotal";
+import { NbaStat } from "@Models/NBA/NbaStat";
 
 export class GameDataRepository {
 
-	public static async FindById(id: number): Promise<Partial<NbaGameData>> {
+	public static async FindById(id: number): Promise<NbaGameData> {
 		try {
-			const exists = await NbaGameData.findOne({ where: { id }, cache: 15000 });
-			if (!exists) throw "game not found";
-
-			const { officials } = await NbaGameData.findOne({ where: { id }, relations: ["officials"] }) as NbaGameData;
-			const { away_totals } = await NbaGameData.findOne({ where: { id }, relations: ["away_totals"] }) as NbaGameData;
-			const { home_totals } = await NbaGameData.findOne({ where: { id }, relations: ["home_totals"] }) as NbaGameData;
-			const { home_stats } = await NbaGameData.findOne({ where: { id }, relations: ["home_stats"] }) as NbaGameData;
-			const { away_stats } = await NbaGameData.findOne({ where: { id }, relations: ["away_stats"] }) as NbaGameData;
-
-			return {
-				...exists,
-				officials,
-				away_totals,
-				home_totals,
-				home_stats,
-				away_stats
-			};
+			const game = await Database.Repo.findOne(NbaGameData, { id });
+			if (!game) throw "game not found";
+			return game;
 		} catch (error) {
 			throw new Error(error);
 		}
 	}
 
-	public static async DeleteById(id: number): Promise<NbaGameData> {
+	public static async DeleteById(id: number): Promise<boolean> {
 		try {
-			const exists = await NbaGameData.findOne({ id });
+			const exists = await Database.Repo.findOne(NbaGameData, { id });
 			if (!exists) throw "game not found";
-
-			return await exists.remove();
+			await Database.Repo.removeAndFlush(exists);
+			return true;
 		} catch (error) {
 			throw new Error(error);
 		}
@@ -47,67 +34,41 @@ export class GameDataRepository {
 
 	public static async InsertGame(gameData: INBAGameData): Promise<NbaGameData> {
 		try {
-			const newAwayTeam = new TeamInfo({ ...gameData.away_team });
-			const newHomeTeam = new TeamInfo({ ...gameData.home_team });
-			const newOfficials = await GameDataRepository.InsertMultipleOfficials(gameData.officials);
-			const newSite = new SiteInfo({ ...gameData.event_information.site });
-			const newEvent = new EventInfo({ ...gameData.event_information, site: newSite });
-			const newAwayTotals = new NbaStatInfo({ ...gameData.away_totals });
-			const newHomeTotals = new NbaStatInfo({ ...gameData.home_totals });
-			const newHomeStats = await GameDataRepository.InsertMultiplePlayerStats(gameData.home_stats);
-			const newAwayStats = await GameDataRepository.InsertMultiplePlayerStats(gameData.away_stats);
-			// game
-			const newGame = new NbaGameData({
-				league: gameData.league,
-				away_team: newAwayTeam,
-				home_team: newHomeTeam,
-				officials: newOfficials,
-				event_information: newEvent,
-				away_period_scores: gameData.away_period_scores,
-				home_period_scores: gameData.home_period_scores,
-				away_totals: newAwayTotals,
-				home_totals: newHomeTotals,
-				home_stats: newHomeStats,
-				away_stats: newAwayStats
+			const newGame = new NbaGameData();
+			newGame.league = gameData.league;
+			newGame.away_period_scores = gameData.away_period_scores;
+			newGame.home_period_scores = gameData.home_period_scores;
+			newGame.away_team = new TeamInfo(gameData.away_team);
+			newGame.home_team = new TeamInfo(gameData.home_team);
+			newGame.away_totals = new NbaTotal(gameData.away_totals);
+			newGame.home_totals = new NbaTotal(gameData.home_totals);
+			newGame.event_information = new EventInfo({
+				...gameData.event_information,
+				site: new SiteInfo(gameData.event_information.site)
 			});
 
-			await newAwayTeam.save();
-			await newHomeTeam.save();
-			await newSite.save();
-			await newEvent.save();
-			await newAwayTotals.save();
-			await newHomeTotals.save();
-			// insert game
-			return await newGame.save();
-		} catch (error) {
-			throw new Error(error);
-		}
-	}
+			Database.Repo.persist(newGame);
 
-	public static async InsertMultiplePlayerStats(playerStats: IPlayerStats[]): Promise<NbaPlayerStat[]> {
-		try {
-			const players = [];
-			for (const key of playerStats) {
-				const newInstance = new NbaPlayerStat(key);
-				await newInstance.save();
-				players.push(newInstance);
+			for (const key of gameData.officials) {
+				const official = new NbaOfficial(key);
+				newGame.officials.add(official);
+				Database.Repo.persist([official, newGame]);
 			}
-			return players;
-		} catch (error) {
-			throw new Error(error);
-		}
-	}
+			for (const key of gameData.home_stats) {
+				const stat = new NbaStat(key);
+				newGame.home_stats.add(stat);
+				Database.Repo.persist([stat, newGame]);
+			}
+			for (const key of gameData.away_stats) {
+				const stat = new NbaStat(key);
+				newGame.away_stats.add(stat);
+				Database.Repo.persist([stat, newGame]);
+			}
 
-	public static async InsertMultipleOfficials(officials: IOffical[]): Promise<NbaOfficial[]> {
-		try {
-			const newOfficials = [];
-			for (const key of officials) {
-				const newInstance = new NbaOfficial(key);
-				await newInstance.save();
-				newOfficials.push(newInstance);
-			}
-			return newOfficials;
+			await Database.Repo.flush();
+			return newGame;
 		} catch (error) {
+			Database.Repo.clear();
 			throw new Error(error);
 		}
 	}

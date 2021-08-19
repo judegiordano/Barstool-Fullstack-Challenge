@@ -1,4 +1,4 @@
-import { Entity, Column } from "typeorm";
+import { Entity, Property } from "@mikro-orm/core";
 
 import { Base } from "../Base";
 
@@ -10,36 +10,36 @@ export class TeamInfo extends Base {
 		Object.assign(this, team);
 	}
 
-	@Column()
+	@Property()
 	team_id: string;
 
-	@Column()
+	@Property()
 	abbreviation: string;
 
-	@Column()
+	@Property()
 	active: boolean;
 
-	@Column()
+	@Property()
 	first_name: string;
 
-	@Column()
+	@Property()
 	last_name: string;
 
-	@Column()
+	@Property()
 	conference: string;
 
-	@Column()
+	@Property()
 	division: string;
 
-	@Column()
+	@Property()
 	site_name: string;
 
-	@Column()
+	@Property()
 	city: string;
 
-	@Column()
+	@Property()
 	state: string;
 
-	@Column()
+	@Property()
 	full_name: string;
 }

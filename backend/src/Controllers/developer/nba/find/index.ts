@@ -26,7 +26,7 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 		const game = await Game.FindById(id);
 		return {
 			ok: true,
-			data: game
+			data: game.toJSON()
 		};
 	});
 };

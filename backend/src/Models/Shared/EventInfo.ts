@@ -1,4 +1,4 @@
-import { Entity, Column, OneToOne, JoinColumn } from "typeorm";
+import { Entity, Property, OneToOne } from "@mikro-orm/core";
 
 import { Base } from "../Base";
 import { SiteInfo } from "./SiteInfo";
@@ -11,25 +11,24 @@ export class EventInfo extends Base {
 		Object.assign(this, event);
 	}
 
-	@OneToOne(() => SiteInfo, site => site.event, { eager: true })
-	@JoinColumn()
-	site: SiteInfo
+	@OneToOne({ owner: true, eager: true, orphanRemoval: true })
+	site: SiteInfo;
 
-	@Column()
+	@Property()
 	temperature: number;
 
-	@Column()
+	@Property()
 	attendance: number;
 
-	@Column()
+	@Property()
 	duration: string;
 
-	@Column()
+	@Property()
 	status: string;
 
-	@Column()
+	@Property()
 	season_type: string;
 
-	@Column()
+	@Property()
 	start_date_time: Date;
 }

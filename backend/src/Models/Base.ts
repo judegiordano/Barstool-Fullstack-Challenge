@@ -1,21 +1,13 @@
-import { classToPlain, Exclude } from "class-transformer";
-import { PrimaryGeneratedColumn, BaseEntity, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { PrimaryKey, Property } from "@mikro-orm/core";
 
-export abstract class Base extends BaseEntity {
+export abstract class Base {
 
-	@Exclude()
-	@PrimaryGeneratedColumn()
-	id: number;
+	@PrimaryKey({ hidden: true })
+	id?: number;
 
-	@Exclude()
-	@CreateDateColumn()
-	createdAt: Date;
+	@Property({ hidden: true })
+	createdAt?: Date = new Date();
 
-	@Exclude()
-	@UpdateDateColumn()
-	updatedAt: Date;
-
-	toJSON(): Record<string, unknown> {
-		return classToPlain(this);
-	}
+	@Property({ onUpdate: () => new Date(), hidden: true })
+	updatedAt?: Date = new Date();
 }

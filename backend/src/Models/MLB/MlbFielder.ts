@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne } from "typeorm";
+import { Property, Entity, ManyToOne } from "@mikro-orm/core";
 
 import { Base } from "../Base";
 import { MlbGameData } from "./MlbGameData";
@@ -11,21 +11,21 @@ export class MlbFielder extends Base {
 		Object.assign(this, fielder);
 	}
 
-	@ManyToOne(() => MlbGameData, { onDelete: "CASCADE" })
-	game: MlbGameData
+	@ManyToOne(() => MlbGameData, { hidden: true })
+	game!: MlbGameData;
 
-	@Column()
+	@Property()
 	last_name: string;
 
-	@Column()
+	@Property()
 	first_name: string;
 
-	@Column()
+	@Property()
 	display_name: string;
 
-	@Column()
+	@Property()
 	errors: number;
 
-	@Column()
+	@Property()
 	team_abbreviation: string;
 }

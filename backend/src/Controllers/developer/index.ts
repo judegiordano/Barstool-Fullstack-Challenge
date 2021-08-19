@@ -13,19 +13,17 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 					type: "object",
 					properties: {
 						ok: { type: "boolean" },
-						connected: { type: "boolean" },
-						database: { type: "string" },
+						connected: { type: "boolean" }
 					}
 				}
 			}
 		}
 	}, async (_: FastifyRequest, res: FastifyReply) => {
 		res.statusCode = 200;
-		const status = Database.GetStatus();
+		const status = await Database.GetStatus();
 		return {
 			ok: true,
-			connected: status.isConnected,
-			database: status.driver.database
+			connected: status
 		};
 	});
 };

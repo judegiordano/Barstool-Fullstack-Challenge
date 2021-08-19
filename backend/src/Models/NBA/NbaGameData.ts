@@ -1,9 +1,9 @@
-import { Entity, JoinColumn, OneToOne, OneToMany } from "typeorm";
+import { Property, Entity, OneToOne, OneToMany, Collection, wrap, Dictionary } from "@mikro-orm/core";
 
-import { GameInfo } from "../Shared/GameInfo";
-import { NbaStatInfo } from "./NbaStatInfo";
-import { NbaPlayerStat } from "./NbaPlayerStat";
 import { NbaOfficial } from "./NbaOfficial";
+import { NbaTotal } from "./NbaTotal";
+import { NbaStat } from "./NbaStat";
+import { GameInfo } from "../Shared/GameInfo";
 
 @Entity()
 export class NbaGameData extends GameInfo {
@@ -13,23 +13,31 @@ export class NbaGameData extends GameInfo {
 		Object.assign(this, game);
 	}
 
-	@OneToMany(() => NbaPlayerStat, stat => stat.game)
-	@JoinColumn()
-	away_stats: NbaPlayerStat[];
+	@Property()
+	league: string;
 
-	@OneToMany(() => NbaOfficial, official => official.game)
-	@JoinColumn()
-	officials: NbaOfficial[];
+	@Property()
+	away_period_scores: number[];
 
-	@OneToMany(() => NbaPlayerStat, stat => stat.game)
-	@JoinColumn()
-	home_stats: NbaPlayerStat[];
+	@Property()
+	home_period_scores: number[];
 
-	@OneToOne(() => NbaStatInfo, stat => stat.game)
-	@JoinColumn()
-	away_totals: NbaStatInfo;
+	@OneToMany(() => NbaOfficial, official => official.game, { eager: true, orphanRemoval: true })
+	officials = new Collection<NbaOfficial>(this);
 
-	@OneToOne(() => NbaStatInfo, stat => stat.game)
-	@JoinColumn()
-	home_totals: NbaStatInfo;
+	@OneToMany(() => NbaStat, stat => stat.game, { eager: true, orphanRemoval: true })
+	away_stats = new Collection<NbaStat>(this);
+
+	@OneToMany(() => NbaStat, stat => stat.game, { eager: true, orphanRemoval: true })
+	home_stats = new Collection<NbaStat>(this);
+
+	@OneToOne({ owner: true, eager: true, orphanRemoval: true })
+	away_totals: NbaTotal;
+
+	@OneToOne({ owner: true, eager: true, orphanRemoval: true })
+	home_totals: NbaTotal;
+
+	toJSON(): Dictionary<NbaGameData> {
+		return wrap(this).toObject();
+	}
 }

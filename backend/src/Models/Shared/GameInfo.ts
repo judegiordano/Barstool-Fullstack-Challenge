@@ -1,29 +1,17 @@
-import { Column, JoinColumn, OneToOne } from "typeorm";
+import { OneToOne } from "@mikro-orm/core";
 
 import { Base } from "../Base";
-import { TeamInfo } from "./TeamInfo";
 import { EventInfo } from "./EventInfo";
+import { TeamInfo } from "./TeamInfo";
 
 export abstract class GameInfo extends Base {
 
-	@Column("int", { array: true })
-	away_period_scores: number[];
-
-	@Column("int", { array: true })
-	home_period_scores: number[];
-
-	@Column()
-	league: string;
-
-	@OneToOne(() => TeamInfo, { eager: true })
-	@JoinColumn()
+	@OneToOne({ owner: true, eager: true, orphanRemoval: true })
 	away_team: TeamInfo;
 
-	@OneToOne(() => TeamInfo, { eager: true })
-	@JoinColumn()
+	@OneToOne({ owner: true, eager: true, orphanRemoval: true })
 	home_team: TeamInfo;
 
-	@OneToOne(() => EventInfo, { eager: true })
-	@JoinColumn()
+	@OneToOne({ owner: true, eager: true, orphanRemoval: true })
 	event_information: EventInfo;
 }

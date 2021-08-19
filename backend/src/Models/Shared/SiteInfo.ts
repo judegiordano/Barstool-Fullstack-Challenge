@@ -1,7 +1,6 @@
-import { Entity, Column, OneToOne } from "typeorm";
+import { Entity, Property } from "@mikro-orm/core";
 
 import { Base } from "../Base";
-import { EventInfo } from "./EventInfo";
 
 @Entity()
 export class SiteInfo extends Base {
@@ -11,21 +10,18 @@ export class SiteInfo extends Base {
 		Object.assign(this, site);
 	}
 
-	@OneToOne(() => EventInfo, event => event.site, { onDelete: "CASCADE" })
-	event: EventInfo
-
-	@Column()
+	@Property()
 	capacity: number;
 
-	@Column()
+	@Property()
 	surface: string;
 
-	@Column()
+	@Property()
 	name: string;
 
-	@Column()
+	@Property()
 	state: string;
 
-	@Column()
+	@Property()
 	city: string;
 }

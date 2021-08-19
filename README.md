@@ -22,7 +22,17 @@ Jude Giordano
     ![docker](./docs/docker.PNG "docker")
     - The two services are a Postgres SQL db and a Redis in-memory NoSQL db.
     - Postgres volume data will be automatically stored in its appropriate container folder, under `./barstool-database-container/data/db/*`. This ensures data is persisted even if the container is composed down.
-2. # Commands
+
+2. # [./Migrations](./backend/src/Migrations/)
+    - I have included a migrations folder for getting your local db instance in line with the state of the backend app.
+    - Open a terminal in `./backend` and run:
+        ```js
+        npm install
+        // then
+        npm run db:up
+        ```
+    - This will execute the latest migration (located in [./backend/src/Migrations](./backend/src/Migrations/)) against the postgres db.
+3. # Commands
     - This step assumes that the Redis container and Postgres db container are running as a service already.
     - To start the backend, run the following 2 commands inside a terminal in the [./backend](./backend/) directory:
         ```js
@@ -40,7 +50,7 @@ Jude Giordano
         ```
         This will use Next to create an optimized production build and start it on [http://localhost:3000](http://localhost:3000).
 
- 3. # [./Backend](./backend/)
+ 4. # [./Backend](./backend/)
     - The backend framework I have chosen is [Fastify](https://www.fastify.io/), mostly as I prefer its performance over Express, Hapi, or Koa.
     - The Below `.env` file is included in the backend folder.
         ```sh
@@ -94,7 +104,7 @@ Jude Giordano
     ![postgres data](./docs/postgres.PNG "postgres data")
     - On subsequent requests, the backend checks if Redis has any data cached, if so, it saves a trip and instantly returns with the cached payload.
     - If the redis data is older than 60 seconds (15 seconds being the max as per the requirements) from its last insertion, it will fetch a new version of the data from the Barstool api and cache that response instead, as well as storing this new version of the data in the Postgres db.
-4. # [./Frontend](./frontend/)
+5. # [./Frontend](./frontend/)
     - The Frontend is written using [Next.js](https://nextjs.org/). It uses the following `.env` file to ensure basic client connection without the ability to perform dangerous commands such as deleting db data.
         ```sh
         NODE_ENV=development
@@ -119,18 +129,6 @@ Jude Giordano
         };
         ```
 
-5. # [Migrations](./backend/src/Migrations/) (optional)
-    - I have included a migrations folder for getting your local db instance in line with the state of the backend app.
-    - Open a terminal in `./backend` and run:
-        ```
-        npm run db:up
-        ```
-    - This will execute the latest migration (located in [./backend/src/Migrations](./backend/src/Migrations/)) against the postgres db.
-    - Optionally, just setting the following `./backend/.env` option will attempt to sync the database on compile-time.
-        ```
-        DB_SYNC=true
-        ```
-        However, this flag is not technically considered production-safe.
 6. # [Types Repo](https://github.com/judegiordano/bartsool-dev-types)
     - I have also published an npm package for help with consistent
     typing across the frontend and backend :)

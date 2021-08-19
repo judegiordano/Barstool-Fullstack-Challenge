@@ -53,3 +53,5 @@ deeplore-dev-container/data/**/*
 
 nba.json
 mlb.json
+
+__db_cache__/**/*
