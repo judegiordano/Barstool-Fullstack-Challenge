@@ -22,6 +22,7 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 			body: NbaGameDataSchema,
 			tags: ["Dev"],
 			summary: "update a game by id",
+			description: "takes an entire game object, replaces the current entry, and returns the updated object",
 			response: {
 				200: {
 					type: "object",

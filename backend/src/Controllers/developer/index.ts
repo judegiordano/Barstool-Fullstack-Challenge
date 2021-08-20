@@ -8,6 +8,7 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 		schema: {
 			tags: ["Dev"],
 			summary: "test conneciton / subscription",
+			description: "check if conenciton to database is live",
 			response: {
 				200: {
 					type: "object",

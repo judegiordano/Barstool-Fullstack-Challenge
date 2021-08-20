@@ -14,6 +14,7 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 		schema: {
 			tags: ["Stats"],
 			summary: "get latest or cached mlb game stat",
+			description: "check for recently cached game object. If none exists, fetch a new instance and cache that",
 			response: {
 				200: {
 					type: "object",

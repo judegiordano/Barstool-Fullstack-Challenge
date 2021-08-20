@@ -8,6 +8,7 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 		schema: {
 			tags: ["Dev"],
 			summary: "clear redis cache",
+			description: "clear all in-memory redis cache",
 			response: {
 				200: {
 					type: "object",

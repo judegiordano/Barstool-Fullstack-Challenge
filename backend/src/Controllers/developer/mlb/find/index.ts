@@ -20,6 +20,7 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 			},
 			tags: ["Dev"],
 			summary: "find a game by id",
+			description: "find a game object by id",
 			response: {
 				200: {
 					ok: { type: "boolean" },

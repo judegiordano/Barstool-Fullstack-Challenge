@@ -19,6 +19,7 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 			},
 			tags: ["Dev"],
 			summary: "Delete a game by id",
+			description: "delete a game object by id",
 			response: {
 				200: {
 					type: "object",
