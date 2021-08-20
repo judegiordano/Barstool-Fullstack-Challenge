@@ -13,7 +13,7 @@ export class GameDataRepository {
 
 	public static async FindById(id: number): Promise<NbaGameData> {
 		try {
-			const game = await Database.Repo.findOne(NbaGameData, { id });
+			const game = await Database.Repo.findOne(NbaGameData, { id }, { cache: 3000 });
 			if (!game) throw "game not found";
 			return game;
 		} catch (error) {
@@ -50,23 +50,63 @@ export class GameDataRepository {
 			Database.Repo.persist(newGame);
 
 			for (const key of gameData.officials) {
-				const official = new NbaOfficial(key);
-				newGame.officials.add(official);
-				Database.Repo.persist([official, newGame]);
+				newGame.officials.add(new NbaOfficial(key));
+				Database.Repo.persist(newGame);
 			}
 			for (const key of gameData.home_stats) {
-				const stat = new NbaStat(key);
-				newGame.home_stats.add(stat);
-				Database.Repo.persist([stat, newGame]);
+				newGame.home_stats.add(new NbaStat(key));
+				Database.Repo.persist(newGame);
 			}
 			for (const key of gameData.away_stats) {
-				const stat = new NbaStat(key);
-				newGame.away_stats.add(stat);
-				Database.Repo.persist([stat, newGame]);
+				newGame.away_stats.add(new NbaStat(key));
+				Database.Repo.persist(newGame);
 			}
 
 			await Database.Repo.flush();
 			return newGame;
+		} catch (error) {
+			Database.Repo.clear();
+			throw new Error(error);
+		}
+	}
+
+	public static async UpdateGame(id: number, newGame: INBAGameData): Promise<NbaGameData> {
+		try {
+			const exists = await GameDataRepository.FindById(id);
+
+			exists.league = newGame.league;
+			exists.away_period_scores = newGame.away_period_scores;
+			exists.home_period_scores = newGame.home_period_scores;
+			exists.away_team = new TeamInfo(newGame.away_team);
+			exists.home_team = new TeamInfo(newGame.home_team);
+			exists.away_totals = new NbaTotal(newGame.away_totals);
+			exists.home_totals = new NbaTotal(newGame.home_totals);
+			exists.event_information = new EventInfo({
+				...newGame.event_information,
+				site: new SiteInfo(newGame.event_information.site)
+			});
+
+			exists.officials.removeAll();
+			exists.home_stats.removeAll();
+			exists.away_stats.removeAll();
+
+			Database.Repo.persist(exists);
+
+			for (const key of newGame.officials) {
+				exists.officials.add(new NbaOfficial(key));
+				Database.Repo.persist(exists);
+			}
+			for (const key of newGame.home_stats) {
+				exists.home_stats.add(new NbaStat(key));
+				Database.Repo.persist(exists);
+			}
+			for (const key of newGame.away_stats) {
+				exists.away_stats.add(new NbaStat(key));
+				Database.Repo.persist(exists);
+			}
+
+			await Database.Repo.flush();
+			return exists;
 		} catch (error) {
 			Database.Repo.clear();
 			throw new Error(error);

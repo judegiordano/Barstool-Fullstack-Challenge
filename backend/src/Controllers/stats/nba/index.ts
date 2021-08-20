@@ -6,13 +6,23 @@ import { Requests } from "@Services/Requests";
 import { Redis } from "@Services/Redis";
 import { Utility } from "@Services/Utility";
 import { GameDataRepository } from "@Repositories/Nba/GameDataRepository";
+import { NbaGameDataSchema } from "@Types/Schemas/NBA";
 
 export default async (fastify: FastifyInstance): Promise<void> => {
 	fastify.get("/", {
 		preValidation: [fastify.client],
 		schema: {
 			tags: ["Stats"],
-			summary: "get latest or cached nba game stat"
+			summary: "get latest or cached nba game stat",
+			response: {
+				200: {
+					type: "object",
+					properties: {
+						ok: { type: "boolean" },
+						data: NbaGameDataSchema
+					}
+				}
+			}
 		}
 	}, async (_: FastifyRequest, res: FastifyReply) => {
 		res.statusCode = 200;

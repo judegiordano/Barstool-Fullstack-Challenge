@@ -20,10 +20,9 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 		}
 	}, async (_: FastifyRequest, res: FastifyReply) => {
 		res.statusCode = 200;
-		const status = await Database.GetStatus();
 		return {
 			ok: true,
-			connected: status
+			connected: await Database.GetStatus()
 		};
 	});
 };

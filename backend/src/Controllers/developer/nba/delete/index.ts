@@ -18,15 +18,23 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 				}
 			},
 			tags: ["Dev"],
-			summary: "Delete a game by id"
+			summary: "Delete a game by id",
+			response: {
+				200: {
+					type: "object",
+					properties: {
+						ok: { type: "boolean" },
+						data: { type: "boolean" }
+					}
+				}
+			}
 		}
 	}, async (req: FastifyRequest, res: FastifyReply) => {
 		res.statusCode = 200;
 		const { id } = req.params as IRequest;
-		const game = await Game.DeleteById(id);
 		return {
 			ok: true,
-			data: game
+			data: await Game.DeleteById(id)
 		};
 	});
 };

@@ -1,13 +1,15 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { INBAGameData } from "@barstool-dev/types";
 
-import { GameDataRepository as Game } from "@Repositories/Mlb/GameDataRepository";
+import { GameDataRepository as Game } from "@Repositories/Nba/GameDataRepository";
+import { NbaGameDataSchema } from "@Types/Schemas/NBA";
 
 interface IRequest {
 	id: number
 }
 
 export default async (fastify: FastifyInstance): Promise<void> => {
-	fastify.delete("/id/:id", {
+	fastify.patch("/:id", {
 		preValidation: [fastify.developer],
 		schema: {
 			params: {
@@ -17,22 +19,26 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 					id: { type: "number" }
 				}
 			},
+			body: NbaGameDataSchema,
 			tags: ["Dev"],
-			summary: "Delete a game by id",
+			summary: "update a game by id",
 			response: {
 				200: {
-					ok: { type: "boolean" },
-					data: { type: "boolean" }
+					type: "object",
+					properties: {
+						ok: { type: "boolean" },
+						game: NbaGameDataSchema
+					}
 				}
 			}
 		}
 	}, async (req: FastifyRequest, res: FastifyReply) => {
 		res.statusCode = 200;
 		const { id } = req.params as IRequest;
-		const game = await Game.DeleteById(id);
+		const game = await Game.UpdateGame(id, req.body as INBAGameData);
 		return {
 			ok: true,
-			data: game
+			data: game.toJSON()
 		};
 	});
 };

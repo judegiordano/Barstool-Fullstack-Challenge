@@ -1,6 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 
 import { GameDataRepository as Game } from "@Repositories/Mlb/GameDataRepository";
+import { MlbGameDataSchema } from "@Types/Schemas/MLB";
 
 interface IRequest {
 	id: number
@@ -18,7 +19,13 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 				}
 			},
 			tags: ["Dev"],
-			summary: "find a game by id"
+			summary: "find a game by id",
+			response: {
+				200: {
+					ok: { type: "boolean" },
+					data: MlbGameDataSchema
+				}
+			}
 		}
 	}, async (req: FastifyRequest, res: FastifyReply) => {
 		res.statusCode = 200;

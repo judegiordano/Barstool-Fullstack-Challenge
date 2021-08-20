@@ -32,7 +32,7 @@ export class Database {
 			enabled: true,
 			pretty: !Config.Options.IS_PROD,
 			options: { cacheDir: cwd() + "/__db_cache__" }
-		},
+		}
 	} as ConnectionOptions;
 
 	public static async Connect(): Promise<void> {

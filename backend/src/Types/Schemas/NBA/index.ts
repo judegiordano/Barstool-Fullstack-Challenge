@@ -1,0 +1,125 @@
+import { GameSchema } from "../Shared";
+
+const StatTotalSchema = {
+	type: "object",
+	required: [
+		"minutes",
+		"points",
+		"assists",
+		"turnovers",
+		"steals",
+		"blocks",
+		"field_goals_attempted",
+		"field_goals_made",
+		"three_point_field_goals_attempted",
+		"three_point_field_goals_made",
+		"free_throws_attempted",
+		"free_throws_made",
+		"defensive_rebounds",
+		"offensive_rebounds",
+		"personal_fouls",
+		"field_goal_percentage",
+		"three_point_percentage",
+		"free_throw_percentage"
+	],
+	properties: {
+		minutes: { type: "number" },
+		points: { type: "number" },
+		assists: { type: "number" },
+		turnovers: { type: "number" },
+		steals: { type: "number" },
+		blocks: { type: "number" },
+		field_goals_attempted: { type: "number" },
+		field_goals_made: { type: "number" },
+		three_point_field_goals_attempted: { type: "number" },
+		three_point_field_goals_made: { type: "number" },
+		free_throws_attempted: { type: "number" },
+		free_throws_made: { type: "number" },
+		defensive_rebounds: { type: "number" },
+		offensive_rebounds: { type: "number" },
+		personal_fouls: { type: "number" },
+		field_goal_percentage: { type: "number" },
+		three_point_percentage: { type: "number" },
+		free_throw_percentage: { type: "number" },
+	}
+};
+
+const PlayerStatSchema = {
+	type: "object",
+	required: [
+		"last_name",
+		"first_name",
+		"display_name",
+		"position",
+		"minutes",
+		"points",
+		"assists",
+		"turnovers",
+		"steals",
+		"blocks",
+		"field_goals_attempted",
+		"field_goals_made",
+		"three_point_field_goals_attempted",
+		"three_point_field_goals_made",
+		"free_throws_attempted",
+		"free_throws_made",
+		"defensive_rebounds",
+		"offensive_rebounds",
+		"personal_fouls",
+		"team_abbreviation",
+		"is_starter",
+		"field_goal_percentage",
+		"three_point_percentage",
+		"free_throw_percentage"
+	],
+	properties: {
+		last_name: { type: "string" },
+		first_name: { type: "string" },
+		display_name: { type: "string" },
+		position: { type: "string" },
+		minutes: { type: "number" },
+		points: { type: "number" },
+		assists: { type: "number" },
+		turnovers: { type: "number" },
+		steals: { type: "number" },
+		blocks: { type: "number" },
+		field_goals_attempted: { type: "number" },
+		field_goals_made: { type: "number" },
+		three_point_field_goals_attempted: { type: "number" },
+		three_point_field_goals_made: { type: "number" },
+		free_throws_attempted: { type: "number" },
+		free_throws_made: { type: "number" },
+		defensive_rebounds: { type: "number" },
+		offensive_rebounds: { type: "number" },
+		personal_fouls: { type: "number" },
+		team_abbreviation: { type: "string" },
+		is_starter: { type: "boolean" },
+		field_goal_percentage: { type: "number" },
+		three_point_percentage: { type: "number" },
+		free_throw_percentage: { type: "number" }
+	}
+};
+
+export const NbaGameDataSchema = {
+	type: "object",
+	required: [
+		"league",
+		"away_period_scores",
+		"home_period_scores",
+		"officials",
+		"event_information",
+		"away_team",
+		"home_team",
+		"away_stats",
+		"home_stats",
+		"away_totals",
+		"home_totals"
+	],
+	properties: {
+		...GameSchema,
+		away_stats: { type: "array", items: PlayerStatSchema },
+		home_stats: { type: "array", items: PlayerStatSchema },
+		away_totals: StatTotalSchema,
+		home_totals: StatTotalSchema
+	}
+};

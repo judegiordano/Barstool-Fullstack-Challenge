@@ -6,13 +6,23 @@ import { Redis } from "@Services/Redis";
 import { CacheKeys, Endpoints } from "@Types/Constants";
 import { Utility } from "@Services/Utility";
 import { GameDataRepository } from "@Repositories/Mlb/GameDataRepository";
+import { MlbGameDataSchema } from "@Types/Schemas/MLB";
 
 export default async (fastify: FastifyInstance): Promise<void> => {
 	fastify.get("/", {
 		preValidation: [fastify.client],
 		schema: {
 			tags: ["Stats"],
-			summary: "get latest or cached mlb game stat"
+			summary: "get latest or cached mlb game stat",
+			response: {
+				200: {
+					type: "object",
+					properties: {
+						ok: { type: "boolean" },
+						data: MlbGameDataSchema
+					}
+				}
+			}
 		}
 	}, async (_: FastifyRequest, res: FastifyReply) => {
 		res.statusCode = 200;
