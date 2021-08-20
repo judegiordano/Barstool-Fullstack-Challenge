@@ -13,7 +13,7 @@ export default plugin(async (fastify: FastifyInstance): Promise<void> => {
 		swagger: {
 			info: {
 				title: "Barstool Dev Rest Api",
-				description: "API documentation for this service",
+				description: "Documentation for Barstool Sports dev api",
 				version: Options.APP_VERSION,
 			},
 			schemes: [Options.IS_PROD ? "https" : "http"],
@@ -22,7 +22,7 @@ export default plugin(async (fastify: FastifyInstance): Promise<void> => {
 			tags: [
 				{ name: "Dev", description: "Dev related endpoints" },
 				{ name: "Stats", description: "Game Statistic related endpoints" }
-			],
+			]
 		},
 		exposeRoute: true
 	});

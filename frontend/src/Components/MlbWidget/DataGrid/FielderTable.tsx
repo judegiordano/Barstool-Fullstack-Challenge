@@ -18,10 +18,9 @@ export const FielderTable: React.FC<IFielderTable> = ({ stats, teamColor }: IFie
 				style={{ backgroundColor: teamColor, color: "White", fontFamily: "'Open Sans', sans-serif" }}
 				expandIcon={<ExpandMoreIcon />}
 			>
-			fiedlers
+			fielders
 			</AccordionSummary>
 			<AccordionDetails>
-				{/* <FielderTable stats={fielderStats} /> */}
 				<div style={{ height: 500, width: "100%" }}>
 					<DataGrid
 						pageSize={6}
