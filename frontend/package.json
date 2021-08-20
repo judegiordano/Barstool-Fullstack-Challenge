@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+	"docker:build": "docker build -t barstool-dev-frontend .",
+    "docker:run": "docker run -d --env-file .env --rm -p 3000:3000 barstool-dev-frontend",
+    "docker:stop": "docker stop ",
     "lint": "eslint --fix --ext .ts,.tsx .",
     "dev": "next dev",
     "build": "next build",
-    "prestart": "npm run build",
     "start": "next start"
   },
   "dependencies": {

@@ -10,6 +10,8 @@ services:
         - database.env
     ports:
       - "6666:5432"
+    expose:
+      - 6666
     networks:
       - barstool-database-network
 networks:

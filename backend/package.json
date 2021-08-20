@@ -17,8 +17,7 @@
     "lint": "eslint --fix --ext .ts,.tsx .",
     "build": "tsc",
     "dev:watch": "ts-node-dev --respawn --transpile-only ./src/index.ts",
-    "prestart": "npm run build",
-    "start": "node . --max-old-space-size=8192"
+    "start": "node ."
   },
   "keywords": [],
   "author": "",

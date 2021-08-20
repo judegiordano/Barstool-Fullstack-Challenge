@@ -38,6 +38,8 @@ Jude Giordano
         ```js
         npm install
         // then
+        npm run build
+        // then
         npm run start
         ```
 
@@ -45,6 +47,8 @@ Jude Giordano
     - To run the Frontend, run the following 2 commands in a terminal inside the [./frontend](./frontend/) directory:
         ```js
         npm install
+        // then
+        npm run build
         // then
         npm run start
         ```
