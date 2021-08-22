@@ -1,8 +1,7 @@
-import React from "react";
+import React, {ReactNode} from "react";
 
 interface IContainerProps {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	children: any
+	children: ReactNode
 }
 
 export const Container: React.FC<IContainerProps> = ({
