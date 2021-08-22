@@ -21,6 +21,20 @@ export class GameDataRepository {
 		}
 	}
 
+	public static async GetAllUids(): Promise<string[]> {
+		try {
+			const uids = [];
+			const games = await Database.Repo.find(NbaGameData, {}, { limit: 10 });
+			if (!games) throw "no games found";
+			for (const key of games) {
+				uids.push(key.uid);
+			}
+			return uids;
+		} catch (error) {
+			throw new Error(error);
+		}
+	}
+
 	public static async FindByUid(uid: string): Promise<NbaGameData> {
 		try {
 			const game = await Database.Repo.findOne(NbaGameData, { uid }, { cache: 3000 });
