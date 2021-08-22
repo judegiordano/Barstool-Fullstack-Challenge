@@ -3,6 +3,7 @@ import { cwd } from "process";
 import { Connection, IDatabaseDriver, MikroORM, ConnectionOptions, EntityManager } from "@mikro-orm/core";
 
 import { Config } from "./Config";
+import { Log } from "./Logger";
 
 export class Database {
 
@@ -20,6 +21,7 @@ export class Database {
 
 	private static readonly Connector: ConnectionOptions = {
 		debug: !Config.Options.IS_PROD,
+		logger: (msg: unknown) => Log.Info(msg, "database"),
 		type: Config.Db.DB_TYPE,
 		host: Config.Db.DB_HOST,
 		port: Config.Db.DB_PORT,
@@ -40,15 +42,19 @@ export class Database {
 			Database.orm = await MikroORM.init(Database.Connector);
 			const { em } = Database.orm;
 			Database.Repo = em;
-			console.log("successfully connected to database", await Database.orm.isConnected());
+			Log.Info(`successfully connected to database: ${await Database.orm.isConnected()}`, "database");
 		} catch (e) {
 			throw new Error(`error connecting to database: ${e}`);
 		}
 	}
 
 	public static async GetStatus(): Promise<boolean> {
-		const connection = await Database.orm.isConnected();
-		return connection;
+		try {
+			const connection = await Database.orm.isConnected();
+			return connection;
+		} catch (e) {
+			throw new Error(e);
+		}
 	}
 
 	public static async Close(): Promise<void> {
