@@ -9,12 +9,23 @@ import { TeamInfo } from "@Models/Shared/TeamInfo";
 import { EventInfo } from "@Models/Shared/EventInfo";
 import { SiteInfo } from "@Models/Shared/SiteInfo";
 import { MlbBatterTotal } from "@Models/MLB/MlbBatterTotal";
+import { MlbFielder } from "@Models/MLB/MlbFielder";
 
 export class GameDataRepository {
 
 	public static async FindById(id: number): Promise<MlbGameData> {
 		try {
 			const game = await Database.Repo.findOne(MlbGameData, { id }, { cache: 3000 });
+			if (!game) throw "game not found";
+			return game;
+		} catch (error) {
+			throw new Error(error);
+		}
+	}
+
+	public static async FindByUid(uid: string): Promise<MlbGameData> {
+		try {
+			const game = await Database.Repo.findOne(MlbGameData, { uid }, { cache: 3000 });
 			if (!game) throw "game not found";
 			return game;
 		} catch (error) {
@@ -41,6 +52,7 @@ export class GameDataRepository {
 			newGame.home_period_scores = gameData.home_period_scores;
 			newGame.away_errors = gameData.away_errors;
 			newGame.home_errors = gameData.home_errors;
+
 			newGame.home_team = new TeamInfo(gameData.home_team);
 			newGame.away_team = new TeamInfo(gameData.away_team);
 			newGame.home_batter_totals = new MlbBatterTotal(gameData.home_batter_totals);
@@ -53,24 +65,39 @@ export class GameDataRepository {
 			Database.Repo.persist(newGame);
 
 			for (const key of gameData.officials) {
-				newGame.officials.add(new MlbOfficial(key));
-				Database.Repo.persist(newGame);
+				const newOfficial = new MlbOfficial(key);
+				newGame.officials.add(newOfficial);
+				Database.Repo.persist([newGame, newOfficial]);
 			}
 			for (const key of gameData.home_pitchers) {
-				newGame.home_pitchers.add(new MlbPitcher(key));
-				Database.Repo.persist(newGame);
+				const newPitcher = new MlbPitcher(key);
+				newGame.home_pitchers.add(newPitcher);
+				Database.Repo.persist([newGame, newPitcher]);
 			}
 			for (const key of gameData.away_pitchers) {
-				newGame.away_pitchers.add(new MlbPitcher(key));
-				Database.Repo.persist(newGame);
+				const newPitcher = new MlbPitcher(key);
+				newGame.away_pitchers.add(newPitcher);
+				Database.Repo.persist([newGame, newPitcher]);
 			}
 			for (const key of gameData.away_batters) {
-				newGame.away_batters.add(new MlbBatter(key));
-				Database.Repo.persist(newGame);
+				const newBatter = new MlbBatter(key);
+				newGame.away_batters.add(newBatter);
+				Database.Repo.persist([newGame, newBatter]);
 			}
 			for (const key of gameData.home_batters) {
-				newGame.home_batters.add(new MlbBatter(key));
-				Database.Repo.persist(newGame);
+				const newBatter = new MlbBatter(key);
+				newGame.home_batters.add(newBatter);
+				Database.Repo.persist([newGame, newBatter]);
+			}
+			for (const key of gameData.away_fielding) {
+				const newFielder = new MlbFielder(key);
+				newGame.away_fielding.add(newFielder);
+				Database.Repo.persist([newGame, newFielder]);
+			}
+			for (const key of gameData.home_fielding) {
+				const newFielder = new MlbFielder(key);
+				newGame.home_fielding.add(newFielder);
+				Database.Repo.persist([newGame, newFielder]);
 			}
 
 			await Database.Repo.flush();
@@ -104,27 +131,44 @@ export class GameDataRepository {
 			exists.away_pitchers.removeAll();
 			exists.away_batters.removeAll();
 			exists.home_batters.removeAll();
+			exists.away_fielding.removeAll();
+			exists.home_fielding.removeAll();
 			Database.Repo.persist(exists);
 
 			for (const key of newGame.officials) {
-				exists.officials.add(new MlbOfficial(key));
-				Database.Repo.persist(exists);
+				const newOfficial = new MlbOfficial(key);
+				exists.officials.add(newOfficial);
+				Database.Repo.persist([exists, newOfficial]);
 			}
 			for (const key of newGame.home_pitchers) {
-				exists.home_pitchers.add(new MlbPitcher(key));
-				Database.Repo.persist(exists);
+				const newPitcher = new MlbPitcher(key);
+				exists.home_pitchers.add(newPitcher);
+				Database.Repo.persist([exists, newPitcher]);
 			}
 			for (const key of newGame.away_pitchers) {
-				exists.away_pitchers.add(new MlbPitcher(key));
-				Database.Repo.persist(exists);
+				const newPitcher = new MlbPitcher(key);
+				exists.away_pitchers.add(newPitcher);
+				Database.Repo.persist([exists, newPitcher]);
 			}
 			for (const key of newGame.away_batters) {
-				exists.away_batters.add(new MlbBatter(key));
-				Database.Repo.persist(exists);
+				const newBatter = new MlbBatter(key);
+				exists.away_batters.add(newBatter);
+				Database.Repo.persist([exists, newBatter]);
 			}
 			for (const key of newGame.home_batters) {
-				exists.home_batters.add(new MlbBatter(key));
-				Database.Repo.persist(exists);
+				const newBatter = new MlbBatter(key);
+				exists.home_batters.add(newBatter);
+				Database.Repo.persist([exists, newBatter]);
+			}
+			for (const key of newGame.away_fielding) {
+				const newFielder = new MlbFielder(key);
+				exists.away_fielding.add(newFielder);
+				Database.Repo.persist([exists, newFielder]);
+			}
+			for (const key of newGame.home_fielding) {
+				const newFielder = new MlbFielder(key);
+				exists.home_fielding.add(newFielder);
+				Database.Repo.persist([exists, newFielder]);
 			}
 
 			await Database.Repo.flush();

@@ -12,7 +12,7 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 	fastify.get("/", {
 		preValidation: [fastify.client],
 		schema: {
-			tags: ["Stats"],
+			tags: ["Live"],
 			summary: "get latest or cached nba game stat",
 			description: "check for recently cached game object. If none exists, fetch a new instance and cache that",
 			response: {

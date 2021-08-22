@@ -20,8 +20,8 @@ export default plugin(async (fastify: FastifyInstance): Promise<void> => {
 			consumes: ["application/json"],
 			produces: ["application/json"],
 			tags: [
-				{ name: "Dev", description: "Dev related endpoints (private)" },
-				{ name: "Stats", description: "Game Statistic related endpoints (public)" }
+				{ name: "Dev", description: "Dev Related Endpoints (private)" },
+				{ name: "Live", description: "Live Game Statistic Related Endpoints (public)" }
 			]
 		},
 		exposeRoute: true

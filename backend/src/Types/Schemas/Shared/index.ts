@@ -84,6 +84,7 @@ const OfficialSchema = {
 
 export const GameSchema = {
 	league: { type: "string" },
+	uid: { type: "string" },
 	away_team: TeamInfoSchema,
 	home_team: TeamInfoSchema,
 	away_period_scores: { type: "array", items: { type: "number" } },

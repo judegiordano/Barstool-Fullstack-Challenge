@@ -24,10 +24,10 @@ export class MlbGameData extends GameInfo {
 	@OneToMany(() => MlbOfficial, official => official.game, { eager: true, orphanRemoval: true })
 	officials = new Collection<MlbOfficial>(this);
 
-	@OneToMany(() => MlbBatter, batter => batter.game, { mappedBy: "game", eager: true, orphanRemoval: true })
+	@OneToMany(() => MlbBatter, batter => batter.game, { eager: true, orphanRemoval: true })
 	away_batters = new Collection<MlbBatter>(this);
 
-	@OneToMany(() => MlbBatter, batter => batter.game, { mappedBy: "game", eager: true, orphanRemoval: true })
+	@OneToMany(() => MlbBatter, batter => batter.game, { eager: true, orphanRemoval: true })
 	home_batters = new Collection<MlbBatter>(this);
 
 	@OneToMany(() => MlbPitcher, pitcher => pitcher.game, { eager: true, orphanRemoval: true })

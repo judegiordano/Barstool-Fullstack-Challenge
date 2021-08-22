@@ -21,6 +21,16 @@ export class GameDataRepository {
 		}
 	}
 
+	public static async FindByUid(uid: string): Promise<NbaGameData> {
+		try {
+			const game = await Database.Repo.findOne(NbaGameData, { uid }, { cache: 3000 });
+			if (!game) throw "game not found";
+			return game;
+		} catch (error) {
+			throw new Error(error);
+		}
+	}
+
 	public static async DeleteById(id: number): Promise<boolean> {
 		try {
 			const exists = await Database.Repo.findOne(NbaGameData, { id });
@@ -50,16 +60,19 @@ export class GameDataRepository {
 			Database.Repo.persist(newGame);
 
 			for (const key of gameData.officials) {
-				newGame.officials.add(new NbaOfficial(key));
-				Database.Repo.persist(newGame);
+				const newOffical = new NbaOfficial(key);
+				newGame.officials.add(newOffical);
+				Database.Repo.persist([newGame, newOffical]);
 			}
 			for (const key of gameData.home_stats) {
-				newGame.home_stats.add(new NbaStat(key));
-				Database.Repo.persist(newGame);
+				const newHomeStat = new NbaStat(key);
+				newGame.home_stats.add(newHomeStat);
+				Database.Repo.persist([newGame, newHomeStat]);
 			}
 			for (const key of gameData.away_stats) {
-				newGame.away_stats.add(new NbaStat(key));
-				Database.Repo.persist(newGame);
+				const newAwayStat = new NbaStat(key);
+				newGame.away_stats.add(newAwayStat);
+				Database.Repo.persist([newGame, newAwayStat]);
 			}
 
 			await Database.Repo.flush();
@@ -93,16 +106,19 @@ export class GameDataRepository {
 			Database.Repo.persist(exists);
 
 			for (const key of newGame.officials) {
-				exists.officials.add(new NbaOfficial(key));
-				Database.Repo.persist(exists);
+				const newOffical = new NbaOfficial(key);
+				exists.officials.add(newOffical);
+				Database.Repo.persist([exists, newOffical]);
 			}
 			for (const key of newGame.home_stats) {
-				exists.home_stats.add(new NbaStat(key));
-				Database.Repo.persist(exists);
+				const newHomeStat = new NbaStat(key);
+				exists.home_stats.add(newHomeStat);
+				Database.Repo.persist([exists, newHomeStat]);
 			}
 			for (const key of newGame.away_stats) {
-				exists.away_stats.add(new NbaStat(key));
-				Database.Repo.persist(exists);
+				const newAwayStat = new NbaStat(key);
+				exists.away_stats.add(newAwayStat);
+				Database.Repo.persist([exists, newAwayStat]);
 			}
 
 			await Database.Repo.flush();
