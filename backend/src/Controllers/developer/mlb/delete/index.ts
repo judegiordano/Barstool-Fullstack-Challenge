@@ -1,13 +1,10 @@
 import { FastifyInstance } from "fastify";
 
 import { GameDataRepository as Game } from "@Repositories/Mlb/GameDataRepository";
-
-interface IParams {
-	id: number
-}
+import { ReuqestInstance } from "@Types/Override";
 
 export default async (fastify: FastifyInstance): Promise<void> => {
-	fastify.delete<{ Params: IParams }>("/id/:id", {
+	fastify.delete<ReuqestInstance>("/id/:id", {
 		preValidation: [fastify.developer],
 		schema: {
 			params: {

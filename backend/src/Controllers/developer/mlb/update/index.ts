@@ -3,13 +3,10 @@ import { IMLBGameData } from "@barstool-dev/types";
 
 import { GameDataRepository as Game } from "@Repositories/Mlb/GameDataRepository";
 import { MlbGameDataSchema } from "@Types/Schemas/MLB";
-
-interface IParams {
-	id: number
-}
+import { ReuqestInstance } from "@Types/Override";
 
 export default async (fastify: FastifyInstance): Promise<void> => {
-	fastify.patch<{ Params: IParams }>("/:id", {
+	fastify.patch<ReuqestInstance>("/:id", {
 		preValidation: [fastify.developer],
 		schema: {
 			params: {

@@ -1,16 +1,10 @@
 import { FastifyInstance } from "fastify";
 
 import { GameDataRepository as Game } from "@Repositories/Nba/GameDataRepository";
-
-interface IQuery {
-	limit: number
-}
-interface IParams {
-	page: number
-}
+import { ReuqestInstance } from "@Types/Override";
 
 export default async (fastify: FastifyInstance): Promise<void> => {
-	fastify.get<{ Querystring: IQuery, Params: IParams }>("/:page", {
+	fastify.get<ReuqestInstance>("/:page", {
 		preValidation: [fastify.developer],
 		schema: {
 			tags: ["Live"],

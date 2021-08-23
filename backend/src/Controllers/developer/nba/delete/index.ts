@@ -1,13 +1,10 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { FastifyInstance } from "fastify";
 
 import { GameDataRepository as Game } from "@Repositories/Nba/GameDataRepository";
-
-interface IRequest {
-	id: number
-}
+import { ReuqestInstance } from "@Types/Override";
 
 export default async (fastify: FastifyInstance): Promise<void> => {
-	fastify.delete("/id/:id", {
+	fastify.delete<ReuqestInstance>("/id/:id", {
 		preValidation: [fastify.developer],
 		schema: {
 			params: {
@@ -30,9 +27,9 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 				}
 			}
 		}
-	}, async (req: FastifyRequest, res: FastifyReply) => {
+	}, async (req, res) => {
 		res.statusCode = 200;
-		const { id } = req.params as IRequest;
+		const { id } = req.params;
 		return {
 			ok: true,
 			data: await Game.DeleteById(id)

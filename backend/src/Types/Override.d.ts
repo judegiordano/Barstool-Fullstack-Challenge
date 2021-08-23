@@ -7,3 +7,16 @@ declare module "fastify" {
 		client(): void;
 	}
 }
+
+interface IQuery {
+	limit: number
+}
+interface IParams {
+	page: number,
+	id: number,
+	uid: string
+}
+export interface ReuqestInstance extends FastifyRequest {
+	Querystring: IQuery,
+	Params: IParams
+}

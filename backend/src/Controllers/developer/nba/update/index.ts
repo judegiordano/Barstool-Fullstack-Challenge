@@ -1,15 +1,12 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { FastifyInstance } from "fastify";
 import { INBAGameData } from "@barstool-dev/types";
 
 import { GameDataRepository as Game } from "@Repositories/Nba/GameDataRepository";
 import { NbaGameDataSchema } from "@Types/Schemas/NBA";
-
-interface IRequest {
-	id: number
-}
+import { ReuqestInstance } from "@Types/Override";
 
 export default async (fastify: FastifyInstance): Promise<void> => {
-	fastify.patch("/:id", {
+	fastify.patch<ReuqestInstance>("/:id", {
 		preValidation: [fastify.developer],
 		schema: {
 			params: {
@@ -33,9 +30,9 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 				}
 			}
 		}
-	}, async (req: FastifyRequest, res: FastifyReply) => {
+	}, async (req, res) => {
 		res.statusCode = 200;
-		const { id } = req.params as IRequest;
+		const { id } = req.params;
 		const game = await Game.UpdateGame(id, req.body as INBAGameData);
 		return {
 			ok: true,

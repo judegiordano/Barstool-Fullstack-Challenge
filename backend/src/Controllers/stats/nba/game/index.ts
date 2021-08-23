@@ -2,13 +2,10 @@ import { FastifyInstance } from "fastify";
 
 import { GameDataRepository as Game } from "@Repositories/Nba/GameDataRepository";
 import { NbaGameDataSchema } from "@Types/Schemas/NBA";
-
-interface IParams {
-	uid: string
-}
+import { ReuqestInstance } from "@Types/Override";
 
 export default async (fastify: FastifyInstance): Promise<void> => {
-	fastify.get<{ Params: IParams }>("/:uid", {
+	fastify.get<ReuqestInstance>("/:uid", {
 		preValidation: [fastify.developer],
 		schema: {
 			params: {
