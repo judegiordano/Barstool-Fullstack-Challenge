@@ -21,10 +21,10 @@ export class GameDataRepository {
 		}
 	}
 
-	public static async GetAllUids(): Promise<string[]> {
+	public static async GetAllUids(pageNumber: number, limit: number): Promise<string[]> {
 		try {
 			const uids = [];
-			const games = await Database.Repo.find(NbaGameData, {}, { limit: 10 });
+			const games = await Database.Repo.find(NbaGameData, {}, { limit, offset: (pageNumber - 1) * limit });
 			if (!games) throw "no games found";
 			for (const key of games) {
 				uids.push(key.uid);

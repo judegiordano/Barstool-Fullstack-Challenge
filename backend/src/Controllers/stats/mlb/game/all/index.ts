@@ -1,14 +1,35 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { FastifyInstance } from "fastify";
 
 import { GameDataRepository as Game } from "@Repositories/Mlb/GameDataRepository";
 
+interface IQuery {
+	limit: number
+}
+interface IParams {
+	page: number
+}
+
 export default async (fastify: FastifyInstance): Promise<void> => {
-	fastify.get("/", {
+	fastify.get<{ Querystring: IQuery, Params: IParams }>("/:page", {
 		preValidation: [fastify.developer],
 		schema: {
 			tags: ["Live"],
-			summary: "Get all game uids",
-			description: "Get all game uids",
+			summary: "Paginate game uids",
+			description: "Paginate game uids",
+			params: {
+				required: ["page"],
+				type: "object",
+				properties: {
+					page: { type: "number", minimum: 1 }
+				}
+			},
+			querystring: {
+				required: ["limit"],
+				type: "object",
+				properties: {
+					limit: { type: "number", maximum: 10 }
+				}
+			},
 			response: {
 				200: {
 					ok: { type: "boolean" },
@@ -18,9 +39,11 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 				}
 			}
 		}
-	}, async (_: FastifyRequest, res: FastifyReply) => {
+	}, async (req, res) => {
 		res.statusCode = 200;
-		const games = await Game.GetAllUids();
+		const { page } = req.params;
+		const { limit } = req.query;
+		const games = await Game.GetAllUids(page, limit);
 		return {
 			ok: true,
 			data: games
