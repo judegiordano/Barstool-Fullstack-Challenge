@@ -1,14 +1,14 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { FastifyInstance } from "fastify";
 
 import { GameDataRepository as Game } from "@Repositories/Nba/GameDataRepository";
 import { NbaGameDataSchema } from "@Types/Schemas/NBA";
 
-interface IRequest {
+interface IParams {
 	uid: string
 }
 
 export default async (fastify: FastifyInstance): Promise<void> => {
-	fastify.get("/:uid", {
+	fastify.get<{ Params: IParams }>("/:uid", {
 		preValidation: [fastify.developer],
 		schema: {
 			params: {
@@ -28,9 +28,9 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 				}
 			}
 		}
-	}, async (req: FastifyRequest, res: FastifyReply) => {
+	}, async (req, res) => {
 		res.statusCode = 200;
-		const { uid } = req.params as IRequest;
+		const { uid } = req.params;
 		const game = await Game.FindByUid(uid);
 		return {
 			ok: true,

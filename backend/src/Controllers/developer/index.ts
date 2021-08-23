@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { FastifyInstance } from "fastify";
 
 import { Database } from "@Services/Database";
 
@@ -19,7 +19,7 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 				}
 			}
 		}
-	}, async (_: FastifyRequest, res: FastifyReply) => {
+	}, async (_, res) => {
 		res.statusCode = 200;
 		return {
 			ok: true,

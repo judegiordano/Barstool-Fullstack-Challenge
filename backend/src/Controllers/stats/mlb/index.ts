@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { FastifyInstance } from "fastify";
 import { IMLBGameData } from "@barstool-dev/types";
 
 import { Requests } from "@Services/Requests";
@@ -25,7 +25,7 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 				}
 			}
 		}
-	}, async (_: FastifyRequest, res: FastifyReply) => {
+	}, async (_, res) => {
 		res.statusCode = 200;
 
 		const redisData = await Redis.GetAsync(CacheKeys.MLB_STATS);

@@ -14,8 +14,8 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 		preValidation: [fastify.developer],
 		schema: {
 			tags: ["Live"],
-			summary: "Get all game uids",
-			description: "Get all game uids",
+			summary: "Paginate game uids",
+			description: "Paginate game uids",
 			params: {
 				required: ["page"],
 				type: "object",

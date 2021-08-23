@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { FastifyInstance } from "fastify";
 import { INBAGameData } from "@barstool-dev/types";
 
 import { CacheKeys, Endpoints } from "@Types/Constants";
@@ -25,7 +25,7 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 				}
 			}
 		}
-	}, async (_: FastifyRequest, res: FastifyReply) => {
+	}, async (_, res) => {
 		res.statusCode = 200;
 
 		const redisData = await Redis.GetAsync(CacheKeys.NBA_STATS);

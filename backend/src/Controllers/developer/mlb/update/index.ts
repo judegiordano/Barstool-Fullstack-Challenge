@@ -1,15 +1,15 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { FastifyInstance } from "fastify";
 import { IMLBGameData } from "@barstool-dev/types";
 
 import { GameDataRepository as Game } from "@Repositories/Mlb/GameDataRepository";
 import { MlbGameDataSchema } from "@Types/Schemas/MLB";
 
-interface IRequest {
+interface IParams {
 	id: number
 }
 
 export default async (fastify: FastifyInstance): Promise<void> => {
-	fastify.patch("/:id", {
+	fastify.patch<{ Params: IParams }>("/:id", {
 		preValidation: [fastify.developer],
 		schema: {
 			params: {
@@ -33,9 +33,9 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 				}
 			}
 		}
-	}, async (req: FastifyRequest, res: FastifyReply) => {
+	}, async (req, res) => {
 		res.statusCode = 200;
-		const { id } = req.params as IRequest;
+		const { id } = req.params;
 		const game = await Game.UpdateGame(id, req.body as IMLBGameData);
 		return {
 			ok: true,
