@@ -1,4 +1,5 @@
 import { INBAGameData } from "@barstool-dev/types";
+import { EntityRepository } from "@mikro-orm/core";
 
 import { Database } from "@Services/Database";
 import { NbaGameData } from "@Models/NBA/NbaGameData";
@@ -11,9 +12,11 @@ import { NbaStat } from "@Models/NBA/NbaStat";
 
 export class GameDataRepository {
 
+	private static Repo: EntityRepository<NbaGameData> = Database.Manager.fork().getRepository(NbaGameData)
+
 	public static async FindById(id: number): Promise<NbaGameData> {
 		try {
-			const game = await Database.Repo.findOne(NbaGameData, { id }, { cache: 3000 });
+			const game = await this.Repo.findOne({ id }, { cache: 3000 });
 			if (!game) throw "game not found";
 			return game;
 		} catch (error) {
@@ -24,7 +27,7 @@ export class GameDataRepository {
 	public static async GetAllUids(pageNumber: number, limit: number): Promise<string[]> {
 		try {
 			const uids = [];
-			const games = await Database.Repo.find(NbaGameData, {}, { limit, offset: (pageNumber - 1) * limit });
+			const games = await this.Repo.find({}, { limit, offset: (pageNumber - 1) * limit });
 			if (!games) throw "no games found";
 			for (const key of games) {
 				uids.push(key.uid);
@@ -37,7 +40,7 @@ export class GameDataRepository {
 
 	public static async FindByUid(uid: string): Promise<NbaGameData> {
 		try {
-			const game = await Database.Repo.findOne(NbaGameData, { uid }, { cache: 3000 });
+			const game = await this.Repo.findOne({ uid }, { cache: 3000 });
 			if (!game) throw "game not found";
 			return game;
 		} catch (error) {
@@ -47,9 +50,9 @@ export class GameDataRepository {
 
 	public static async DeleteById(id: number): Promise<boolean> {
 		try {
-			const exists = await Database.Repo.findOne(NbaGameData, { id });
+			const exists = await this.Repo.findOne({ id });
 			if (!exists) throw "game not found";
-			await Database.Repo.removeAndFlush(exists);
+			await this.Repo.removeAndFlush(exists);
 			return true;
 		} catch (error) {
 			throw new Error(error);
@@ -71,28 +74,28 @@ export class GameDataRepository {
 				site: new SiteInfo(gameData.event_information.site)
 			});
 
-			Database.Repo.persist(newGame);
+			this.Repo.persist(newGame);
 
 			for (const key of gameData.officials) {
 				const newOffical = new NbaOfficial(key);
 				newGame.officials.add(newOffical);
-				Database.Repo.persist([newGame, newOffical]);
+				this.Repo.persist([newGame, newOffical]);
 			}
 			for (const key of gameData.home_stats) {
 				const newHomeStat = new NbaStat(key);
 				newGame.home_stats.add(newHomeStat);
-				Database.Repo.persist([newGame, newHomeStat]);
+				this.Repo.persist([newGame, newHomeStat]);
 			}
 			for (const key of gameData.away_stats) {
 				const newAwayStat = new NbaStat(key);
 				newGame.away_stats.add(newAwayStat);
-				Database.Repo.persist([newGame, newAwayStat]);
+				this.Repo.persist([newGame, newAwayStat]);
 			}
 
-			await Database.Repo.flush();
+			await this.Repo.flush();
 			return newGame;
 		} catch (error) {
-			Database.Repo.clear();
+			Database.Manager.clear();
 			throw new Error(error);
 		}
 	}
@@ -117,28 +120,28 @@ export class GameDataRepository {
 			exists.home_stats.removeAll();
 			exists.away_stats.removeAll();
 
-			Database.Repo.persist(exists);
+			this.Repo.persist(exists);
 
 			for (const key of newGame.officials) {
 				const newOffical = new NbaOfficial(key);
 				exists.officials.add(newOffical);
-				Database.Repo.persist([exists, newOffical]);
+				this.Repo.persist([exists, newOffical]);
 			}
 			for (const key of newGame.home_stats) {
 				const newHomeStat = new NbaStat(key);
 				exists.home_stats.add(newHomeStat);
-				Database.Repo.persist([exists, newHomeStat]);
+				this.Repo.persist([exists, newHomeStat]);
 			}
 			for (const key of newGame.away_stats) {
 				const newAwayStat = new NbaStat(key);
 				exists.away_stats.add(newAwayStat);
-				Database.Repo.persist([exists, newAwayStat]);
+				this.Repo.persist([exists, newAwayStat]);
 			}
 
-			await Database.Repo.flush();
+			await this.Repo.flush();
 			return exists;
 		} catch (error) {
-			Database.Repo.clear();
+			Database.Manager.clear();
 			throw new Error(error);
 		}
 	}

@@ -17,7 +17,7 @@ export class Database {
 	 * @type {EntityManager<IDatabaseDriver<Connection>>}
 	 * @memberof Database
 	 */
-	public static Repo: EntityManager<IDatabaseDriver<Connection>>;
+	public static Manager: EntityManager<IDatabaseDriver<Connection>>;
 
 	private static readonly Connector: ConnectionOptions = {
 		debug: !Config.Options.IS_PROD,
@@ -40,7 +40,7 @@ export class Database {
 	public static async Connect(): Promise<void> {
 		try {
 			Database.orm = await MikroORM.init(Database.Connector);
-			Database.Repo = Database.orm.em.fork();
+			Database.Manager = Database.orm.em.fork();
 			Log.Info(`successfully connected to database: ${await Database.orm.isConnected()}`, "database");
 		} catch (e) {
 			throw new Error(`error connecting to database: ${e}`);

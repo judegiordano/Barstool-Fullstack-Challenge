@@ -14,11 +14,11 @@ export class App {
 	private static instance = fastify({ logger: !Options.IS_PROD });
 
 	private static async Setup(): Promise<void> {
-		App.instance.register(import("../Middleware/Auth"));
-		App.instance.register(import("../Middleware/AppSubscription"));
 		App.instance.register(AutoLoad, {
 			dir: path.join(__dirname, "../Plugins"),
 		});
+		App.instance.register(import("../Middleware/Auth"));
+		App.instance.register(import("../Middleware/AppSubscription"));
 		App.instance.register(AutoLoad, {
 			dir: path.join(__dirname, "../Controllers"),
 			options: { prefix: `/api/${Options.APP_VERSION}/` },
@@ -43,8 +43,8 @@ export class App {
 
 	public static async Start(): Promise<void> {
 		try {
-			await App.Setup();
 			await Database.Connect();
+			await App.Setup();
 			await App.instance.listen(Options.PORT, Options.IS_PROD ? "0.0.0.0" : "127.0.0.1");
 		} catch (e) {
 			Log.Error(e, e.stack || e.stackTrace, "Application Error");
