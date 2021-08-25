@@ -6,6 +6,7 @@ import { Config } from "./Config";
 import { Database } from "./Database";
 import { Redis } from "./Redis";
 import { Log } from "./Logger";
+import { cwd } from "process";
 
 const { Options } = Config;
 
@@ -14,13 +15,13 @@ export class App {
 	private static instance = fastify({ logger: !Options.IS_PROD });
 
 	private static async Setup(): Promise<void> {
+		App.instance.register(import("../Plugins/Request"));
+		App.instance.register(import("../Plugins/Decorators"));
 		App.instance.register(AutoLoad, {
-			dir: path.join(__dirname, "../Plugins"),
+			dir: path.join(cwd(), "build/Middleware"),
 		});
-		App.instance.register(import("../Middleware/Auth"));
-		App.instance.register(import("../Middleware/AppSubscription"));
 		App.instance.register(AutoLoad, {
-			dir: path.join(__dirname, "../Controllers"),
+			dir: path.join(cwd(), "build/Controllers"),
 			options: { prefix: `/api/${Options.APP_VERSION}/` },
 			routeParams: false
 		});
@@ -32,7 +33,6 @@ export class App {
 				data: error.message
 			};
 		});
-		// connect to Redis
 		Redis.client.on("connect", () => {
 			Log.Info("connected to redis server", "Redis");
 		});
