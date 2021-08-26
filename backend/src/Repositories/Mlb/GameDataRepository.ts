@@ -1,7 +1,6 @@
 import { EntityRepository } from "@mikro-orm/core";
 import { IMLBGameData } from "@barstool-dev/types";
 
-import { Database } from "@Services/Database";
 import { MlbBatter } from "@Models/MLB/MlbBatter";
 import { MlbPitcher } from "@Models/MLB/MlbPitcher";
 import { MlbGameData } from "@Models/MLB/MlbGameData";
@@ -12,13 +11,13 @@ import { SiteInfo } from "@Models/Shared/SiteInfo";
 import { MlbBatterTotal } from "@Models/MLB/MlbBatterTotal";
 import { MlbFielder } from "@Models/MLB/MlbFielder";
 
+type RequestRepo = EntityRepository<MlbGameData>;
+
 export class GameDataRepository {
 
-	private static Repo: EntityRepository<MlbGameData> = Database.Manager.fork().getRepository(MlbGameData)
-
-	public static async FindById(id: number): Promise<MlbGameData> {
+	public static async FindById(manager: RequestRepo, id: number): Promise<MlbGameData> {
 		try {
-			const game = await this.Repo.findOne({ id }, { cache: 3000 });
+			const game = await manager.findOne({ id }, { cache: 3000 });
 			if (!game) throw "game not found";
 			return game;
 		} catch (error) {
@@ -26,10 +25,10 @@ export class GameDataRepository {
 		}
 	}
 
-	public static async GetAllUids(pageNumber: number, limit: number): Promise<string[]> {
+	public static async GetAllUids(manager: RequestRepo, pageNumber: number, limit: number): Promise<string[]> {
 		try {
 			const uids = [];
-			const games = await this.Repo.find({}, { limit, offset: (pageNumber - 1) * limit });
+			const games = await manager.find({}, { limit, offset: (pageNumber - 1) * limit });
 			if (!games) throw "no games found";
 			for (const key of games) {
 				uids.push(key.uid);
@@ -40,9 +39,9 @@ export class GameDataRepository {
 		}
 	}
 
-	public static async FindByUid(uid: string): Promise<MlbGameData> {
+	public static async FindByUid(manager: RequestRepo, uid: string): Promise<MlbGameData> {
 		try {
-			const game = await this.Repo.findOne({ uid }, { cache: 3000 });
+			const game = await manager.findOne({ uid }, { cache: 3000 });
 			if (!game) throw "game not found";
 			return game;
 		} catch (error) {
@@ -50,18 +49,18 @@ export class GameDataRepository {
 		}
 	}
 
-	public static async DeleteById(id: number): Promise<boolean> {
+	public static async DeleteById(manager: RequestRepo, id: number): Promise<boolean> {
 		try {
-			const exists = await this.Repo.findOne({ id });
+			const exists = await manager.findOne({ id });
 			if (!exists) throw "game not found";
-			await this.Repo.removeAndFlush(exists);
+			await manager.removeAndFlush(exists);
 			return true;
 		} catch (error) {
 			throw new Error(error);
 		}
 	}
 
-	public static async InsertGame(gameData: IMLBGameData): Promise<MlbGameData> {
+	public static async InsertGame(manager: RequestRepo, gameData: IMLBGameData): Promise<MlbGameData> {
 		try {
 			const newGame = new MlbGameData();
 			newGame.league = gameData.league;
@@ -79,55 +78,54 @@ export class GameDataRepository {
 				site: new SiteInfo(gameData.event_information.site)
 			});
 
-			this.Repo.persist(newGame);
+			manager.persist(newGame);
 
 			for (const key of gameData.officials) {
 				const newOfficial = new MlbOfficial(key);
 				newGame.officials.add(newOfficial);
-				this.Repo.persist([newGame, newOfficial]);
+				manager.persist([newGame, newOfficial]);
 			}
 			for (const key of gameData.home_pitchers) {
 				const newPitcher = new MlbPitcher(key);
 				newGame.home_pitchers.add(newPitcher);
-				this.Repo.persist([newGame, newPitcher]);
+				manager.persist([newGame, newPitcher]);
 			}
 			for (const key of gameData.away_pitchers) {
 				const newPitcher = new MlbPitcher(key);
 				newGame.away_pitchers.add(newPitcher);
-				this.Repo.persist([newGame, newPitcher]);
+				manager.persist([newGame, newPitcher]);
 			}
 			for (const key of gameData.away_batters) {
 				const newBatter = new MlbBatter(key);
 				newGame.away_batters.add(newBatter);
-				this.Repo.persist([newGame, newBatter]);
+				manager.persist([newGame, newBatter]);
 			}
 			for (const key of gameData.home_batters) {
 				const newBatter = new MlbBatter(key);
 				newGame.home_batters.add(newBatter);
-				this.Repo.persist([newGame, newBatter]);
+				manager.persist([newGame, newBatter]);
 			}
 			for (const key of gameData.away_fielding) {
 				const newFielder = new MlbFielder(key);
 				newGame.away_fielding.add(newFielder);
-				this.Repo.persist([newGame, newFielder]);
+				manager.persist([newGame, newFielder]);
 			}
 			for (const key of gameData.home_fielding) {
 				const newFielder = new MlbFielder(key);
 				newGame.home_fielding.add(newFielder);
-				this.Repo.persist([newGame, newFielder]);
+				manager.persist([newGame, newFielder]);
 			}
 
-			await this.Repo.flush();
+			await manager.flush();
 			return newGame;
 		} catch (error) {
-			Database.Manager.clear();
 			throw new Error(error);
 		}
 	}
 
-	public static async UpdateGame(id: number, newGame: IMLBGameData): Promise<MlbGameData> {
+	public static async UpdateGame(manager: RequestRepo, id: number, newGame: IMLBGameData): Promise<MlbGameData> {
 		try {
-			const exists = await GameDataRepository.FindById(id);
+			const exists = await GameDataRepository.FindById(manager, id);
 
 			exists.league = newGame.league;
 			exists.away_period_scores = newGame.away_period_scores;
@@ -150,48 +148,47 @@ export class GameDataRepository {
 			exists.home_batters.removeAll();
 			exists.away_fielding.removeAll();
 			exists.home_fielding.removeAll();
-			this.Repo.persist(exists);
+			manager.persist(exists);
 
 			for (const key of newGame.officials) {
 				const newOfficial = new MlbOfficial(key);
 				exists.officials.add(newOfficial);
-				this.Repo.persist([exists, newOfficial]);
+				manager.persist([exists, newOfficial]);
 			}
 			for (const key of newGame.home_pitchers) {
 				const newPitcher = new MlbPitcher(key);
 				exists.home_pitchers.add(newPitcher);
-				this.Repo.persist([exists, newPitcher]);
+				manager.persist([exists, newPitcher]);
 			}
 			for (const key of newGame.away_pitchers) {
 				const newPitcher = new MlbPitcher(key);
 				exists.away_pitchers.add(newPitcher);
-				this.Repo.persist([exists, newPitcher]);
+				manager.persist([exists, newPitcher]);
 			}
 			for (const key of newGame.away_batters) {
 				const newBatter = new MlbBatter(key);
 				exists.away_batters.add(newBatter);
-				this.Repo.persist([exists, newBatter]);
+				manager.persist([exists, newBatter]);
 			}
 			for (const key of newGame.home_batters) {
 				const newBatter = new MlbBatter(key);
 				exists.home_batters.add(newBatter);
-				this.Repo.persist([exists, newBatter]);
+				manager.persist([exists, newBatter]);
 			}
 			for (const key of newGame.away_fielding) {
 				const newFielder = new MlbFielder(key);
 				exists.away_fielding.add(newFielder);
-				this.Repo.persist([exists, newFielder]);
+				manager.persist([exists, newFielder]);
 			}
 			for (const key of newGame.home_fielding) {
 				const newFielder = new MlbFielder(key);
 				exists.home_fielding.add(newFielder);
-				this.Repo.persist([exists, newFielder]);
+				manager.persist([exists, newFielder]);
 			}
 
-			await this.Repo.flush();
+			await manager.flush();
 			return exists;
 		} catch (error) {
-			Database.Manager.clear();
 			throw new Error(error);
 		}
 	}

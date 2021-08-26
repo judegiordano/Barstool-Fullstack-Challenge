@@ -3,6 +3,7 @@ import { FastifyInstance } from "fastify";
 import { GameDataRepository as Game } from "@Repositories/Mlb/GameDataRepository";
 import { MlbGameDataSchema } from "@Types/Schemas/MLB";
 import { ReuqestInstance } from "@Types/Override";
+import { MlbGameData } from "@Models/MLB/MlbGameData";
 
 export default async (fastify: FastifyInstance): Promise<void> => {
 	fastify.get<ReuqestInstance>("/id/:id", {
@@ -28,7 +29,8 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 	}, async (req, res) => {
 		res.statusCode = 200;
 		const { id } = req.params;
-		const game = await Game.FindById(id);
+		const manager = req.em.getRepository(MlbGameData);
+		const game = await Game.FindById(manager, id);
 		return {
 			ok: true,
 			data: game.toJSON()

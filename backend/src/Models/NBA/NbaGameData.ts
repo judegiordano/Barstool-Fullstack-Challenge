@@ -28,7 +28,7 @@ export class NbaGameData extends GameInfo {
 	@OneToOne({ owner: true, eager: true, orphanRemoval: true })
 	home_totals: NbaTotal;
 
-	toJSON(): Dictionary<NbaGameData> {
+	public toJSON(): Dictionary<NbaGameData> {
 		return wrap(this).toObject();
 	}
 }

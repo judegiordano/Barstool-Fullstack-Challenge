@@ -38,6 +38,7 @@
     "@barstool-dev/types": "github:judegiordano/bartsool-dev-types",
     "@mikro-orm/core": "^4.5.7",
     "@mikro-orm/postgresql": "^4.5.7",
+    "argon2": "^0.28.2",
     "axios": "^0.21.1",
     "class-transformer": "^0.4.0",
     "fastify": "^3.19.2",

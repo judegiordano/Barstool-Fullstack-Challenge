@@ -48,7 +48,7 @@ export class MlbGameData extends GameInfo {
 	@OneToOne({ owner: true, orphanRemoval: true, eager: true })
 	home_batter_totals: MlbBatterTotal;
 
-	toJSON(): Dictionary<MlbGameData> {
+	public toJSON(): Dictionary<MlbGameData> {
 		return wrap(this).toObject();
 	}
 }

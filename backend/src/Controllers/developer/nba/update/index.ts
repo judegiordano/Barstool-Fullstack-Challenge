@@ -4,6 +4,7 @@ import { INBAGameData } from "@barstool-dev/types";
 import { GameDataRepository as Game } from "@Repositories/Nba/GameDataRepository";
 import { NbaGameDataSchema } from "@Types/Schemas/NBA";
 import { ReuqestInstance } from "@Types/Override";
+import { NbaGameData } from "@Models/NBA/NbaGameData";
 
 export default async (fastify: FastifyInstance): Promise<void> => {
 	fastify.patch<ReuqestInstance>("/:id", {
@@ -33,7 +34,8 @@ export default async (fastify: FastifyInstance): Promise<void> => {
 	}, async (req, res) => {
 		res.statusCode = 200;
 		const { id } = req.params;
-		const game = await Game.UpdateGame(id, req.body as INBAGameData);
+		const manager = req.em.getRepository(NbaGameData);
+		const game = await Game.UpdateGame(manager, id, req.body as INBAGameData);
 		return {
 			ok: true,
 			data: game.toJSON()

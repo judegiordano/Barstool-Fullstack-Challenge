@@ -7,7 +7,7 @@ import { Log } from "./Logger";
 
 export class Database {
 
-	private static orm: MikroORM<IDatabaseDriver<Connection>>;
+	public static orm: MikroORM<IDatabaseDriver<Connection>>;
 
 	/**
 	 *

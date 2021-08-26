@@ -1,7 +1,6 @@
 import { INBAGameData } from "@barstool-dev/types";
 import { EntityRepository } from "@mikro-orm/core";
 
-import { Database } from "@Services/Database";
 import { NbaGameData } from "@Models/NBA/NbaGameData";
 import { NbaOfficial } from "@Models/NBA/NbaOfficial";
 import { TeamInfo } from "@Models/Shared/TeamInfo";
@@ -10,13 +9,13 @@ import { SiteInfo } from "@Models/Shared/SiteInfo";
 import { NbaTotal } from "@Models/NBA/NbaTotal";
 import { NbaStat } from "@Models/NBA/NbaStat";
 
+type RequestRepo = EntityRepository<NbaGameData>;
+
 export class GameDataRepository {
 
-	private static Repo: EntityRepository<NbaGameData> = Database.Manager.fork().getRepository(NbaGameData)
-
-	public static async FindById(id: number): Promise<NbaGameData> {
+	public static async FindById(manager: RequestRepo, id: number): Promise<NbaGameData> {
 		try {
-			const game = await this.Repo.findOne({ id }, { cache: 3000 });
+			const game = await manager.findOne({ id }, { cache: 3000 });
 			if (!game) throw "game not found";
 			return game;
 		} catch (error) {
@@ -24,10 +23,10 @@ export class GameDataRepository {
 		}
 	}
 
-	public static async GetAllUids(pageNumber: number, limit: number): Promise<string[]> {
+	public static async GetAllUids(manager: RequestRepo, pageNumber: number, limit: number): Promise<string[]> {
 		try {
 			const uids = [];
-			const games = await this.Repo.find({}, { limit, offset: (pageNumber - 1) * limit });
+			const games = await manager.find({}, { limit, offset: (pageNumber - 1) * limit });
 			if (!games) throw "no games found";
 			for (const key of games) {
 				uids.push(key.uid);
@@ -38,9 +37,9 @@ export class GameDataRepository {
 		}
 	}
 
-	public static async FindByUid(uid: string): Promise<NbaGameData> {
+	public static async FindByUid(manager: RequestRepo, uid: string): Promise<NbaGameData> {
 		try {
-			const game = await this.Repo.findOne({ uid }, { cache: 3000 });
+			const game = await manager.findOne({ uid }, { cache: 3000 });
 			if (!game) throw "game not found";
 			return game;
 		} catch (error) {
@@ -48,18 +47,18 @@ export class GameDataRepository {
 		}
 	}
 
-	public static async DeleteById(id: number): Promise<boolean> {
+	public static async DeleteById(manager: RequestRepo, id: number): Promise<boolean> {
 		try {
-			const exists = await this.Repo.findOne({ id });
+			const exists = await manager.findOne({ id });
 			if (!exists) throw "game not found";
-			await this.Repo.removeAndFlush(exists);
+			await manager.removeAndFlush(exists);
 			return true;
 		} catch (error) {
 			throw new Error(error);
 		}
 	}
 
-	public static async InsertGame(gameData: INBAGameData): Promise<NbaGameData> {
+	public static async InsertGame(manager: RequestRepo, gameData: INBAGameData): Promise<NbaGameData> {
 		try {
 			const newGame = new NbaGameData();
 			newGame.league = gameData.league;
@@ -74,35 +73,34 @@ export class GameDataRepository {
 				site: new SiteInfo(gameData.event_information.site)
 			});
 
-			this.Repo.persist(newGame);
+			manager.persist(newGame);
 
 			for (const key of gameData.officials) {
 				const newOffical = new NbaOfficial(key);
 				newGame.officials.add(newOffical);
-				this.Repo.persist([newGame, newOffical]);
+				manager.persist([newGame, newOffical]);
 			}
 			for (const key of gameData.home_stats) {
 				const newHomeStat = new NbaStat(key);
 				newGame.home_stats.add(newHomeStat);
-				this.Repo.persist([newGame, newHomeStat]);
+				manager.persist([newGame, newHomeStat]);
 			}
 			for (const key of gameData.away_stats) {
 				const newAwayStat = new NbaStat(key);
 				newGame.away_stats.add(newAwayStat);
-				this.Repo.persist([newGame, newAwayStat]);
+				manager.persist([newGame, newAwayStat]);
 			}
 
-			await this.Repo.flush();
+			await manager.flush();
 			return newGame;
 		} catch (error) {
-			Database.Manager.clear();
 			throw new Error(error);
 		}
 	}
 
-	public static async UpdateGame(id: number, newGame: INBAGameData): Promise<NbaGameData> {
+	public static async UpdateGame(manager: RequestRepo, id: number, newGame: INBAGameData): Promise<NbaGameData> {
 		try {
-			const exists = await GameDataRepository.FindById(id);
+			const exists = await GameDataRepository.FindById(manager, id);
 
 			exists.league = newGame.league;
 			exists.away_period_scores = newGame.away_period_scores;
@@ -120,28 +118,27 @@ export class GameDataRepository {
 			exists.home_stats.removeAll();
 			exists.away_stats.removeAll();
 
-			this.Repo.persist(exists);
+			manager.persist(exists);
 
 			for (const key of newGame.officials) {
 				const newOffical = new NbaOfficial(key);
 				exists.officials.add(newOffical);
-				this.Repo.persist([exists, newOffical]);
+				manager.persist([exists, newOffical]);
 			}
 			for (const key of newGame.home_stats) {
 				const newHomeStat = new NbaStat(key);
 				exists.home_stats.add(newHomeStat);
-				this.Repo.persist([exists, newHomeStat]);
+				manager.persist([exists, newHomeStat]);
 			}
 			for (const key of newGame.away_stats) {
 				const newAwayStat = new NbaStat(key);
 				exists.away_stats.add(newAwayStat);
-				this.Repo.persist([exists, newAwayStat]);
+				manager.persist([exists, newAwayStat]);
 			}
 
-			await this.Repo.flush();
+			await manager.flush();
 			return exists;
 		} catch (error) {
-			Database.Manager.clear();
 			throw new Error(error);
 		}
 	}
