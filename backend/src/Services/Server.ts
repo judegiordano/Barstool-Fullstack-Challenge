@@ -27,11 +27,11 @@ export class App {
 			routeParams: false
 		});
 		App.instance.setErrorHandler(async (error: FastifyError) => {
-			Log.Error(error, error.stack as string, "application error");
+			Log.Error(error, "application error");
 			return {
 				ok: false,
-				status: error.statusCode ?? 500,
-				data: error.message
+				status: error.code ?? 500,
+				data: error
 			};
 		});
 		Redis.client.on("connect", () => {
