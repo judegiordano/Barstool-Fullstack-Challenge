@@ -58,7 +58,7 @@ Jude Giordano
     - The backend framework I have chosen is [Fastify](https://www.fastify.io/), mostly as I prefer its performance over Express, Hapi, or Koa.
     - The Below `.env` file is included in the backend folder.
         ```sh
-        APP_VERSION=v1
+        APP_VERSION=v2
         PORT=8888
         HOST=127.0.0.1
         APPCODE=somesecret
@@ -97,13 +97,13 @@ Jude Giordano
     
         ![headers](./docs/headers.PNG "headers")
 
-    - I have also included swagger documentation for the backend, reachable on `http://127.0.0.1:8888/api/v1/docs/`
+    - I have also included swagger documentation for the backend, reachable on `http://127.0.0.1:8888/api/v2/docs/`
     which should render:
     
         ![swagger](./docs/swagger.PNG "swagger")
 
 
-    - The main backend rest endpoint of interest is under the scope of `http://127.0.0.1:8888/api/v1/stats/`. This will make a request out the [Bartsool api](https://chumley.barstoolsports.com/dev/data/games/6c974274-4bfc-4af8-a9c4-8b926637ba74.json) for game data.
+    - The main backend rest endpoint of interest is under the scope of `http://127.0.0.1:8888/api/v2/stats/`. This will make a request out the [Bartsool api](https://chumley.barstoolsports.com/dev/data/games/6c974274-4bfc-4af8-a9c4-8b926637ba74.json) for game data.
     - It then caches the response into Redis, as well as inserts a game object into the postgres db so all previous game data is back-logged
     ![postgres data](./docs/postgres.PNG "postgres data")
     - On subsequent requests, the backend checks if Redis has any data cached, if so, it saves a trip and instantly returns with the cached payload.

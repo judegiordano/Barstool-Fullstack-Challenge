@@ -6,7 +6,7 @@ import { ReuqestInstance } from "@Types/Override";
 
 export default async (fastify: FastifyInstance): Promise<void> => {
 	fastify.get<ReuqestInstance>("/:page", {
-		preValidation: [fastify.developer],
+		preValidation: [fastify.client],
 		schema: {
 			tags: ["Live"],
 			summary: "Paginate game uids",

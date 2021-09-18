@@ -48,19 +48,11 @@ export class Database {
 	}
 
 	public static async GetStatus(): Promise<boolean> {
-		try {
-			const connection = await Database.orm.isConnected();
-			return connection;
-		} catch (e) {
-			throw new Error(e);
-		}
+		const connection = await Database.orm.isConnected();
+		return connection;
 	}
 
 	public static async Close(): Promise<void> {
-		try {
-			return await Database.orm.close();
-		} catch (e) {
-			throw new Error(e);
-		}
+		return await Database.orm.close();
 	}
 }

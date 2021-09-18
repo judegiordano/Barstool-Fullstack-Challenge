@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import path from "path";
 import fastify, { FastifyError } from "fastify";
 import AutoLoad from "fastify-autoload";
@@ -46,7 +47,7 @@ export class App {
 			await Database.Connect();
 			await App.Setup();
 			await App.instance.listen(Options.PORT, Options.IS_PROD ? "0.0.0.0" : "127.0.0.1");
-		} catch (e) {
+		} catch (e: any) {
 			Log.Error(e, e.stack || e.stackTrace, "Application Error");
 			await App.instance.close();
 			await Database.Close();

@@ -7,12 +7,8 @@ type RequestRepo = EntityRepository<Profile>;
 export class ProfileRepository {
 
 	public static async FindById(manager: RequestRepo, id: number): Promise<Profile> {
-		try {
-			const profile = await manager.findOne({ id }, { cache: 3000 });
-			if (!profile) throw "profile not found";
-			return profile;
-		} catch (error) {
-			throw new Error(error);
-		}
+		const profile = await manager.findOne({ id }, { cache: 3000 });
+		if (!profile) throw new Error("profile not found");
+		return profile;
 	}
 }

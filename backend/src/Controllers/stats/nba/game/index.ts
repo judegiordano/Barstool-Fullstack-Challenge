@@ -7,7 +7,7 @@ import { NbaGameData } from "@Models/NBA/NbaGameData";
 
 export default async (fastify: FastifyInstance): Promise<void> => {
 	fastify.get<ReuqestInstance>("/:uid", {
-		preValidation: [fastify.developer],
+		preValidation: [fastify.client],
 		schema: {
 			params: {
 				type: "object",
