@@ -7,6 +7,7 @@ import { AppLayout } from "@Comp/Layout/AppLayout";
 const BoxScoreButtons = [
 	{ path: "/nba", text: "NBA Boxscore" },
 	{ path: "/mlb", text: "MLB Boxscore" },
+	{ path: "/authors", text: "Authors" },
 ];
 
 const Home: React.FC = (): JSX.Element => {
