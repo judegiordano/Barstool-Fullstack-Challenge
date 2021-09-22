@@ -62,3 +62,7 @@ export const MlbTeamColors = [
 	{ name: "Toronto Blue Jays", hex: "#134a8e" },
 	{ name: "Washington Nationals", hex: "#ab0003" }
 ];
+
+export const Links = {
+	DefaultProfile: "https://www.barstoolsports.com/static/images/headshot-placeholder.png"
+};

@@ -33,3 +33,21 @@ export class Rest {
 		}
 	}
 }
+
+export class BarstoolRest {
+
+	private static readonly url = Config.Options.BARSTOOL_ENDPOINT;
+
+	public static readonly client = create({
+		baseURL: BarstoolRest.url
+	});
+}
+
+export class InternalRest {
+
+	private static readonly url = Config.Options.HOST;
+
+	public static readonly client = create({
+		baseURL: `${InternalRest.url}api/`
+	});
+}
