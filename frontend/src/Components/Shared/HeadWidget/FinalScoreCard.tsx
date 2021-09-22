@@ -1,7 +1,7 @@
 import React from "react";
-import Card from "@material-ui/core/Card";
-import { CardContent } from "@material-ui/core";
 import { IMLBGameData, INBAGameData, IEvent as IEventInfo } from "@barstool-dev/types";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 
 import { DateTime } from "@Services/Date";
 
@@ -26,7 +26,7 @@ interface IPeriodScores {
 	awayAbbrev: string
 }
 
-const Totals: React.FC<ITotals> = ({ 
+const Totals: React.FC<ITotals> = ({
 	homeFinalScore,
 	awayFinalScore,
 	homeAbbrev,
@@ -81,18 +81,18 @@ const PeriodScores: React.FC<IPeriodScores> = ({
 
 const EventInfo: React.FC<IEvent> = ({ eventInformation }: IEvent): JSX.Element => {
 	return (
-		<div style={{textAlign: "left", fontSize: "10px"}}>
+		<div style={{ textAlign: "left", fontSize: "10px" }}>
 			<div>
-				{ eventInformation.site.name }
+				{eventInformation.site.name}
 			</div>
 			<div>
-				{ eventInformation.site.city }, { eventInformation.site.state }
+				{eventInformation.site.city}, {eventInformation.site.state}
 			</div>
 			<div>
-				{ DateTime.Format(eventInformation.start_date_time) }
+				{DateTime.Format(eventInformation.start_date_time)}
 			</div>
 			<div>
-				status: { eventInformation.status }
+				status: {eventInformation.status}
 			</div>
 		</div>
 	);

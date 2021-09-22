@@ -20,6 +20,8 @@
     "@material-ui/icons": "^4.11.2",
     "@mui/icons-material": "^5.0.1",
     "@mui/material": "^5.0.1",
+    "@mui/styles": "^5.0.1",
+    "@mui/x-data-grid": "^4.0.0",
     "apisauce": "^2.1.1",
     "next": "11.0.1",
     "react": "17.0.2",
