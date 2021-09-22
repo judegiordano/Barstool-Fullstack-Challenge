@@ -1,9 +1,9 @@
 import React from "react";
 import Router from "next/router";
-import Button from "@material-ui/core/Button";
 import { GetStaticProps } from "next";
 import { IMLBGameData } from "@barstool-dev/types";
-import { Divider } from "@material-ui/core";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
 
 import { Rest } from "@Services/RestService";
 import { MlbGameWidget } from "@Comp/MlbWidget/MlbGameWidget";
