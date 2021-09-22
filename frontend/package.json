@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-	"docker:build": "docker build -t barstool-dev-frontend .",
+    "docker:build": "docker build -t barstool-dev-frontend .",
     "docker:run": "docker run -d --env-file .env --rm -p 3000:3000 barstool-dev-frontend",
     "docker:stop": "docker stop ",
     "lint": "eslint --fix --ext .ts,.tsx .",
@@ -13,9 +13,13 @@
   },
   "dependencies": {
     "@barstool-dev/types": "github:judegiordano/bartsool-dev-types",
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
     "@material-ui/core": "^4.12.3",
     "@material-ui/data-grid": "^4.0.0-alpha.35",
     "@material-ui/icons": "^4.11.2",
+    "@mui/icons-material": "^5.0.1",
+    "@mui/material": "^5.0.1",
     "apisauce": "^2.1.1",
     "next": "11.0.1",
     "react": "17.0.2",

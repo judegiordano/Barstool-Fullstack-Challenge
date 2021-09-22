@@ -1,4 +1,10 @@
 module.exports = {
+	images: {
+		domains: ["chumley.barstoolsports.com",
+			"external-content.duckduckgo.com",
+			"www.barstoolsports.com"
+		]
+	},
 	poweredByHeader: false,
 	async headers() {
 		return [
