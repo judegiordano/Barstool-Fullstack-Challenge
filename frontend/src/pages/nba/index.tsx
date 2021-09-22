@@ -1,7 +1,7 @@
 import React from "react";
 import Router from "next/router";
-import Button from "@material-ui/core/Button";
 import { GetStaticProps } from "next";
+import Button from "@material-ui/core/Button";
 import { INBAGameData } from "@barstool-dev/types";
 import { Divider } from "@material-ui/core";
 

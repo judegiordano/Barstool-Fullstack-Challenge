@@ -1,6 +1,6 @@
 import React from "react";
 import Router from "next/router";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 
 import { AppLayout } from "@Comp/Layout/AppLayout";
 
