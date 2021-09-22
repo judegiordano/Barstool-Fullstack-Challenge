@@ -1,6 +1,6 @@
 import React from "react";
 import { GetServerSideProps } from "next";
-import { Grid } from "@material-ui/core";
+import Grid from "@mui/material/Grid";
 
 import { AppLayout } from "@Comp/Layout/AppLayout";
 import { InternalRest } from "@Services/RestService";
