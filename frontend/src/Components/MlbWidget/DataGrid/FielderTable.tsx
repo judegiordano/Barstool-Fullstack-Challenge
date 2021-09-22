@@ -1,10 +1,10 @@
 import React from "react";
-import { DataGrid } from "@material-ui/data-grid";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { IFielder } from "@barstool-dev/types";
+import { DataGrid } from "@mui/x-data-grid";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 interface IFielderTable {
 	stats: IFielder[],

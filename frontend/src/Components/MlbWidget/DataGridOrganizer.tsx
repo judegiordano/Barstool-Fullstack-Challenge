@@ -1,5 +1,5 @@
 import React from "react";
-import Divider from "@material-ui/core/Divider";
+import Divider from "@mui/material/Divider";
 import { IBatter, IFielder, IPitcher, IBatterTotal } from "@barstool-dev/types";
 
 import { BatterTable } from "./DataGrid/BatterTable";
