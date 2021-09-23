@@ -15,7 +15,14 @@ export const FielderTable: React.FC<IFielderTable> = ({ stats, teamColor }: IFie
 	return (
 		<Accordion TransitionProps={{ unmountOnExit: true }}>
 			<AccordionSummary
-				style={{ backgroundColor: teamColor, color: "White", fontFamily: "'Open Sans', sans-serif" }}
+				style={{
+					backgroundColor: teamColor,
+					color: "White",
+					fontFamily: "'Open Sans', sans-serif",
+					width: "100%",
+					paddingLeft: 10,
+					paddingRight: 10
+				}}
 				expandIcon={<ExpandMoreIcon />}
 			>
 			fielders
