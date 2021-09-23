@@ -7,7 +7,7 @@ import { ReuqestInstance } from "@Types/Override";
 import { NbaGameData } from "@Models/NBA/NbaGameData";
 
 export default async (fastify: FastifyInstance): Promise<void> => {
-	fastify.patch<ReuqestInstance>("/:id", {
+	fastify.put<ReuqestInstance>("/:id", {
 		preValidation: [fastify.developer],
 		schema: {
 			params: {
